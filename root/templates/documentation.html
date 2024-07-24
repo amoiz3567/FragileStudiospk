@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title>Documentation</title>
+</head>
+<style>
+    @font-face {
+        font-family: 'secondfont';
+        src: url("{{ url_for('static', filename='fonts/Uomo.otf') }}") format('opentype');
+    }
+    .fixskew .column .cat {
+        cursor: pointer;
+        font-weight: 900;
+        color: rgb(0, 0, 0);
+    }
+
+    .fixskew .column .cat i {
+        color: rgb(0, 0, 0);
+        padding: 5px;
+        font-style: normal;
+        font-weight: 100;
+        font-size: 25px;
+        display: none;
+    }
+
+    .fixskew .column .link {
+        font-size: 17px;
+        color: #000000b9;
+        font-weight: 500;
+        font-family: 'brold', sans-serif;
+        font-style: italic;
+    }
+
+    .fixskew h1 {
+        color: rgb(0, 0, 0);
+        font-size: 17px;
+    }
+
+    .tooltip {
+        width: 200px;
+        font-size: 18px;
+        padding: 120px 120px 40px;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 58% 90%, 50% 100%, 42% 90%, 0 90%);
+    }
+
+    .fixskew {
+        gap: 25px;
+    }
+
+    .sub-menu {
+        display: block;
+    }
+
+    .link {
+        color: white;
+        text-decoration: none;
+    }
+    .awr {
+        font-family: 'secondfont', sans-serif;
+    }
+</style>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+
+<body id="bod" style="background-color: #000; background-color: #fff; height: 100%; scroll-behavior: smooth; overflow: hidden;">
+    <div id="se" style="/*overflow: visible; overflow: auto;*/ height: 199%; background: none;">
+        <div class="man v n"></div>
+        <div id="cart_" class="man contain_menu"
+            style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+            <div onclick="op('cart', 'cart_')"
+                style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+            <div id="cart" class="menu" style="display: flex; flex-direction: column; min-width: 50%;">
+                <a onclick="op('cart', 'cart_')"
+                    style="padding: 10px; position: absolute; top: 0; z-index: 1; right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img
+                        style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+                <br><br><br><br>
+                <iframe id="cart_frame" src="/cart"
+                    style="position: absolute; width: 100%; height: 109%; bottom: 0; z-index: -1;" frameborder="0"></iframe>
+            </div>
+        </div>
+        <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
+        </div>
+        <fk id="fkhead"></fk>
+        <header id="header" class="center">
+            <a align="left" style="flex: 0;">
+                <a style="flex:0;margin: 0;" onclick="menu()"><img style="width: 50px;"
+                        src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+            </a>
+            <div onclick="window.location = '/home';" class="one logo center" style="flex:1;position: absolute;"><img
+                    id="frg" style="cursor: pointer; margin-top: 20px;"
+                    src="{{ url_for('static', filename='img/frg.png') }}" alt=""></div>
+            <a class="one" align="right" style="flex: 1;">
+                <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape"
+                        xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+                        <g>
+                            <path
+                                d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0">
+                            </path>
+                        </g>
+                    </svg></a>
+            </a>
+        </header>
+        <br><br><br><br><br>
+        <div class="center" style="margin-bottom: 0; position: sticky; top: 0;">
+            <div id="fux" class="center fixskew"
+                style="flex-direction: column; align-items: start; justify-content: start; text-wrap: nowrap; top:0; border-right: 1px solid #ccc; padding-right: 125px; position: sticky; top: 0; overflow: auto; overflow-x: hidden; height: calc(100vh - 90px); padding-top: 90px;">
+                <a onclick="op()"
+                    style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img
+                        style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+                <div class="column fold">
+                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>POLICIES</p>
+                    <div class="sub-menu">
+                        <p onclick="respective(this)" class="cat link">Exchange_Policy</p>
+                        <p onclick="respective(this)" class="cat link">Deliver_Policy</p>
+                        <p onclick="respective(this)" class="cat link">PAYMENT_METHODS</p>
+                        <p onclick="respective(this)" class="cat link">Contact_Us</p>
+                    </div>
+                </div>
+                <div class="column fold">
+                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>SOCIALS</p>
+                    <div class="sub-menu">
+                        <p onclick="respective(this)" class="cat link">Contact_information</p>
+                    </div>
+                </div>
+                <div class="column fold">
+                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>COMPANY</p>
+                    <div class="sub-menu">
+                        <p onclick="respective(this)" class="cat link">ABOUT_COMPANY</p>
+                        <p onclick="respective(this)" class="cat link">NEWS</p>
+                        <p onclick="respective(this)" class="cat link">CONTACT_US</p>
+                    </div>
+                </div>
+                <div class="column fold">
+                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>ABOUT_WEBSITE</p>
+                    <div class="sub-menu">
+                        <p onclick="respective(this)" class="cat link">CONTACT</p>
+                        <p onclick="respective(this)" class="cat link">REPORT_BUG</p>
+                    </div>
+                </div>
+            </div>
+            <div class="center" style="width: 100%;height: 100%; align-items: end;">
+                <iframe style="width: 100%; border: none; outline: none; height: 100vh;" id="inlineFrameExample"
+                    title="Inline Frame Example"
+                    src="/static/contactus.html"
+                    class="awr">
+                </iframe>
+                <script>
+                    var old = 0;
+                    $('#inlineFrameExample').on("load", function() {
+                        var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
+                        console.log(a);
+                        if (a == `<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+`) {
+                            $('#inlineFrameExample').css("display", "none")
+                            document.getElementById("starting").style.display = "flex";
+                        }
+                        //$("#inlineFrameExample").contents().find("body").css("font-family", "'secondfont', sans-serif");
+                        $("#inlineFrameExample").contents().find("body").css("background", "#fff");
+                        $("#inlineFrameExample").contents().find("body").css("width", "90%");
+                        $("#inlineFrameExample").contents().find("html").css("display", "flex");
+                        $("#inlineFrameExample").contents().find("html").css("flex-direction", "column");
+                        $("#inlineFrameExample").contents().find("html").css("align-items", "center");
+                        $("#inlineFrameExample").contents().find("html").css("justify-content", "center");
+                        $("#inlineFrameExample").contents().find("body").css("overflow", "visible");
+                        //$("#inlineFrameExample").contents().find("body").css("background", "#ffff");
+                        var iframe = document.getElementById('inlineFrameExample');
+                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        $(iframeDoc).on('scroll', function() {
+                            if (old < $(iframeDoc).scrollTop()){
+                                old = $(iframeDoc).scrollTop();
+                                window.scrollTo(0, 135);
+                            } else {
+                                window.scrollTo(0, 0);
+                                old = $(iframeDoc).scrollTop();
+                            } 
+                        });
+                        $("#inlineFrameExample").contents().find("html").append(`${css_}`);
+                    });
+                </script>
+                <div class="center" id="starting" style="display: none;">
+                    <h1 style="font-weight: 100;">: )&nbsp; &nbsp;</h1>
+                    <h1 style="font-weight: 100; gap: 0; flex-direction: column; align-items: start;" class="center">
+                        Documentation
+                        <p style="font-size: 18px; font-weight: 500; margin: 4px; margin-left: 5px;">Find answers.</p>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $(document).ready(function() {
+        var scrollpos = localStorage.getItem('scrollpos');
+        if (location.hash == "#search") {
+            my_search();
+            location.hash = "";
+            window.location.href.split('#')[0];
+        }
+        });
+</script>
+<script>
+    window.addEventListener("scroll", function (event) {
+        let sc = window.scrollY;
+    });
+</script>
+<script>
+    window.scrollTo(0,0);
+    function size() {
+        var width = screen.width;
+          if (screen.width <= 798 || window.innerWidth <= 798) {
+            $('#fux').css("display", "none");
+          } else {
+            $('#fux').css("display", "block");
+          }
+    }
+    $(window).on('resize', function(){
+        size();
+    });
+    $(document).ready(function(){
+        size();
+    });
+    //document.body.style.filter = "invert(0)";
+</script>
+<script>
+    document.querySelectorAll(".sub-menu").forEach((el) => {el.style.display = "none";el.style.whiteSpace = "nowrap";})
+    document.querySelectorAll(".sub-menu").forEach((el) => {el.parentNode.children[0].style.display = "flex";el.parentNode.children[0].children[0].style.display = "flex";})
+    function toggleSection(element) {
+        var subMenu = element.nextElementSibling;
+        if (subMenu.style.display === "block") {
+            subMenu.style.display = "none";
+            element.children[0].innerHTML = "+";
+        } else {
+            subMenu.style.display = "block";
+            element.children[0].innerHTML = "-";
+        }
+    }
+
+</script>
+<script>
+    function TextAbstract(text, length) {
+        if (text == null) {
+            return "";
+        }
+        if (text.length <= length) {
+            return text;
+        }
+        text = text.substring(0, length);
+        last = text.lastIndexOf(" ");
+        text = text.substring(0, last);
+        return text + "...";
+    }
+
+</script>
+<script>
+    const css_ = `<style>
+        /*
+@font-face {
+    font-family: 'secondfont';
+    src: url("{{ url_for('static', filename='/static/fonts/Uomo.otf') }}") format('opentype');
+}
+
+body {
+    font-family: 'secondfont', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+  }
+  .container {
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+      padding: 2em;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+  }
+  h1, h2, h3, h4 {
+      color: #333;
+      margin-top: 1em;
+  }
+  p {
+      margin: 1em 0;
+  }
+  a {
+      color: #db7734;
+      text-decoration: none;
+  }
+  a:hover {
+      text-decoration: underline;
+  } 
+  ul {
+      list-style: none;
+      padding: 0;
+  }
+  ul li {
+      background: #f4f4f4;
+      margin: 0.5em 0;
+      padding: 0.5em;
+      border-left: 4px solid #db7734;
+  }
+  pre {
+      background: #ffffff;
+      color: #000000;
+      padding: 1em;
+      overflow: auto;
+      border-radius: 4px;
+  }
+  code {
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 600;
+      background: rgb(225, 225, 225);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      color: #000000;
+  }
+  .badge img {
+      margin-right: 10px;
+  }*/
+</style>`;
+</script>

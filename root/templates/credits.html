@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title>Credits - Fragile Studios</title>
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #000000;
+    overflow: hidden;
+}
+ul{
+    list-style-type: none;
+}
+
+.wrapper{
+    width: 768px;
+    margin: 40px auto 0;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    position: relative;
+}
+
+.main-visual{
+    margin: 0 auto;
+    position: relative;
+    overflow-y: hidden;
+}
+
+@media screen and (max-width: 767px){
+    .wrapper{
+        width: 100%;
+    }
+}
+
+.end-credits{
+    width: 100%;
+    padding-top: 56.25%;	/* 16:9 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    color: #fff;
+}
+
+@media screen and (max-width: 767px){
+    .end-credits{
+        font-size: 2.6vw;
+    }
+}
+
+.crew{
+    overflow: hidden;
+}
+.crew dt{
+    width: 45%;
+    float: left;
+    margin-right: 5%;
+    text-align: right;
+    font-weight: 200;
+    line-height: 1.8;
+    letter-spacing: 1px;
+}
+.crew dd{
+    width: 45%;
+    float: left;
+    font-weight: bold;
+    line-height: 1.8;
+    text-transform: uppercase;
+}
+
+.slider-box{
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+}
+.slide{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+img{
+    max-width: 100%;
+    height: auto;
+    vertical-align: bottom;
+}
+</style>
+<body>
+    <div id="creds" style="display: none; justify-content: center; align-items: center; position: absolute; top: 50px; z-index: 1000;">
+        <i style="color: white; width: 100vw; text-align: center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Special Thanks to <i style=" font-style: normal; text-decoration: underline;">Abdul Moiz</i></i>
+    </div>
+    
+    <div class="wrapper">
+        <div class="main-visual" style="height: 100vh;">
+            <ul class="slider-box">
+            </ul>
+            <div class="end-credits">
+                 <!--fake names generated using https://www.fantasynamegenerators.com/english_names.php -->
+                <dl class="crew">
+                    <h1 style="display: flex; justify-content: center; align-items: center;">THANK YOU</h1> 
+                    <h1 style="display: flex; justify-content: center; align-items: center;">FOR SHOPPING WITH US</h1><br><br> 
+                    <dt>Clothes By</dt><dd>Fragile Studios</dd>
+                    <dt>Website & Business Owner</dt><dd>Abubakar Shahid bakar</dd>
+                    <dt>Website Designed & Built By</dt><dd>Abdul Moiz</dd>
+                    <dt>Credits</dt><dd>Abdul Moiz</dd>
+                    <dt>Director of Photography</dt><dd>...</dd>
+                    <dt>Production Designer</dt><dd>...</dd>
+                    <dt>Editor</dt><dd>...</dd>
+                    <dt>Associate Producers</dt><dd>..</dd>
+                    <dt>Music</dt><dd>Toxic (Freestyle)</dd>
+                    <dt>Publicity</dt><dd>...</dd>
+                    <dt>Still Photographer</dt><dd>...</dd><br><br>
+                    <p style="margin-top: 250px;"> Clothes by <i style="font-style: normal; text-decoration: underline;">Abubakar Shahid bakar</i></p>
+                    <img id="image_should_stop_in_middle" src="/static/img/frg.png" style="filter: invert(1);" alt="">
+                </dl>
+            </div>
+            
+        </div>
+    </div>
+    </body>
+</html>
+<script>
+    $("dt, dd").css("transition", '0.5s')
+    var mySequence = [
+        { 
+            e: $('.slide').eq(0), 
+            p: { opacity: [0, 1] }, 
+            o: { easing: "easeInCubic", duration: 5000 } 
+        },
+        { 
+            e: $('.slide').eq(1), 
+            p: { opacity: [1, 0] }, 
+            o: { easing: "easeInOutCubic", delay: 2000, duration: 2000, sequenceQueue: false } 
+        },
+        { 
+            e: $('.slide').eq(1), 
+            p: { opacity: [0, 1] }, 
+            o: { easing: "easeInCubic", delay: 2500, duration: 5000, sequenceQueue: false } 
+        },
+        { 
+            e: $('.slide').eq(2), 
+            p: { opacity: [1, 0] }, 
+            o: { easing: "easeInOutCubic", delay: 3000, duration: 2000, sequenceQueue: false } 
+        },
+        { 
+            e: $('.slide').eq(2), 
+            p: { opacity: [0, 1] }, 
+            o: { easing: "easeInCubic", delay: 3500, duration: 6000, sequenceQueue: false } 
+        },
+        { 
+            e: $('.slide').eq(3), 
+            p: { opacity: [1, 0] }, 
+            o: { easing: "easeInOutCubic", delay: 4000, duration: 2000, sequenceQueue: false } 
+        }
+    ];
+
+    $.Velocity.RunSequence(mySequence);
+
+    // Calculate the position where the image should stop
+    var stopPosition = ($(window).height() / 2) - ($('#image_should_stop_in_middle').height() / 2);
+
+    // Animate the .end-credits and stop the image animation when it reaches the center
+    $(".end-credits")
+        .velocity({ translateY: "-100%" }, { duration: 30000, easing: "linear", display: "none", progress: function(elements, complete, remaining, start, tweenValue) {
+            // Check the position of the image
+            var imageTop = $('#image_should_stop_in_middle').offset().top;
+            if (imageTop <= stopPosition) {
+                // Stop the animation
+                $(elements).velocity("stop");
+                $("dt, dd").css("opacity", '0')
+                $("#creds").css("display", 'flex')
+            }
+        }});
+</script>

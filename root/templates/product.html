@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1">
+  <script nonce="{{ csp_nonce() }}" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script nonce="{{ csp_nonce() }}" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+  <script nonce="{{ csp_nonce() }}" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+  <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title id="d">
+    Loading...
+  </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<style>
+  @font-face {
+    font-family: 'secondfont';
+    src: url("{{ url_for('static', filename='fonts/Uomo Expanded.otf') }}") format('opentype');
+  }
+  @font-face {
+    font-family: 'MyFont';
+    src: url("{{ url_for('static', filename='fonts/DIN.ttf') }}") format('opentype');
+  }
+  i, .cats {
+    font-family: 'MyFont', sans-serif;
+    font-weight: 1000;
+  }
+  .co {
+    font-family: 'Arial', sans-serif;
+    font-weight: 1000;
+    background-color: #c3c3c3;
+    width: 100vw;
+    font-style: normal;
+    text-align: center;
+  }
+  * {
+    font-family: 'MyFont', sans-serif;
+    font-weight: 1000;
+  }
+</style>
+  <div id="dialogue_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #0000005d; backdrop-filter: blur(10px);">
+    <div id="dialogue" class="center" align="center" style="transition: .3s; position: absolute; height: auto; width:auto; max-width: 645px; border-radius: 5px; background-color: rgb(255, 255, 255); z-index: 50; padding: 25px;">
+        <a nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+        <br><br>
+        <div class="col">
+            <h1 style="font-size: 50px;"><i>THE PRODUCT ALREADY IS IN UR CART <i style="text-decoration: underline;">(ADD ANYWAYS)</i></i></h1>
+            <div class="row center" style="gap:15px;">
+              <input type="checkbox" onfocus="console.log('hide next time')" style="margin: 0; display: flex; z-index: 25;position: absolute; left: -15%; width: 20px;height: 20px; justify-content: start; align-items: start; padding: 0; width: 100%;" value="Never ask again">
+              <i style=" pointer-events: none;">NEVER ASK AGIAN?</i>
+            </div>
+            <div class="row" style="margin: 0; margin-top: 25px; width: 40%; padding: 0;">
+                <a href="#" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">yes</a>
+                <a href="#" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">no</a>
+            </div>
+        </div>
+    </div>
+    <div nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="width: 100vw; height: 100vh; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+</div>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+<div class="ticker-container">
+  <div class="ticker-content ticker-font" style="width: 10000px;" id="ticker">
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+  </div>
+</div>
+<body id="bod">
+	<div class="man v pizzaria n"></div>
+  <div id="description__" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #5a5a5a23;">
+    <div id="description_" class="center" align="center" style="transition: .3s; position: absolute; height: auto; min-height: 450px; width:auto; max-width: 550px; overflow-y: auto; height: auto; max-height: 50vh; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
+        <a nonce="{{ csp_nonce() }}" onclick="op('description_', 'description__');" style="padding: 20px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+        <br><br>
+        <div class="col">
+            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Description*</i></h1><br>
+            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;">umm... hmm... something doesn't add up :/</i></h1><br>
+        </div>
+    </div>
+    <div nonce="{{ csp_nonce() }}" onclick="op('description_', 'description__');" style="width: 100vw; height: 100vh; background-color: #5a5a5a86;"></div>
+  </div>
+  <div
+    style="width: 100vw; height: 100vh; background-color: transparent; position: absolute; top: 0; left: 0; z-index: 2000; pointer-events: none;">
+  </div>
+  <div class="man v n" style="filter: blur(40px);"></div>
+  <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+    <div id="menu" class="menu">
+        <a nonce="{{ csp_nonce() }}" onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+        <br><br>
+        <div class="column">
+        <h4 onclick="window.location = '/home';" nonce="{{ csp_nonce() }}" class="b_ fb b">Home</h4>
+        </div>
+        <div class="column">
+        <h4 class="pointer b_" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/product'">SHOP</h4>
+        </div>
+        <div class="div center" style="margin: 25px; background-color: #ccc;"></div>
+        <div class="column">
+        <h4>CATEGORIES</h4>
+        <ul id="categories_list">
+
+        </ul>
+        </div>
+        <div class="div center" style="margin: 25px; background-color: #ccc; margin-top: 25px;"></div>
+        <div class="column">
+            <h4 style="font-weight: 300;" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/cart'" style="font-weight: 1000;" class="b_ pointer">CART<svg style="width: 15px; margin-left:10px; margin-bottom: -2px; height: auto;" class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
+                <path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z" fill="none" stroke="black" stroke-width="5"></path>
+                <path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z" fill="none" stroke="black" stroke-width="5"></path>
+                <text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: black; font-style: normal;" class="uxskpx" data-hook="items-count"></text>
+            </svg>
+              </h4>
+            <h4 style="font-weight: 300;" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/saved'" class="b_ pointer">SAVED<svg style="width: 20px; color: #6e6e6e; margin-left:5px; margin-bottom: -3px; height: auto;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32" fill="#6e6e6e"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg></h4>
+        </div>
+    </div>
+    <div nonce="{{ csp_nonce() }}" onclick="op()" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+</div>
+
+  <fk id="fkhead"></fk>
+  <header id="header" class="center">
+    <a style="flex:1;" nonce="{{ csp_nonce() }}" onclick="menu()"><img style="width: 50px;"
+        src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+    <div onclick="window.location = '/home';" nonce="{{ csp_nonce() }}" data-clickable="true" class="one logo center" style="flex:1;position: absolute;"><img id="frg"
+        style="cursor: pointer; margin-top: 50px;" src="{{ url_for('static', filename='img/frg.png') }}"
+        alt=""></div>
+    <a class="one" align="right" style="flex: 1;">
+      <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 50 50"><g><path d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0"></path></g></svg></a>
+      <a href="/cart" class="fb b abs"><svg class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1"><path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z"></path><path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z"></path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: white;" class="uxskpx" data-hook="items-count">0</text></svg></a>
+    </a>
+  </header><br><br><br>
+  <div id="fur" class="blur_" style="position: fixed; top: 0;height: 100vh; width: 100vw; left: 0; z-index: 1000; display: none; justify-content: center; align-items: center;">
+    <a nonce="{{ csp_nonce() }}" onclick="e('fur').style.display = 'none';"
+      style="padding: 20px 30px; position: absolute; top: 0; right: 0; z-index: 100; color: white;filter: brightness(1000%); cursor: pointer; font-size: 55px;"><img
+        style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+    <div nonce="{{ csp_nonce() }}" onclick="e('fur').style.display = 'none';" style="width: 100vw; height: 100vh; background-color: #5a5a5a00;"></div>
+
+        <div class="ticker-container" style="transform: rotate(-90deg); position: absolute; left: 25%; background-color: rgba(0, 0, 0, 0); height: 100vh;">
+          <div class="ticker-content ticker-font" style="animation-duration: 50s;" id="ticker2">
+          </div>
+        </div>
+    <div class="slideshow-container" style="height: 100vh; width: 100vw;">
+
+      <div class="mySlides fade">
+        <div class="img_producto_container center" data-scale="1.6">
+          <img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; width: 80vw; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/123.png') }}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'No images Ahead could not be loaded.';this.parentNode.appendChild(v);this.style.display = 'none';">
+        </div>
+      </div>
+
+      <div class="mySlides fade">
+        <div class="img_producto_container center" data-scale="1.6">
+          <img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; width: 80vw; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/123.png') }}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'No images Ahead could not be loaded.';this.parentNode.appendChild(v);this.style.display = 'none';">
+        </div>
+      </div>
+
+      <div class="mySlides fade">
+        <div class="img_producto_container center" data-scale="1.6">
+          <img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; width: 80vw; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/123.png') }}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'No images Ahead could not be loaded.';this.parentNode.appendChild(v);this.style.display = 'none';">
+        </div>
+      </div>
+
+        <a class="prev" style="position: absolute; z-index: 10000;" nonce="{{ csp_nonce() }}" onclick="plusSlides(-1)">
+            <span class="svg svg-arrow-left">
+              <svg version="1.1" id="svg4-Layer_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"
+                viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve">
+                <path
+                  d="M13,26c-0.256,0-0.512-0.098-0.707-0.293l-12-12c-0.391-0.391-0.391-1.023,0-1.414l12-12c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L2.414,13l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414C13.512,25.902,13.256,26,13,26z" />
+              </svg>
+              <span class="alt sr-only"></span>
+            </span>
+        </a>
+        <a class="next" style="position: absolute; z-index: 10000;flex: 1;" nonce="{{ csp_nonce() }}" onclick="plusSlides(1)">
+            <span class="svg svg-arrow-right">
+              <svg version="1.1" id="svg5-Layer_1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"
+                viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve">
+                <path
+                  d="M1,0c0.256,0,0.512,0.098,0.707,0.293l12,12c0.391,0.391,0.391,1.023,0,1.414l-12,12c-0.391,0.391-1.023,0.391-1.414,0s-0.391-1.023,0-1.414L11.586,13L0.293,1.707c-0.391-0.391-0.391-1.023,0-1.414C0.488,0.098,0.744,0,1,0z" />
+              </svg>
+              <span class="alt sr-only"></span>
+            </span>
+          </a>
+    </div>
+    <div nonce="{{ csp_nonce() }}" onclick="e('fur').style.display = 'none';" style="width: 100vw; height: 100vh; background-color: #5a5a5a00;"></div>
+
+  </div><br><br><br><br><br>
+  <div class="head_2">
+    <h1 class="h_font head_ing chrome" style="width: 100%; overflow: hidden; text-wrap: nowrap;" id="name">
+name    </h1>
+    <div class="column">
+      <div align="right" class="save-container" style="margin-top: -50px;">
+        <i class="ao o bh pointer" id="save_container_svg" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtonclick(event, this, 'dnt do this error')">
+            <svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>
+        </i>
+      </div>
+    </div>
+    <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome" id="ident"></p>
+    <div class="row">
+    <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
+    </h1>
+    </div>
+  </div>
+  <div class="cont" style="border: none; margin-bottom: 250px; background: rgba(255, 0, 0, 0);">
+    <div class="col fleft" style="margin: 0; background-color: rgba(255, 0, 0, 0); width: 100%; position: relative;" id="gal">
+      <img class="v abs" target="_self"
+            src="{{ url_for('static', filename='img/loading.gif') }}" alt="">
+      <img class="v abs" target="_self"
+            src="{{ url_for('static', filename='img/loading.gif') }}" alt="">
+      <img class="v abs" target="_self"
+            src="{{ url_for('static', filename='img/loading.gif') }}" alt="">
+    </div>
+    <div class="col brip fleft" id="bar">
+      <div style="width: 87%;">
+        <div class="head_">
+          <h1 class="h_font chrome" id="name">
+            name
+          </h1>
+        </div>
+          <div class="column"><br>
+            <div align="right" class="save-container nhead">
+              <i class="ao o bh pointer" id="save_container_svg" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtonclick(event, this, 'dnt do this error')">
+                <svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>
+              </i>
+            </div>
+          <div align="right" class="save-container">
+              <div class="dropdown">
+                <button for="sizes" id="size" onselect="document.getElementById('jude').style.display = 'flex';" class="dropbtn abs chrome al">&nbsp;XL&nbsp;</button>
+                <div name="sizes" id="jude" align="start" class="chrome dropdown-content">
+                <a class="ra selected">&nbsp;XL&nbsp;</a>
+                <a class="ra">&nbsp;L&nbsp;</a>
+                <a class="ra">&nbsp;M&nbsp;</a>
+                <s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp;</s>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome" id="ident"></p>
+          <div class="row">
+          <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
+          </h1>
+          </div>
+
+          <div class="div center" style="background-color: #67676745;"></div>
+        <br>
+        <p class="h_font chrome" style="display: flex; margin: 0px;">
+          <div>
+            <div class="g avia chrome">CLOTHES FOR <b style="font-size: 16px; margin: -1px 4px;">&</b> CATEGORY</div>
+            <div class="row">
+              <div id="gender" class="row"></div>
+              <div class="g">|</div>
+              <div id="category" class="row"></div>
+            </div>
+          </div>
+          <div align="right" class="save-container" style="margin-top: 60px;">
+            <i style="font-weight: 400; background-color: #282828c6; background: yellow; padding: 4px 5px; color: white; color: black;">Only <i id="quantity_many">--</i> Left</i>
+          </div>
+        </p>
+        <p class="h_font chrome">
+        <div class="g avia chrome" style="margin: 0; font-size: 13px;">COLOR<b style="font-size: 18px; margin: -5px 4px;">/</b>S</div>
+          <div id="color" class="row"></div>
+        </p>
+
+        <div class="row">
+        <div class="col counter" style="position: relative; user-select: none; display: block;"><a id="up">+</a><a id="down">-</a></div>
+        <a class="quantity al" id="nums"><span align="center" id="quantity" class="center">0</span></a>
+        <div class="tooltip" id="context_container" style="width: auto; height: auto; position: absolute; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin-left:37%; margin-top: 230px; border: none; padding-bottom: 15px; background-color: #c7c7c7;">
+          <p class="butts"  style="background-color: rgba(255, 0, 0, 0); color: rgb(0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 25px 0 0 0; color: balck; font-size: 18px;">For performing this action</p>
+          <a class="butts" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/auth';"  style="background-color: rgba(255, 0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 0px 0 25px 0px; text-decoration: underline; color: #000000; font-size: 19px;">sign in / up</a>
+        </div>
+
+        <a class="cta darth abs bh pointer" id="car" style="width: 100%;" nonce="{{ csp_nonce() }}" onclick="addtocart(event);"><span align="center" class="center">ADD TO CART&nbsp;&nbsp;&nbsp;<div style="width: 12%;"><svg class="svg s"
+                style="fill: white; width: 50%;" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%"
+                viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
+                <path
+                  d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z">
+                </path>
+                <path
+                  d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z">
+                </path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="fill: rgb(0, 0, 0); width: 100%;" class="axrqpv"
+                  data-hook="items-count">&#65291;</text>
+              </svg></div></span></a>
+            </div>
+            <div class="row">
+              <a class="cta darth abs bh pointer" style="width: 97%; height: 40px; color: black; border: 2px solid rgba(0, 0, 0, 0.569); background-color: rgba(128, 128, 128, 0);"><span align="center" class="center">BUY NOW&nbsp;&nbsp;&nbsp; &#65291;</span></a>
+            </div>
+        <br>
+        <h1 class="h_font chrome" style="margin-top: 5px;">Description*</h1>
+        <p class="p_font chrome desc abs" nonce="{{ csp_nonce() }}" onclick="menu('description_', 'description__')" style="font-size: 17px; font-weight: 400;" id="description">gggggggggggggggggggggg be
+          like brrrrrr...</p>
+        <h1 class="h_font chrome" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/doc#policy'" style="font-size: 17px; font-weight: 500;">Return Policy*</h1>
+      </div>
+    </div>
+  </div>
+  <div class="center" style="margin-top: -25px; margin-bottom: 45px;">
+    <div class="div"></div>
+  </div>
+  <div class="center">
+    <h1><i style="font-weight: 900;">SIMILAR TO ABOVE (<i id="amount">0</i>)</i></h1>
+  </div>
+  <div class="center">
+    <div style="width: 100vw;">
+        <div id="items" class="one navigation" style="display: flex;">
+          </div>
+        </div>
+      </div>
+      <div class="center" style="margin: 40px;">
+        <h3 id="noexist" class="va center error">None Found :/</h3>
+    </div>
+</body>
+
+</html>
+<script nonce="{{ csp_nonce() }}">
+  document.getElementById("noexist").style.display = "none";
+  var off = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+  var on = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
+  function nestedButtonclick(event, thi, productid) {
+      event.preventDefault();
+      if (thi.innerHTML == off) {
+          thi.innerHTML = on;
+          //delete_(productid);
+          console.log("DELETED")
+      } else {
+          thi.innerHTML = off;
+          save(productid);
+      }
+  }
+
+</script>
+<script nonce="{{ csp_nonce() }}">
+    function updateSearch(name, fr) {
+        searchfor[name] = fr;
+    }
+    var results_length = 0;
+    function searchFilter(bg, color, display) {
+        for (let i = 0; i< Object.keys(searchfor).length; i++) {
+            document.querySelectorAll(searchfor[Object.keys(searchfor)[i]]).forEach(function (el) {
+                const parent_element = el.closest('[href*="/product/"]');
+                console.log(parent_element.getAttribute("href").replace("/product/", ''), document.getElementById("ident").innerText, "the id_ too");
+                if (parent_element.getAttribute("href").replace("/product/", '') != document.getElementById("ident").innerText) {
+                  parent_element.style.display = "block";
+                  parent_element.classList.add("count_as_search_success");
+                  el.style.background = bg;
+                  el.style.color = color;
+                }
+                });
+                }
+          document.querySelectorAll(".count_as_search_success").forEach((el) => {
+            results_length++
+            //el.remove();
+          });
+          console.log(results_length, "the result length");
+          document.getElementById("amount").innerText = `${results_length}`;
+          if (results_length == 0) {
+          document.getElementById("noexist").style.display = "flex";
+          }
+    }
+    var searchfor = {};
+
+</script>
+<script nonce="{{ csp_nonce() }}">
+  window.onpageshow = function(event) {
+      if (event.persisted) {
+          window.location.reload();
+      }
+  };
+</script>
+<script nonce="{{ csp_nonce() }}">
+  var down = 0;
+function summonContext(event=NaN, id) {
+    if (event == NaN) {
+      event.preventDefault();
+    }
+    const context = document.getElementById('context_container');
+    context.style.display = 'flex';
+    down = 1;
+    document.querySelectorAll('.butts').forEach(function (el) {
+        el.addEventListener('mousedown', function () {
+            if (el.innerText == "SIGN IN/UP") {
+                el.setAttribute('href',v+"/"+id);
+            }
+        });
+    })
+    var txt = $('.context_container'),
+        sel = $('.add_menu');
+    //context.style.left = `${event.pageX}px`;
+    //context.style.top = `${event.pageY}px`;
+}
+document.addEventListener('mouseup', function () {
+    const context = document.getElementById('context_container');
+    if (down == 1) {
+        context.style.display = 'none';
+        down = 0;
+    }
+});
+
+</script>
+<script nonce="{{ csp_nonce() }}">
+var formation = {
+  "productId": '',
+  "quantity": '',
+  "color": '',
+  "size": '',
+  "price": '',
+  "dcon": 0,
+  "ping": 0
+}
+pointer_();
+</script>
+<script nonce="{{ csp_nonce() }}">
+second_ticker('#ffffff5d');
+</script>
+<script nonce="{{ csp_nonce() }}">
+  function create_dp() {
+    var sel = $('.dropdown'),
+    txt = $('.dropbtn'),
+    options = $('.dropdown-content');
+
+    sel.click(function (e) {
+        e.stopPropagation();
+        options.show();
+    });
+
+    $('body').click(function (e) {
+        options.hide();
+    });
+
+    options.children('a').click(function (e) {
+        e.stopPropagation();
+        txt.text($(this).text());
+        $(this).addClass('selected').siblings('div').removeClass('selected');
+        options.hide();
+    });
+}
+</script>
+<script nonce="{{ csp_nonce() }}">
+  var tog = 0;
+$(".img_producto_container")
+  // tile mouse actions
+  .on("click", function() {
+    if (tog == 0) {
+      tog = 1;
+      $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(" + $(this).attr("data-scale") + ")" });
+    } else {
+      tog = 0;
+      $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+    }
+  })
+  .on("mouseup", function() {
+    $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+  })
+  .on("mouseout", function() {
+    $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+  })
+  .on("mousemove", function(e) {
+      $(this)
+      .children(".img_producto")
+      .css({
+        "border": "2px solid black",
+        "border": "",
+        "transform-origin":
+          ((e.pageX - $(this).offset().left) / $(this).width()) * 130 +
+          "% " +
+          ((e.pageY - $(this).offset().top) / $(this).height()) * 130 +
+          "%"
+      });
+  });
+</script>
+<script nonce="{{ csp_nonce() }}">
+  const x = document.getElementById("demo");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  //getLocation();
+  function showPosition(position) {
+    document.getElementById('bod').innerHTML = "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+  }
+pointer_();
+
+</script>
+<script nonce="{{ csp_nonce() }}">
+  let slideIndex = 1;
+  showSlides(slideIndex);
+
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
+  }
+
+  function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    //let dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {
+      slideIndex = 1
+    }
+    if (n < 1) {
+      slideIndex = slides.length
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    /*for (i = 0; i < dots.length; i++) {
+      //dots[i].className = dots[i].className.replace(" active", "");
+    }*/
+    slides[slideIndex - 1].style.display = "flex";
+    //dots[slideIndex - 1].className += " active";
+  }
+</script>
+<script nonce="{{ csp_nonce() }}">
+
+  function up(v) {
+    const value = v;
+    var ticker = document.getElementById('ticker');
+    ticker.innerHTML = '';
+    var a;
+    if (value.length > 20)
+      a = Math.floor(value.length + 5);
+    else
+      a = Math.floor(value.length + 100);
+    for (var i = 0; i < a; i++) {
+      var span = document.createElement('span');
+      span.innerHTML = value; // Set initial text
+      ticker.appendChild(span);
+    }
+  }
+</script>
+<script nonce="{{ csp_nonce() }}">
+  var kill = false
+  setTimeout(function () {
+    $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() /2.6 >= $(window).height() && kill == false && got == 2) {
+        redunduncy_rec();
+        kill = true;
+      }
+    });
+  }, 100);
+</script>
+<script nonce="{{ csp_nonce() }}">
+  var got = 0;
+  function e(e) {
+    return document.getElementById(e);
+  }
+  function ea(e) {
+    return document.querySelectorAll(e);
+  }
+
+  function cat(e_, c) {
+    c_ = c.split('.');
+    var a = [];
+    if (e_ == "color") a = [" style=\"background: ", ";\">"];
+    else if (e_ == "category") a = [" >", ""];
+    else if (e_ == "gender") a = [" >", ""];
+    for (let i = 0; i < c.length; i++) {
+      if (c_[i] == undefined)
+        break;
+      e(e_).innerHTML += "<div class=\"" + e_ + "\"" + a[0] + c_[i] + a[1] + "</div>";
+    }
+    return
+  }
+  function loadp(keys, dObj, count, rep=0) {
+    for (let i = 0; i < count; i++) {
+      console.log(i)
+      let key = Math.floor(keys[i]);
+          const item = (dObj[key]);
+          console.log(item, "th");
+          const container = document.getElementById('items');
+          //item.
+          const a = document.createElement("a");
+          const division = document.createElement("div");
+          const image = document.createElement("img");
+          const imageAh = document.createElement("img");
+          const secondDivision = document.createElement("div");
+          const img = String(item['img']);
+          const img1 = img.split('/')[0].replace(/ /g, "%20");
+            var img2 = "";
+            if (img[1] == '') {
+                img2 = img1;
+            } else {
+                img2 = img.split('/')[1].replace(/ /g, "%20");
+            }
+            img2 = img2.replace(/,/g, '');
+            a.setAttribute("href", `/product/${item['id']}`);
+            a.setAttribute("id", `${item['id']}`)
+            a.classList.add("abs");
+            division.setAttribute("class", "container cont center");
+            var cate = item['category'].toUpperCase().replace(/\./g, ' / ').replace(/ /g, '').split(',');
+            var cats = "";
+            taged = ["gender_", "type_", "color_"];
+            let lock = "";
+            for (var lor = 0; lor < cate.length; lor++) {
+                if (lor == 3)
+                    break;
+                text_cate = cate[lor].replace(/ /g, '')
+                if (taged[lor] == "color_") {
+                  text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
+                  }
+                  let paired = text_cate.split(/[.\/]/)
+                  if (paired.length > 1 && taged[lor] != "color_") {
+                    for (let v = 0; v < paired.length; v++) {
+                      if (v == 2)
+                      lock = "display: none;"
+                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
+                      console.log(`${taged[lor]}${paired[v].replace(/ /g, '')}`)
+                  }
+                } else {
+                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
+                  console.log(`${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}`);
+                }
+            }
+            division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
+    <i class="save-container add me bh pointer">…</i>
+    </div>`
+            var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
+            console.log(item['saved'])
+            console.log(item['saved'])
+            if (item['saved'] == 1){
+                save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+            }
+            image.classList.add("img1");
+            image.classList.add("imagus");
+            division.appendChild(image);
+            image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
+            imageAh.classList.add("img2");
+            imageAh.classList.add("imagus");
+            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replace(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
+            secondDivision.setAttribute("align", "left");
+            division.appendChild(imageAh);
+            secondDivision.classList.add("detail-container");
+            const details = `<div align="right" class="save-container"><i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtnonce="{{ csp_nonce() }}" onclick(event, this, '${item['id']}');">${save_svg}</i></div>
+                    <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
+                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
+                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
+                    </div>
+                    <b><!--${item['quantity']}--></b>`
+            secondDivision.innerHTML = details;
+            division.appendChild(secondDivision);
+            a.appendChild(division);
+            container.append(a);
+            routPointer();
+        }
+    }
+    function hide() {
+      const main_items = document.getElementById("items").children;
+      for (let i = 0; i< main_items.length; i++) {
+          console.log(main_items);
+          main_items[i].style.display = "none";
+      }
+    }
+  function setup(key, dObj, i, count) {
+    const item = (dObj[key]);
+    const category = item['category'].split(',');
+    //cat("color", category[2]);
+    cat("category", category[1].toLowerCase());
+    cat("gender", category[0].toLowerCase());
+    taged = ["gender_", "type_", "color_"];
+    cate_ = item['category'].toUpperCase().split(',')
+    for (let i = 0; i< cate_.length; i++) {
+      let paired = cate_[i].replace(/ /g, '').split(/[.\/]/);
+      for (let v = 0; v < paired.length; v++) {
+        var classes_filter = `${taged[i]}${paired[v]}`.replace(/#/g, '').replace(/'/g, '').replace(/ /g, '');
+        updateSearch(classes_filter, ("."+classes_filter));
+        console.log(searchfor);
+      }
+    }
+    ea("#name").forEach(function (el) {
+      el.innerText = item['name'];
+    });
+    ea("#price").forEach(function (el) {
+      el.parentNode.style.textWrap = "nowrap";
+      el.innerText = item['price'];
+    });
+    window.pid = item['id'];
+    window.pprice = item['price'];
+    window.pquantity = item['quantity'];
+    const QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
+    document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
+    document.getElementById("quantity_many").parentElement.innerText = QUANTITY_ != 0 ? document.getElementById("quantity_many").parentElement.innerText:document.getElementById("quantity_many").parentElement.innerText.replace("Only", '');
+    window.pname = item['name'];
+    e("description").innerText = TextAbstract(item['description'], 128);
+    e("desc_2").innerText = item['description'];
+    e("d").innerText = item['name']+" - Fragile";
+    var str = item['img'].split('/');
+    const a = document.getElementById('gal');
+    a.innerHTML = '';
+    var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
+    console.log(item['saved'])
+    if (item['saved'] == 1){
+        save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+    }
+    document.querySelectorAll("#save_container_svg").forEach(el => {
+      el.innerHTML = `${save_svg}`;
+    })
+    for (var v = 0; v< str.length; v++) {
+      var escal = "";
+      if (v == str.length-1) {
+        escal = `onError="var v = document.createElement('p');v.setAttribute('style', 'display: block; width: 50%;');v.className = 'la va error center'; v.style.display = 'flex'; v.innerText = 'Unfortunately, no more Images could be loaded.';this.parentNode.appendChild(v);this.style.display = 'none';"`;
+      }
+      console.log(escal, ` broo ${v}`);
+      a.innerHTML +=  `<div id="blo" class="blo" style="position: absolute; opacity: 0.2;top: 0;left: 0;width: 100%;height: 100%; margin-bottom: 25px;filter: invert(100%);z-index: -1; /* Position behind the content */"></div><img class="v abs" id="img" target="_self" nonce="{{ csp_nonce() }}" onclick="slideIndex = ${v+1};showSlides(slideIndex);e('fur').style.display = 'flex';"  ${escal}
+      src="{{ url_for('static', filename='products/') }}${str[v].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}" style="filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.05)); padding: 55px 10px 85px 25px; margin-bottom: 25px;" alt="">`;
+    }
+    routPointer();
+    document.querySelectorAll('.chrome').forEach(element => {
+      element.classList.remove("chrome");
+    });
+    document.querySelectorAll('.al').forEach(element => {
+      element.classList.remove("al");
+    });
+    const scr = document.querySelectorAll('.img_producto_container');
+    console.log(scr);
+    global_num_length = item['xl'];
+    ric(global_num_length);
+    document.querySelectorAll('#ident').forEach(function (el) {el.innerText = `${item['id']}`});
+    try {
+      for (let c= 0; c< scr.length; c++)
+        scr[c].innerHTML = `<img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; width: 60vw; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/') }}${str[c].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'Error! Unfortunately, the image could not be load.';this.parentNode.appendChild(v);this.style.display = 'none';">`;
+      }
+    catch (err) {
+      console.log(err, "wtffff");
+    }
+    console.log("done 2");
+  }
+  var id_ = "";
+  const loc = window.location.href;
+  var exclude = []
+  $(document).ready(function () {
+    try{
+      var token = '{{ token }}';
+      var socket = io("https://"+window.location.hostname, {
+        extraHeaders: {
+                  Authorization: '' + token
+              }
+      });
+      socket.on(getcookie('evid'), function (data) {
+        if (data['goKaraleva'] == '1' && got <= 1) {
+          got = 1;
+          document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+          up(data['ticker']);
+          const d = data['d'];
+          const dObj = JSON.parse(d);
+          var keys = Object.keys(dObj);
+          var count = keys.length;
+          for (let i = 0; i < count; i++) {
+            got = 2;
+            let key = keys[i];
+            let intent = dObj[key];
+            var category = intent['category'].split(',');
+            var l = "";
+            if (intent['id'] == loc.substring(loc.lastIndexOf('/') + 1)) {
+              console.log(intent, " the xl shit")
+              document.getElementById("jude").innerHTML = `${intent.xl != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.xl};ric(global_num_length);">&nbsp;XL (${intent.xl})&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;XL&nbsp; <i style="text-decoration: none; font-size: 9px;">not available</s>`}`;
+              document.getElementById("jude").innerHTML += `${intent.l != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.l};ric(global_num_length);">&nbsp;L (${intent.l})&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;L&nbsp; <i style="text-decoration: none; font-size: 9px;">not available</s>`}`;
+              document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M (${intent.m})&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">not available</s>`}`;
+              document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S (${intent.s})&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">not available</s>`}`;
+              create_dp();
+              document.querySelector(".dropbtn").innerHTML = `${intent.xl != 0 ? `&nbsp;XL (${intent.xl})&nbsp;`:intent.l != 0 ? `&nbsp;L (${intent.l})&nbsp;`:intent.m != 0 ? `&nbsp;M (${intent.m})&nbsp;`:intent.s != 0 ? `&nbsp;XL (${intent.s})&nbsp;`:"SOLD OUT"}`;
+              console.log("done 1");
+              setup(key, dObj, i, count);
+              console.log("done 2");
+              id_ = dObj[key]['id'];
+              l = "padding: 7px; outline: 1px solid black; border: 2px solid white;";
+              window.pcolor = category[2].split('.')[0];
+            }
+            console.log(category[2].split('.')[1], "the color for the products");
+            exclude.push(intent['id'])
+            document.getElementById('color').innerHTML += `<br><a nonce="{{ csp_nonce() }}" onclick="location.replace('/product/${intent['id']}');" style=\"margin: 0;\"><div class=\"color\" style=\"${l}background: ` + category[2].split('.')[1]+";\"></div>"+`</a>`;
+          }
+          var rgb;
+          setTimeout(async () => {
+            rgb = averageColor(document.getElementById('img'));
+            const all = document.querySelectorAll(".blo");
+            for (var n = 0; n < all.length;n++) {
+              const wid = document.getElementById('img').clientWidth+5;
+              all[n].style.width = `${wid}px`;
+                all[n].style.backgroundColor =
+                'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+              }
+            }, 0);
+          } else if (got == 2) {
+            var data_ = JSON.parse(data);
+            var keys = Object.keys(data_);
+            console.log(data_);
+            loadp(keys, data_, keys.length);
+            hide();
+            searchFilter("black", "white", "block");
+          }
+      });
+      socket.on(getcookie('evid')+"r", function(data) {
+            if (data[2] != "") {
+                for (let v = 0; v< data[0].length;v++) {
+                    if (v != 0)
+                    document.getElementById("categories_list").innerHTML += `<li nonce="{{ csp_nonce() }}" onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
+                    else
+                    document.getElementById("categories_list").innerHTML = `<li nonce="{{ csp_nonce() }}" onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
+                }
+            }
+        });
+      //var id = "";
+      // Evidence that user has logged or signed in.
+      /*socket.on(getcookie('id'), function (data) {
+        id = (data) // Now the add to cart is gonna send it to the original signed in  id after results.
+      });*/
+      function redund_Recommendations() {
+        socket.emit("sp_products", exclude);
+        console.log("pain...");
+      }
+      function redund() {
+        const j = [`${getcookie('evid')}`, `${loc.substring(loc.lastIndexOf('/') + 1)}`];
+        socket.emit("red", `${j}`);
+        socket.emit("get_category_read", "alldata_")
+        console.log("Retrying...");
+      }
+      function submit() {
+        formation['ping'] = 0;
+        if (getcookie("id") != null) {
+          socket.emit("submitcart", formation, function (data) {
+            if (data == "Invalid")
+            summonContext('auth');
+            else if (data == "Valid") {
+              document.getElementById('car').style.background = "#828382";
+              document.getElementById('car').style.color = "white";
+              document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
+              document.getElementById('car').style.width = "90%";
+            } else if (data == "confirm") {
+              menu('dialogue', 'dialogue_');
+            }
+          });
+          console.log("Submiting");
+        } else {
+          summonContext('auth');
+        }
+      }
+      function savef(p) {
+          socket.emit("save", p);
+      }
+      window.save = savef;
+      window.redunduncy_rec = redund_Recommendations;
+      window.redunduncy = redund;
+      window.approve = submit;
+      if (got != 2 && rets < 12) {
+        rets += 1;
+        redunduncy()
+      } if (rets == 12)
+        window.location.href = "/500";
+      let retrive_information = setInterval(nint, 600)
+      function nint() {
+        if (got == 2) {
+          clearInterval(retrive_information)
+          formation['ping'] = 1;
+          formation['productId'] = id_;
+          console.log(formation)
+          socket.emit("submitcart", formation, function (data) {
+              if (data == "Invalid")
+                summonContext('auth');
+              else if (data == "pong") {
+                document.getElementById('car').style.background = "#828382";
+                document.getElementById('car').style.color = "white";
+                document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
+                document.getElementById('car').style.width = "90%";
+              }
+            });
+        }
+      }
+      }
+      catch(e){
+    console.log(e);
+  }
+
+  });
+  var rets = 0;
+  window.addEventListener('load', function() {
+    var inter_ = setInterval(myinter_f,400);
+    function myinter_f() {
+      if (got != 2 && rets < 12) {
+        rets += 1;
+        redunduncy();
+      } else {
+        clearInterval(inter_);
+      }
+      if (rets == 12) {
+        window.location.href = "/500";
+      }
+  }
+  });
+
+function addtocart(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+  formation["productId"] = pid;
+  formation["price"] = pprice;
+  formation["color"] = pcolor;
+  formation["ping"] = 0;
+  // from live form
+  const quantity = Math.floor(document.getElementById('quantity').innerText);
+  if (quantity <= pquantity || pquantity >= 1) {
+    formation["quantity"] = quantity;
+    const size = document.getElementById('size').innerHTML.replace(/>/g, '').replace(/</g, '').replace(/&nbsp;/g, '');
+    formation["size"] = size;
+    approve();
+  }
+
+}
+
+</script>
+<script nonce="{{ csp_nonce() }}">
+  function TextAbstract(text, length) {
+    if (text == null) {
+      return "";
+    }
+    if (text.length <= length) {
+      return text;
+    }
+    text = text.substring(0, length);
+    last = text.lastIndexOf(" ");
+    text = text.substring(0, last);
+    return text + "...";
+  }
+</script>

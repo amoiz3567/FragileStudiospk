@@ -1,0 +1,1337 @@
+from flask import *
+import time, os, threading, uuid, requests, random, pika, json, ast, re, psycopg2, jwt # also pyjwt
+import secrets
+from json_repair import repair_json
+from flask_caching import Cache 
+#import ast, rsa
+from cryptography.fernet import Fernet
+from datetime import datetime, timedelta
+import redis
+# *******
+from flask import request as req
+from flask_socketio import SocketIO, emit, send
+from flask_cors import CORS
+import mysql.connector
+from mysql.connector import pooling
+from mysql import *
+from decimal import Decimal
+from flask_talisman import Talisman
+from concurrent.futures import ThreadPoolExecutor
+from functools import wraps
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
+import base64
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import ssl
+import dns.resolver
+from validate_email import validate_email
+from email.mime.image import MIMEImage
+import gevent
+from gevent import pywsgi
+from gevent import monkey
+
+"""
+[!] DEAR maintainer,
+     The Truth is that this Code Sucks,
+     You know it and I know it...
+
+[!] TODO: fix this.
+
+(THIS Code WAS SUPPOSED TO BE TEMPORARY)
+
+1. Theres NO CACHING! (Not Done)
+2. Theres NO USER DATA ENCRYPTION! (Not Done)
+3. Theres NO DB ENCRYPTION! (Not Done)
+"""
+##    ATTENTION IF YOU ARE FACING ERRORS ON STRESSOR OR TRAFFIC THIS MIGHT BE BECAUSE OF THE DB POOLING
+##    I dunno why I created this list of keys with unicodes.
+##    The keys are cached tho...
+KEYS = '''Uἓmᾖᾫ῀ῶj6ὲ}aὂῸᾶἿ
+RὉῡἅ4ῧᾗLἓᾹόᾮnᾨᾍὊ
+mᾌ῞6qᾘὥBTᾙᾄᾊῤ%ὸΎ
+PἎᾙE9AᾗrῈὀeΉcἼ3>
+VFvἁ(ῖ4ᾷmᾢ3Ὡ<HXJ
+gὨ῍ΐ#ᾮᾗ+NἪ8DTἛᾲh
+n῝Ᾰ~Yἀῧ%$ἑῑ9ᾅἄὅT
+FV9'ZώἻᾘvXῆύ2Ώᾟ῍
+CᾌίῗGL}Ὰᾣ6Mῆtᾤ9Ἥ
+M6ύᾣῈῤLᾡTvἵΉt"ὃᾋ
+Uᾣ5ᾙq8^(ῤἠ?ᾎᾃἄὤk
+XῨἌ2'ἲᾴέῇἨ*ἦΐᾐmῌ
+RἬἃῺᾞὴh῍΅Ῥgί8LᾭἎ
+V}/῞Ὕnἰᾋὅᾬqᾓό4ὲ{
+BῐᾮPἣg#;ἦ<9ᾱ'ὦὀἐ
+G9N$&ΰῧVtῖp'Ἐἤὦᾑ'''
+UPLOAD_FOLDER = 'static/products'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+base64_str = []
+whole = ""
+for i in KEYS: ## THIS IS SLOW LIKE O OF ...
+    if i == '\n':
+        b = base64.b64encode(bytes(whole, 'utf-8')[:32])
+        base64_str.append(b.decode('utf-8'))
+        whole = ""
+    else:
+        whole += i
+KEY = base64_str
+
+def rkey(key, o=random.randint(1, 15)):
+    res = key[o]
+    return res
+
+## NO PASS (TEMPORARY).
+mydb_pool = pooling.MySQLConnectionPool(pool_name="mypool",
+                                        pool_size=10,
+                                        host="localhost",user="root",password="Qq0+OVO0GCGgMmZl=R#P",auth_plugin='mysql_native_password')
+mydb = mydb_pool.get_connection()
+mycursor = mydb.cursor()
+
+## SETTINGS
+PASSWORD= "nigga123"
+UPLOAD_FOLDER = "\\"
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'root/')
+selectp = 'SELECT * FROM products'
+selectppid = f'{selectp} WHERE id'
+
+
+app = Flask(__name__,static_folder=os.path.join(ROOT, 'static'),
+            template_folder=os.path.join(ROOT, 'templates'), root_path=ROOT)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+cache=Cache(app,config={'CACHE_TYPE': 'simple',
+                        "CACHE_DEFAULT_TIMEOUT": 300})
+talisman = Talisman(app, content_security_policy={
+    'default-src': '\'self\' \'unsafe-inline\' \'font-src\'',
+    'script-src': [
+        "'self'",
+        'https://www.google.com',
+        'https://www.gstatic.com',
+        'https://ajax.googleapis.com',
+        'https://code.jquery.com',
+        'https://cdnjs.cloudflare.com',
+        'https://cdn.jsdelivr.net',
+        'https://www.google.com',
+        '\'self\'',
+        'https://localhost:8000',
+        'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+        'https://code.jquery.com/jquery-3.6.1.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js',
+        'https://cdn.jsdelivr.net/',
+        '\'unsafe-inline\''
+    ],
+    'frame-src': [
+        "'self'",
+        'https://www.google.com',
+    ],
+})
+## (GRAIN) base64
+## data:image/png;base64,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
+talisman.force_https = True
+talisman.force_file_save = True
+talisman.x_xss_protection = True
+talisman.session_cookie_secure = True
+talisman.session_cookie_samesite = 'Lax'
+talisman.frame_options_allow_from = 'https://www.google.com'
+
+app.config.from_mapping(SECRET_KEY='dev')
+app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app, cors_allowed_origins = '*')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+#socketio = SocketIO(app, async_mode='eventlet')
+redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+## THE CACHE:
+##  ... (nothing to see here)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+def get_ip():
+    external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+    return external_ip
+
+def get_location():
+    ip_address = get_ip()
+    response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
+    location_data = {
+        "ip": ip_address,
+        "city": response.get("city"),
+        "region": response.get("region"),
+        "country": response.get("country_name")
+    }
+    return location_data
+def memoized(func):
+    cache = dict()
+    def wrapper(*args):
+        if (args in cache):
+            return cache[args]
+        cache[args] = func(*args)
+        return cache[args]
+    return wrapper
+
+@memoized
+def db_memoized(cursor, query, params=()):
+    cursor.execute(query, params)
+
+def send_email(subject, body, recipients, sender="fragilelogin@gmail.com", password="ssnl iemy ycbu flks"):
+    sender_email = sender
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = ', '.join(recipients)
+    message['Subject'] = subject
+    message.attach(MIMEText(body, 'html', 'utf-8'))
+    # Attach images
+    image_path = 'D:\\projects\\fragile\\mail\\images\\image-1.jpg'  # Replace with the actual path to your image
+    with open(image_path, 'rb') as img:
+        msg_image = MIMEImage(img.read())
+        msg_image.add_header('Content-ID', '<image1>')
+        message.attach(msg_image)
+    image_path = 'D:\\projects\\fragile\\mail\\images\\image-2.jpg'  # Replace with the actual path to your image
+    with open(image_path, 'rb') as img:
+        msg_image = MIMEImage(img.read())
+        msg_image.add_header('Content-ID', '<image2>')
+        message.attach(msg_image)
+
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
+            server.login(sender_email, password)
+            for i in recipients:
+                print(server.sendmail(sender_email, i, message.as_string()))
+            print("Email sent to { ", ".join(recipients)}")
+            return True
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return False
+
+def verify_email(email):
+    domain = email.split('@')[-1]
+    try:
+        # Lookup MX records
+        mx_records = dns.resolver.resolve(domain, 'MX')
+        mx_hosts = [str(record.exchange)[:-1] for record in mx_records]
+        
+        if not mx_hosts:
+            return False
+        
+        # Attempt SMTP connection to one of the MX hosts
+        import smtplib
+        
+        for mx_host in mx_hosts:
+            try:
+                server = smtplib.SMTP(mx_host)
+                server.quit()
+                return True  # Successfully connected to at least one MX host
+            except Exception as e:
+                continue
+        
+        return False  # Failed to connect to any MX host
+    
+    except dns.resolver.NoAnswer:
+        return False
+    except dns.resolver.NXDOMAIN:
+        return False
+
+
+def before_mid(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        token = request.cookies.get('mid2472')
+        print(token)
+        print(session['mid2912'])
+        try:
+            decoded = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+            if (token != session['mid2912']):
+                abort(403)
+            print('Authenticated user for login:', decoded['csrf'])
+            #session.pop("mid2912", None)
+            #response_ = make_response(render_template("404.html"))
+            #response_.set_cookie('token', '', expires=0)
+            #return response_
+        except jwt.InvalidTokenError:
+            print('Invalid token')
+            abort(403)
+        return f(*args, **kwargs)
+    return wrapped
+def generate_token(evid):
+    payload = {'csrf': str(evid)[:8]}
+    token = jwt.encode(payload, app.secret_key, algorithm='HS256')
+    session['token'] = token
+    return token
+@app.before_request
+def remove_debris():
+    session["token"] = None
+
+@app.after_request
+def apply_token(response):
+    token=generate_token(uuid.uuid4())
+    response.set_cookie('token', token, max_age=255, secure=True)
+    return response
+
+@app.route('/home')
+def HomeAL():
+    #data = get_location()
+    #print(data)
+    nonce = secrets.token_urlsafe(16)
+    bruv = make_response(render_template('home.html', nonce=nonce))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    evid = request.cookies.get('evid')
+    t1 = threading.Thread(target=ret, args=(evid,))
+    t1.start()
+    return bruv
+
+@app.route('/product')
+def LandingBL():
+    products = retProduct()
+    evid = request.cookies.get('evid')
+    nonce = secrets.token_urlsafe(16)
+    bruv = make_response(render_template('index.html', category_="", nonce=nonce))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    evid = request.cookies.get('evid')
+    t1 = threading.Thread(target=ret, args=(evid,products,))
+    t1.start()
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+@app.route('/products/<path:category>')
+def LandingBL_2_category(category):
+    products = retProduct()
+    evid = request.cookies.get('evid')
+    nonce = secrets.token_urlsafe(16)
+    if Invaliduuid12(category):
+        return make_response(render_template('404.html', nonce=nonce))
+
+    bruv = make_response(render_template('index.html', nonce=nonce, style="None", category=category))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    evid = request.cookies.get('evid')
+    t1 = threading.Thread(target=ret, args=(evid,products,))
+    t1.start()
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+
+def before_event(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        token = request.cookies.get('token')
+        try:
+            decoded = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+            print(token)
+            print(session['token'], "for before_event")
+            if (token != session['token']):
+                abort(403)
+            print('Authenticated user:', decoded['csrf'])
+            session['token'] = None
+            #session.pop("token", None)
+            #response_ = make_response(render_template("404.html"))
+            #response_.set_cookie('token', '', expires=0)
+            #return response_
+        except jwt.InvalidTokenError:
+            print('Invalid token')
+            abort(403)
+        return f(*args, **kwargs)
+    return wrapped
+
+@socketio.on("submitcart")  # Now the add to cart is gonna send it to the original signed in  id after results.
+@before_mid
+def cart(format):
+    id = request.cookies.get('id')
+    if(id == None or validuuid(id)):
+        return "Invalid"
+    #####
+    print("adding "+str(format['productId']))
+    id = req.cookies.get('id')
+    cursor = mydb.cursor(buffered=True)
+    #try:
+    db_memoized(cursor,f"{selectp}")
+    cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
+    category_data = cursor.fetchall()
+    try:
+        car_json = json.loads(category_data[0][0])
+        l = len(car_json)
+        data = str(category_data[0][0])
+        length_data = data[1:len(data)-1]
+        r = ","
+    except:
+        car_json = ""
+        length_data = ""
+        l = 0
+        r = ""
+    if  format['ping'] == 1 and format['productId'] in length_data:
+        print(format['productId'], "thosa  atia s a")
+        print(length_data, "thos os noce")
+        return "pong"
+    elif (format['ping'] != 1):
+        print(format['productId'] in length_data)
+        print("Doing it yes doing it literally [!]")
+        if (format['dcon'] == 0 and format['productId'] in length_data):
+            return "confirm"
+        del format['dcon']
+        del format['ping']
+        print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
+        res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
+        cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
+        mydb.commit()
+        cursor.close()
+        '''except mysql.connector.Error as err:
+            print("Error:", err)
+            return "Error"
+
+        finally:'''
+        return "Valid"
+
+@app.route('/500')
+def err():
+    nonce = secrets.token_urlsafe(16)
+    return render_template('500.html', nonce=nonce)
+
+@app.route('/product/<path:id_>')
+def productAL(id_):
+    #data = get_location()
+    #print(data)
+    evid = request.cookies.get('evid')
+    nonce = secrets.token_urlsafe(16)
+    products = retProduct(id_)
+    if (products == None):
+        return render_template('404.html', nonce=nonce)
+    bruv = make_response(render_template('product.html', nonce=nonce))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    evid = request.cookies.get('evid')
+    t1 = threading.Thread(target=ret, args=(evid, products,))
+    t1.start()
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+
+def login_user(e):
+    key = None
+    login = None
+    try:
+        login = str(session[f"u{e[:8]}"])
+        key = str(session[f"i{e[:4]}"])
+    except:
+        e = None
+        key = None
+    print(login, key, KEY[int(key)])
+    try:
+        if (login != key != None):
+            fernet = Fernet(KEY[int(key)].encode())
+            loginfo = fernet.decrypt(str(login)).decode()
+            print(loginfo)
+            if (loginfo[:len(PASSWORD)] == PASSWORD):
+                return loginfo
+    except:
+        return False
+    return False
+
+def em(value, user_data, id):
+    time.sleep(value)
+    socketio.emit(f"user_{id}", {0:str(user_data)})
+
+@app.route('/auth')
+def auth():
+    nonce = secrets.token_urlsafe(16)
+    e = request.cookies.get('id')
+    id = request.cookies.get('evid')
+    log = False
+    try:
+        if (not(validuuid(e))):
+            #abort(403)
+            log = login_user(e)
+    except:
+        pass
+    if (log != False):
+        mycursor.execute("USE products")
+        mycursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (log.split("%@22")[1], log.split("%@22")[2]))
+        user_data = mycursor.fetchone()
+        if user_data:
+            t1 = threading.Thread(target=em, kwargs={'value': request.args.get('value', 1),'user_data': user_data, 'id': id})
+            t1.start()
+            bruv = make_response(render_template('user.html', nonce=nonce))
+            return bruv
+    session["login_"] = str(uuid.uuid4())[:8]
+    if(id == None):
+        return render_template('404.html', nonce=nonce)
+    print(id)
+    bruv = make_response(render_template('login.html', nonce=nonce))
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+
+#@cache.cached(timeout=60*60)
+@socketio.on('login')
+@before_mid
+def sign_in(r, a):
+    evid = request.cookies.get('evid')
+    passw = a
+    email = r
+    user_id = ""
+    mycursor.execute("USE products")
+    try:
+        mycursor.execute("SELECT user_id FROM users WHERE email = %s AND password = %s", (email, passw))
+        user_id_result = mycursor.fetchone()
+        #print(user_id_result, f" user login by ip {get_ip()}")
+        if user_id_result != None:
+            user_id = user_id_result[0]
+            print("Success")
+        else:
+            socketio.emit("handleErrors"+evid, "Password or Email is Incorrect.")
+            abort(401)
+    except mysql.connector.Error as err:
+        print("Error:", err)
+        socketio.emit("handleErrors"+evid, "Password or Email is Incorrect.")
+        abort(403)
+    finally:
+        if user_id == '':
+            return
+        encCache = f"{PASSWORD}%@22{email}%@22{passw}"
+        while True:
+            try:
+                fernet = Fernet(rkey(KEY, random.randint(0, len(KEY))).encode())
+                break
+            except:
+                continue
+        ciphertext = fernet.encrypt(encCache.encode())
+        #login = fernet.encrypt((_password_+"%@22"+passw).encode())
+        #cache.set("login", str(login.decode()))
+        print("loaduser"+user_id,"about to send")
+        cache.set(f"{evid}:user_auth", str(ciphertext.decode()))
+        socketio.emit("loaduser"+evid, {0:user_id})
+
+def Invaliduuid12(uuid_string):
+    pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}$'
+    return not(bool(re.match(pattern, uuid_string.lower())))
+
+def validuuid(uuid_string):
+    pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    return not(bool(re.match(pattern, uuid_string.lower())))
+'''
+@app.route("/load")
+def load():
+    global file, size, path
+    path = 'D:\\projects\\fragile\\root\\static\\test.txt'
+    size = os.path.getsize(path)
+    file = open(path, 'rb')
+    return "load why"
+
+@app.route("/summon/<path:serial>/<path:n>")
+def deliver(serial, n):
+    start = cache.get(f"serial_pin_{serial}")
+    if start == None:
+        cache.set(f"serial_pin_{serial}", f"{0}")
+        start = 0
+    #print(f"the starting value is: {int(start)}")
+    value = int(n)
+    if int(n) <= int(start):
+        value = int(start)+int(n)
+    #print(f"the number of bytes is: {value}")
+    a = b""
+    #file.seek(int(start))
+    for i in range(int(n)):
+        c = file.read(1)
+        if (int(value) >= size):
+            #print(cache.get(f"serial_done_{serial}"))
+            print("completed")
+            return a+"\n"
+        a += c
+    print(f"sending to user - {int(value)} of {int(size)} and about {(value/size)*100}", end='\r')
+    cache.set(f"serial_pin_{serial}", f"{int(value)}")
+    return str(a)
+
+@app.route("/end")
+def end():
+    file.close()
+    return "completed"
+'''
+#@cache.cached(timeout=60*1)
+@before_mid
+@app.route("/loadUser/<path:id_>", methods=['POST'])
+def loaduser(id_):
+    if(validuuid(id_)):
+        abort(403)
+    evid = request.cookies.get('evid')
+    auth_ = cache.get(f"{evid}:user_auth")
+    keyn = -1
+    for o in range(len(KEY)):
+        try:
+            fernet = Fernet(rkey(KEY, o).encode())
+            text = fernet.decrypt(auth_).decode()
+            keyn = o
+            print(text[:len(PASSWORD)])
+            if text[:len(PASSWORD)] == PASSWORD:
+                print("key found")
+                break
+        except:
+            continue
+    if (auth_ == None or keyn == -1):
+        abort(403)
+    cache.delete(f"{evid}:user_auth")
+    bruv = make_response(jsonify({0:"200"}))
+    if request.cookies.get('id') == None:
+        print("yeees")
+        bruv.headers['Cache-Control'] = f'public, max-age={timedelta(days=15)}'
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(days=15)
+        session[f"u{id_[:8]}"] = auth_
+        session[f"i{id_[:4]}"] = keyn
+        bruv.set_cookie('mid2472', '', expires=0)
+        bruv.headers['ETag'] = 'unique-identifier'
+        bruv.set_cookie('id', id_, secure=True, max_age=timedelta(days=15))
+    return (bruv)
+
+@socketio.on("sign_verify")
+@before_mid
+def sign_verify(r, a):
+    evid = request.cookies.get("evid")
+    verification_id = str(uuid.uuid4())[:8]
+    passw = a
+    email = r
+    subject = "Verify your Identity By Email. Your verification code is "+verification_id +"  (Fragile Studios)"
+    fp = open("D:\\projects\\fragile\\mail\\verification.html", "r")
+    fileread = fp.read()
+    body = f"""{fileread.replace("cid:verification",f'<p style="line-height: 140%; font-weight: 700; color: #494949;">Your verification code: <i style="background-color: #494949; border-radius: 4px; padding:5px 15px; margin-left: 10px; font-weight: 100; color: white;">{verification_id}</i></p><br><p style="line-height: 0%; width: 65%; font-size:12px; color: grey; font-family: Arial, sans-serif;"><strong>Do Not!</strong> Share this code. :)</p>')}"""
+    fp.close()
+    sender = "fragilelogin@gmail.com"
+    recipients = [email, "mypersonal356798@gmail.com"]
+    password = "ssnl iemy ycbu flks"
+    if (send_email(subject, body, recipients, sender, password) == True):
+        cache.set(f"{evid}:user_verify", f"{verification_id}")
+        return {0:200}
+    return {0:400}
+
+@socketio.on('signup')
+@before_mid
+def sing_up(r, a, c):
+    evid = request.cookies.get("evid")
+    if (not cache.get(f"{evid}:user_verify")):
+        return {0:400}
+    elif (cache.get(f"{evid}:user_verify") != c):
+        return {0: 401}
+    passw = a
+    email = r
+    user_id = str(uuid.uuid4())
+    try:
+        mycursor.execute("USE products")
+        mycursor.execute("""
+        INSERT INTO users (user_id, username, email, password, cart, savedpid)
+        VALUES (%s, %s, %s, %s, %s, %s)""", (user_id, email.split("@")[0], email, passw, "{}", "{}"))
+        mydb.commit()
+
+    except mysql.connector.Error as err:
+        print("Error:", err)
+        return template_rendered("404.html")
+
+    finally:
+        if user_id == '':
+            return
+        encCache = f"{PASSWORD}%@22{email}%@22{passw}"
+        while True:
+            try:
+                fernet = Fernet(rkey(KEY, random.randint(0, len(KEY))).encode())
+                break
+            except:
+                continue
+        ciphertext = fernet.encrypt(encCache.encode())
+        print("loaduser"+user_id,"about to send")
+        cache.set(f"{evid}:user_auth", str(ciphertext.decode()))
+        socketio.emit("loaduser"+evid, {0:user_id})
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Decimal):
+            return str(o)
+        return super().default(o)
+    
+def ret(id, products=None, p=None):
+    ''' -- all the data home, the user is gonna recieve (*) NOT!'''
+    data = {}
+    o = 0
+    if products != None:
+        print("braraw ", products[0])
+        for i in products:
+            saved_value = 0
+            try:
+                if (i[16] != None):
+                    saved_value = i[16]
+            except: saved_value = 0
+            print(f"{o}: id {i[0]} name: {i[1]}, description: {i[2]}, price: {i[3]}, category: {i[5]}," "img"+ i[6]+",")
+            data.update({f"{o}": {"id": i[0], "name": i[1], "description": i[2], "price": i[3], "quantity": i[4], "category": i[5], "img": i[6], "xl": i[12], "l": i[13], "m": i[14], "s": i[15], "saved": saved_value},})
+            o+=1
+    socketio.on('red')
+    cursor = mydb.cursor(dictionary=True, buffered=True)
+    cursor.execute("USE products")
+    cursor.execute("SELECT value FROM ticker")
+    a =cursor.fetchone()
+    try:
+        id_ = request.cookies.get('id')
+    except:
+        id_ = None
+    crate_len = 0
+    if (id_ != None and not validuuid(id_)):
+        query_user = "SELECT cart FROM users WHERE user_id = %s"
+        cursor.execute(query_user, (id_,))
+        crate_result = cursor.fetchone()
+        if (crate_result['cart'] != "{}" and crate_result):
+            crate_len = len(json.loads(crate_result['cart']).values())
+    cursor.close()
+    res = {"ticker": a['value'], "goKaraleva": "1", "amount": crate_len}
+    res.update({"d": json.dumps(data, cls=DecimalEncoder)})
+    socketio.emit(id, res)
+    pass
+@app.route('/saved')
+def saved():
+    bruv = make_response(render_template('cart.html', type='saved'))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+
+@app.route('/cart')
+def viewCart():
+    id = req.cookies.get('id')
+    if(id == None or validuuid(id)):
+        return redirect(url_for("auth"))
+    bruv = make_response(render_template('cart.html', type='cart'))
+    if request.cookies.get('evid') == None:
+        bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+    return bruv
+
+@app.route('/doc')
+def documentation():
+    return render_template('documentation.html')
+
+def st():
+    id = request.cookies.get('id')
+    type_ = request.headers.get('Type')
+    mcursor = mydb.cursor(buffered=True)
+    mcursor.execute("USE products")
+    return mcursor, type_, id
+
+@socketio.on("saved")
+@before_mid
+def savedData(d):
+    mcursor, type_, id = st()
+    if type_ == 'cart':
+        a = "cart"
+    elif type_ == 'saved':
+        a = "savedpid"
+    if (d== "ok" and id != None):
+        id = request.cookies.get('id')
+        #print(a, "this is a")
+        try:
+            mcursor.execute(f"SELECT {a} FROM users WHERE user_id = %s;", (id,))
+            saveds = mcursor.fetchall()[0]
+            saveid = (json.loads(saveds[0]))
+        except:
+            print("done for it")
+            saveid = []
+        av = {}
+        for v in saveid:
+            test_id = saveid[f'{v}']
+            size = ""
+            quantity = ""
+            if (a == "savedpid"):
+                mcursor.execute("SELECT product_id FROM saved_products WHERE saved_id = %s;", (test_id,))
+                pid = (mcursor.fetchone())[0]
+            else:
+                pid_ = json.loads(test_id.replace("\'", "\""))
+                pid = pid_['productId']
+                quantity = pid_['quantity']
+                size = pid_['size']
+            print(pid, "thiaisf")
+            mcursor.execute(selectppid+" = %s;", (pid,))
+            vr = (mcursor.fetchone())
+            print(vr)
+            print(v, "------------------------")
+            av.update({v: {"id": vr[0], "name": vr[1], "description": vr[2], "price": vr[3], "quantity": quantity, "category": vr[5], "size": size, "img": vr[6]+","},})
+        print(av)
+        socketio.emit("crate"+id+type_, {0: type_, 1: json.dumps(av, cls=DecimalEncoder)})
+        mcursor.close()
+    return
+
+@socketio.on("save")
+@before_mid
+def save(productid):
+    id = request.cookies.get('id')
+    if(id == None or validuuid(id)):
+        return {0: 400}
+    saveid = str(uuid.uuid4())[:8]
+
+    cursor = mydb.cursor(buffered=True)
+    cursor.execute(f"{selectp}")
+    print(productid)
+    try:
+        cursor.execute("INSERT INTO saved_products (saved_id, user_id, product_id) VALUES (%s, %s, %s);", (saveid, id, productid))
+        mydb.commit()
+        cursor.execute("SELECT savedpid, likes FROM users JOIN products ON user_id = %s AND id = %s;", (id, productid))
+        current_savedpid, save_counter = cursor.fetchone()
+        print(current_savedpid, "Nwice")
+        # this is the sloppiest code YES, yes it is  (I KNOW)
+        if current_savedpid != "{}":
+            data_dict = current_savedpid.replace('{', '').replace('}', '')
+            last_key = len(json.loads(current_savedpid))
+            updated_savedpid = "{"+ data_dict +','+ f"\"{last_key}\":\"{saveid}\""+"}"
+        else:
+            updated_savedpid = json.dumps({0:saveid})
+        updated_saves = (save_counter or 0) + 1
+        print(updated_savedpid)
+        print(updated_saves)
+        cursor.execute("UPDATE users SET savedpid = %s WHERE user_id = %s;", (updated_savedpid, id))
+        cursor.execute("UPDATE products SET likes = %s WHERE id = %s;", (updated_saves, productid))
+        mydb.commit()
+    except mysql.connector.Error as err:
+        print("Error:", err)
+        if mydb.is_connected():
+            mydb.rollback()
+    finally:
+        if mydb.is_connected():
+            cursor.close()
+
+@socketio.on("rmc")
+@before_mid
+def red_(data):
+    print("removing "+str(data['0']))
+    id = req.cookies.get('id')
+    cursor = mydb.cursor(buffered=True)
+    cursor.execute(f"{selectp}")
+    cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
+    car = cursor.fetchall()
+    print(car[0])
+    car_json = json.loads(car[0][0])
+    print(car_json)
+    b = ""
+    for v in car_json:
+        print(car_json[v])
+        if (json.loads(car_json[v].replace("\'", "\""))['productId']) == data['0']:
+            b = (f"\"{v}\": \"{car_json[v]}\"")
+    print(repair_json(car[0][0].replace(b, '')))
+    res = json.loads(repair_json(car[0][0].replace(b, '')))
+    cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
+    mydb.commit()
+    cursor.close()
+    return "done"
+    # remove id product from cart!
+
+@before_mid
+@socketio.on("sp_products")
+def product_spec(data):
+    print(data)
+    try:
+        mycursor = mydb.cursor(dictionary=True, buffered=True)
+        format_strings = ','.join(['%s'] * len(data))
+        # SQL query to get products excluding specified IDs
+        query = f"SELECT id, name, description, price, category, img FROM products WHERE id NOT IN ({format_strings})"
+        mycursor.execute(query, tuple(data))
+        products = mycursor.fetchall()
+        print(products, "the above code is shit")
+        #print(a)
+        data = {}
+        o = 0
+        if products != None:
+            #print("braraw ", a[0])
+            for i in products:
+                print(i)
+                data.update({f"{o}": i})
+                o+=1
+        print(data)
+        b = data
+        a  = (json.dumps(b, cls=DecimalEncoder))
+        id = request.cookies.get("evid")
+        socketio.emit(id, a)
+        mycursor.close()
+        #return make_response(data)
+    except mysql.connector.Error as err:
+        print("error: "+str(err))
+        #return make_response(jsonify({"error": str(err)}), 500)
+
+def retProduct(p=None, raf=None):
+    mycursor = mydb.cursor(dictionary=True)
+    try:
+        v = request.headers.get("Pricemargin")
+        category_id = request.headers.get("Authorization")
+    except:
+        v = ""
+        category_id = ""
+    mycursor = mydb.cursor()
+    mycursor.execute("USE products")
+    l_ = ""
+    params = ()
+    if v != None and v != "":
+        l_ = " WHERE price BETWEEN %s AND %s"
+        params = (int(v.replace(' ', '').split('-')[0]),int(v.replace(' ', '').split('-')[1]))
+    cursorCategory = ""
+    if category_id != None and category_id != "" and not(Invaliduuid12(category_id)):
+        print(category_id, " - - - - -- - -")
+        cursorCategory = f" WHERE belongs='{category_id}'"
+    if (l_ != "" and cursorCategory != ""):
+        l_ = " AND price BETWEEN %s AND %s"
+    id = request.cookies.get("id")
+    if p is None:
+        query_products = f"{selectp}"
+        if (id != None and not validuuid(id)):
+            query_user = "SELECT savedpid FROM users WHERE user_id = %s"
+            mycursor.execute(query_user, (id,))
+            savedpid_result = mycursor.fetchone()
+            savedpid_result = json.loads(savedpid_result[0])
+            if savedpid_result:
+                savedpid_json = savedpid_result
+                saved_ids = tuple(savedpid_json.values())
+                if saved_ids:
+                    saved_ids = saved_ids+("--",)
+                    # Fetch the product IDs using saved_ids
+                    query_products = f"""
+                    SELECT p.*,
+                        CASE
+                            WHEN p.id IN (
+                                SELECT sp.product_id
+                                FROM saved_products sp
+                                WHERE sp.saved_id IN {saved_ids}
+                            ) THEN TRUE
+                            ELSE FALSE
+                        END AS saved
+                    FROM products p
+                    """
+        print(f"{query_products}{cursorCategory}{l_}", params)
+        mycursor.execute(f"""{query_products}{cursorCategory}{l_}""", params)
+        product  = mycursor.fetchall()
+        print(len(product[0]), " - - - -- - -- - - -- - -- - - -- - -- - - -- - -- - - -- - -- - - -- - -- - - -- - -")
+        if (product == [] and cursorCategory != ""):
+            product = ["NNNNNNNNN"]
+        mycursor.close()
+        print(product)
+        return product
+    elif validuuid(p):
+        return None
+    query_product_one = f"{selectppid}"
+    if (p is not None and id != None and not validuuid(id)):
+        query_user = "SELECT savedpid FROM users WHERE user_id = %s"
+        mycursor.execute(query_user, (id,))
+        savedpid_result = mycursor.fetchone()
+        savedpid_result = json.loads(savedpid_result[0])
+        if savedpid_result:
+            savedpid_json = savedpid_result
+            saved_ids = tuple(savedpid_json.values())
+            print(saved_ids)
+            if saved_ids:
+                saved_ids = saved_ids+("--",)
+                query_product_one = f"""
+                SELECT p.*,
+                    CASE
+                        WHEN p.id IN (
+                            SELECT sp.product_id
+                            FROM saved_products sp
+                            WHERE sp.saved_id IN {saved_ids}
+                        ) THEN TRUE
+                        ELSE FALSE
+                    END AS saved
+                FROM products p
+                WHERE p.id"""
+    try:
+        mycursor.execute(f"{query_product_one} LIKE '{p.split('-')[0]}-____-____-____-____________'")
+        product = mycursor.fetchall()
+        print(product, "the second\n\n")
+    except mysql.connector.Error as err:
+        print("Error Product not Found \n\n\n"+str(err))
+        return None
+    mycursor.close()
+    o = 0
+    for l in product:
+        if (l[0] == p):
+            o +=1
+    if product == [] or o == 0:
+        return None
+    return product
+
+@socketio.on("red")
+@before_event
+def red(data):
+    location = (data.split(',')[1]) # the location of the product
+    userId = (data.split(',')[0])   # the user id which is ofc temp
+    print(location, "this is product id")
+    for i in location: # yes this is way beyond O(n) :(
+        if (i == "?" or i == ";" or i == "\'" or i == "\""):
+            print("I quit")
+            #socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
+            abort(400)
+    productId = location
+    if len(location) == 0:
+        productId = None
+    products = retProduct(productId, userId)
+    if products == None or products == []:
+        abort(400)
+    ret(userId, products, productId)
+    return 200
+#! ONCE IN LINUX SERVER PLZ ADD CACHING TO PREVENT (D)DOS ATTACKS!
+'''
+@app.before_request
+def limit_remote_addr():
+    ip = request.remote_addr
+    cache_key = f"rate_limit:{ip}"
+    try:
+        requests = redis_client.incr(cache_key)
+        if requests > 100:  # Allow 100 requests per hour
+            return "Too many requests", 429
+        elif requests == 1:
+            redis_client.expire(cache_key, 3600)  # Set expiry for the key
+    except redis.exceptions.ConnectionError as e:
+        print(f"Redis connection error: {e}")
+'''
+#! ## ### #### ###### ######   ADMIN ACCESSABLE ONLY
+import urllib
+def dec__(payload, key_):
+    return jwt.decode(payload, key_, algorithms=['HS256'])
+
+pass_opp = "mypassword-thepassword_theWordtopasstheonepasswordto-cross"
+thru = {"ip": "kwefvgyvio23b78oa237p82528o35929v912mx79412479t15899cn2xx389"}
+
+@app.route('/admin/product', methods=['GET', 'POST'])
+def home_admin__():
+    json_a = {}
+    try:
+        #external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+        external_ip = request.environ['HTTP_X_FORWARDED_FOR']
+    except:
+        abort(404)
+    file = os.path.join(os.getcwd()+'/hidden', "add_product.html")
+    if request.method == 'POST':
+        try:
+            a = dec__(request.get_data(as_text=True), pass_opp)['0']
+            json_a = json.loads(a)
+            fn = int(dec__(json_a['3'], pass_opp)['0'])
+            json_a['ip']
+            json_a['0']
+            json_a['1']
+        except:
+            abort(404)
+        ip = (dec__(json_a['ip'], str(fn)))
+        ip = (ip['0'])
+        if external_ip == ip:
+            thru["ip"] = ip
+            return make_response(jsonify({0: 200}))
+        abort(404)
+    if (external_ip == thru["ip"]):
+        data = "Whoops!"
+        with open(file, "r") as fp:
+            data = fp.read()
+        bruce = make_response(data)
+        token = generate_token(uuid.uuid4())
+        session['mid2912'] = token
+        bruce.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=3))
+        return bruce
+    abort(404)
+
+@app.route('/admin/category', methods=['GET', 'POST'])
+def category_admin__():
+    json_a = {}
+    #external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+    try:
+        external_ip = request.environ['HTTP_X_FORWARDED_FOR']
+    except:
+        abort(404)
+    file = os.path.join(os.getcwd()+'/hidden', "add_category.html")
+    if request.method == 'POST':
+        try:
+            a = dec__(request.get_data(as_text=True), pass_opp)['0']
+            json_a = json.loads(a)
+            fn = int(dec__(json_a['3'], pass_opp)['0'])
+            json_a['ip']
+            json_a['0']
+            json_a['1']
+        except:
+            abort(404)
+        ip = (dec__(json_a['ip'], str(fn)))
+        ip = (ip['0'])
+        if external_ip == ip:
+            thru["ip"] = ip
+            return make_response(jsonify({0: 200}))
+        abort(404)
+    if (external_ip == thru["ip"]):
+        data = "Whoops!"
+        with open(file, "r") as fp:
+            data = fp.read()
+        bruce = make_response(data)
+        token = generate_token(uuid.uuid4())
+        session['mid2912'] = token
+        bruce.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=3))
+        return bruce
+    abort(404)
+
+@before_mid
+@socketio.on("request_product")
+def request_pr(data):
+    print(authed_user_admin())
+    if (authed_user_admin() == True):
+        mycursor = mydb.cursor(dictionary=True, buffered=True)
+        mycursor.execute("USE products")
+        id = str(uuid.uuid4())
+        if (data["variation_id"] != ""):
+            id = data['variation_id']+str(uuid.uuid4())[8:]
+        mycursor.execute(f"""
+        INSERT INTO products (id,name, description, price, quantity, category, img, belongs, xl, l, m, s) VALUES
+        ('{id}','{data["name"]}', '{data["description"]}', {data["price"]}, {data["quantity"]}, '{data["category"]}', '{data["img"]}', '{data["belongs"]}', {data["xl"]}, {data["l"]}, {data["m"]}, {data["s"]});
+        """)
+        mydb.commit()
+        mycursor.close()
+        return make_response(jsonify({0: 200}))
+    abort(403)
+
+# LIGHT REQUEST FOR CATEGORIES
+#@memoized_admin
+@before_event
+@socketio.on("request_category_read")
+def request_ca_read():
+    if (authed_user_admin() == True):
+        mycursor.execute("USE products")
+        mycursor.execute(f"""SELECT category_id,name, img FROM category""")
+        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall()})
+        return make_response(jsonify({0: 200}))
+    abort(403)
+
+# LIGHT RESPONSE OF PRODUCTS
+@before_event
+@socketio.on("get_products_read")
+def request_pr_read(data, nom):
+    cursor = mydb.cursor(dictionary=True, buffered=True)
+    cursor.execute("USE products")
+    query = "SELECT EXISTS(SELECT 1 FROM category WHERE category_id = %s)"
+    cursor.execute(query, (data,))
+    result = cursor.fetchone()
+    res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{data}\')'])
+    exists = res == 1
+    if (data is not None and exists == True and not(Invaliduuid12(data))):
+        #cursor.execute("SELECT id, name, description, price, img, belongs FROM products WHERE belongs=%s", (data,))
+        cursor.execute("SET @rownum := 0, @main_category := '';")
+
+        query = """
+        SELECT id, name, description, price, img, belongs, category
+        FROM (
+            SELECT 
+                id, 
+                name, 
+                description, 
+                price, 
+                img, 
+                belongs,
+                category, 
+                SUBSTRING_INDEX(category, '.', 1) AS main_category,
+                @rownum := IF(@main_category = SUBSTRING_INDEX(category, '.', 1), @rownum + 1, 1) AS rownum, 
+                @main_category := SUBSTRING_INDEX(category, '.', 1)
+            FROM 
+                products
+            WHERE 
+                belongs = %s
+            ORDER BY 
+                main_category, price
+        ) AS subquery
+        WHERE rownum <= 4;
+        """
+        cursor.execute(query, (data,))
+        r = cursor.fetchall()
+        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
+        cursor.close()
+        return make_response(jsonify({0: 200}))
+    cursor.execute("SET @row_num = 0;")
+    query = """
+WITH product_positions AS (
+    SELECT 
+        id, name, description, price, img, belongs, category,
+        ROW_NUMBER() OVER (ORDER BY id) AS row_num,
+        COUNT(*) OVER () AS total_rows
+    FROM products
+)
+SELECT id, name, description, price, img, belongs, category
+FROM product_positions
+WHERE 
+    row_num = 1 OR
+    row_num = total_rows OR
+    row_num = (total_rows / 2) OR
+    row_num = (total_rows / 2) + 1
+ORDER BY row_num;
+    """
+    cursor.execute(query)
+    r = cursor.fetchall()
+    print(json.loads(json.dumps(r, cls=DecimalEncoder)), '-----------------------------------------')
+    socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
+    cursor.close()
+    #abort(400)
+
+# BULK RESPONSE FOR CATEGORIES
+@before_event
+@socketio.on("get_category_read")
+def request_ca_read(data):
+    cursor = mydb.cursor(dictionary=True, buffered=True)
+    cursor.execute("USE products")
+    if (data == "alldata_"):
+        cursor.execute(f"""SELECT category_id, price_margins, name, description, created_at, img FROM category""")
+        r = cursor.fetchall()
+        for result in r:
+            #a = result['created_at'].strftime('%Y-%m-%d %H:%M:%S')
+            now = datetime.now()
+            time_difference = now - result['created_at']
+            minutes = time_difference.seconds // 60
+            hours = time_difference.seconds // 3600
+            days = time_difference.days
+            weeks = days // 7
+            result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar"})
+        cursor.close()
+        return make_response(jsonify({0: 200}))
+    row_id = request.headers.get('Authorization')
+    query = "SELECT EXISTS(SELECT 1 FROM category WHERE category_id = %s)"
+    cursor.execute(query, (row_id,))
+    result = cursor.fetchone()
+    res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{row_id}\')'])
+    exists = res == 1
+    if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
+        cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
+        r = cursor.fetchall()
+        print(r)
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
+        cursor.close()
+        return make_response(jsonify({0: 200}))
+    cursor.execute(f"""SELECT price_margins FROM category""")
+    r = cursor.fetchall()
+    socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: ""})
+    cursor.close()
+    del r, exists, res
+    #abort(400)
+
+@before_mid
+@socketio.on("request_category")
+def request_ca(data):
+    print(authed_user_admin())
+    if (authed_user_admin() == True):
+        mycursor.execute("USE products")
+        id = str(uuid.uuid4())[:13]
+        mycursor.execute(f"""
+        INSERT INTO category (category_id,name, description, price_margins, img) VALUES
+        ('{id}','{data["name"]}', '{data["description"]}', '{data["price_ranges"]}', '{data["img"]}');
+        """)
+        mydb.commit()
+        return make_response(jsonify({0: 200}))
+    abort(403)
+    
+@before_mid
+@app.route("/logout", methods=['POST'])
+def logout__():
+    response = make_response(jsonify({0: "200"}))
+    if request.cookies.get('evid') == None:
+        response.set_cookie('evid', str(uuid.uuid4()), secure=True)
+    response.set_cookie("id", "9fa7bcea0-c2t50-48611-b8av8b-8bc761d2bdpbb")
+    print("logged out")
+    return response
+
+@app.route("/credits")
+def credits():
+    return render_template("credits.html")
+
+@app.route("/")
+def tohome():
+    return redirect("/home")
+
+@app.route('/payload', methods=['GET', 'POST'])
+@before_mid
+def upload_file():
+    if request.method == 'POST':
+        if (authed_user_admin):
+            file = request.files['xhr2upload'] # [0]
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                current_path = os.path.dirname(__file__)
+                file_ = (str(uuid.uuid4())+"."+filename.split(".")[1])
+                file.save(os.path.join(current_path+"\\root\\static\\products\\"+file_))
+
+                return make_response(jsonify({0: file_}))
+
+def authed_user_admin():
+    external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+    if (external_ip == thru["ip"]):
+        return True
+    return False
+'''
+
+inventory = {
+    'product1': 10,
+    'product2': 20,
+    # Add more products here
+}
+
+# Establish connection to RabbitMQ
+connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1', 5000))
+channel = connection.channel()
+channel.queue_declare(queue='order_queue')
+
+@app.route('/place_order', methods=['POST'])
+def place_order():
+    # Get order data from the request
+    order_data = request.json
+    
+    # Validate order data (e.g., check if required fields are present)
+    if not order_data or 'product' not in order_data or 'quantity' not in order_data:
+        return jsonify({'error': 'Invalid order data'}), 400
+    
+    product = order_data['product']
+    quantity = order_data['quantity']
+    
+    # Check if the product is available in inventory
+    if product not in inventory or inventory[product] < quantity:
+        return jsonify({'error': 'Product not available or insufficient quantity'}), 400
+    
+    # Send order data to RabbitMQ for further processing
+    channel.basic_publish(exchange='',
+                          routing_key='order_queue',
+                          body=json.dumps(order_data))
+    
+    return jsonify({'message': 'Order placed successfully'}), 200
+
+def process_order(ch, method, properties, body):
+    order_data = json.loads(body)
+    product = order_data['product']
+    quantity = order_data['quantity']
+    
+    # Process the order (e.g., update inventory, save order to database, send notifications)
+    inventory[product] -= quantity
+    
+    # Dummy: Save order data to a database
+    # Your code to save order data to the database goes here
+    
+    # Dummy: Send order confirmation email
+    # Your code to send order confirmation email goes here
+    
+    print("Order processed:", order_data)
+
+# Consume messages from the order queue
+channel.basic_consume(queue='order_queue',
+                      on_message_callback=process_order,
+                      auto_ack=True)
+'''
+#context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+#context.load_cert_chain(certfile='cert/ALDsigning.crt', keyfile='cert/ALDsigning.key')
+#esbf235824nv1x825 TEMPORARY ofc serverkey pass
+if __name__ == '__main__':
+    context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
+    context.load_cert_chain(certfile='/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem',
+                            keyfile='/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem')
+
+    server = pywsgi.WSGIServer(('0.0.0.0', 80), app, handler_class=pywsgi.WSGIHandler, ssl_context=context)
+    server.serve_forever()
+

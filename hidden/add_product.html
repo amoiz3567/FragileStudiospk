@@ -1,0 +1,797 @@
+<div class="man v n" style="position: absolute; z-index: 25000;"></div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+    <script src="/static/js/header.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/ocolors.js"></script>
+    <script src=""></script>
+    <title id="d">
+    add products
+  </title>
+  <link rel="stylesheet" href="/static/css/index.css">
+  <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<style>
+  @font-face {
+    font-family: 'secondfont';
+    src: url("/static/fonts/Uomo Expanded.otf") format('opentype');
+  }
+  @font-face {
+    font-family: 'MyFont';
+    src: url("/static/fonts/DIN.ttf") format('opentype');
+  }
+  i, .cats {
+    font-family: 'MyFont', sans-serif;
+    font-weight: 1000;
+  }
+  .co {
+    font-family: 'Arial', sans-serif;
+    font-weight: 1000;
+    background-color: #c3c3c3;
+    width: 100vw;
+    font-style: normal;
+    text-align: center;
+  }
+  * {
+    font-family: 'MyFont', sans-serif;
+    font-weight: 1000;
+  }
+  .btnpointer {
+    display: none;
+  }
+  a:hover, .btnpointer {
+    display: block;
+  }
+  h3, i {
+    margin: 0;
+    margin-left: 10px;
+  }
+  h1 {
+    font-size: 35px;
+  }
+  h1 img {
+    width: auto; max-width: 45px;
+  }
+  @media screen and (max-width:611px) {
+    h1 img {
+      width: auto; max-width: 7vw;
+    }
+    h1 {
+      font-size: 6vw;
+    }
+  }
+  input {
+    margin: 0;
+  }
+  input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: flex;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: 100%;
+  height: 150px;
+  margin: 7px;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+</style>
+  <div id="btnpointer" class="btnpointer"></div>
+  <div id="dialogue_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #0000005d; backdrop-filter: blur(10px);">
+    <div id="dialogue" class="center" align="center" style="transition: .3s; position: absolute; height: auto; width:auto; max-width: 645px; border-radius: 5px; background-color: rgb(255, 255, 255); z-index: 50; padding: 25px;">
+        <a onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="/static/img/close.png" alt=""></a>
+        <br><br>
+        <div class="col">
+            <h1 style="font-size: 50px;"><i>DO U WANT TO <i style="text-decoration: underline;">REPLACE</i> THE PRODUCT ALREADY IN UR CART</i></h1>
+            <div class="row center" style="gap:15px;">
+              <input type="checkbox" onfocus="console.log('hide next time')" style="margin: 0; display: flex; z-index: 25;position: absolute; left: -15%; width: 20px;height: 20px; justify-content: start; align-items: start; padding: 0; width: 100%;" value="Never ask again">
+              <i style=" pointer-events: none;">NEVER ASK AGIAN?</i>
+            </div>
+            <div class="row" style="margin: 0; margin-top: 25px; width: 40%; padding: 0;">
+                <a href="#" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">yes</a>
+                <a href="#" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">no</a>
+            </div>
+        </div>
+    </div>
+    <div onclick="op('dialogue', 'dialogue_')" style="width: 100vw; height: 100vh; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+</div>
+<svg style="width: 23px; margin-top: -25px; position: absolute; filter: invert(1);" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+  <path d="M 22.205078 2 A 1.0001 1.0001 0 0 0 21.21875 2.8378906 L 20.246094 8.7929688 C 19.076509 9.1331971 17.961243 9.5922728 16.910156 10.164062 L 11.996094 6.6542969 A 1.0001 1.0001 0 0 0 10.708984 6.7597656 L 6.8183594 10.646484 A 1.0001 1.0001 0 0 0 6.7070312 11.927734 L 10.164062 16.873047 C 9.583454 17.930271 9.1142098 19.051824 8.765625 20.232422 L 2.8359375 21.21875 A 1.0001 1.0001 0 0 0 2.0019531 22.205078 L 2.0019531 27.705078 A 1.0001 1.0001 0 0 0 2.8261719 28.691406 L 8.7597656 29.742188 C 9.1064607 30.920739 9.5727226 32.043065 10.154297 33.101562 L 6.6542969 37.998047 A 1.0001 1.0001 0 0 0 6.7597656 39.285156 L 10.648438 43.175781 A 1.0001 1.0001 0 0 0 11.927734 43.289062 L 16.882812 39.820312 C 17.936999 40.39548 19.054994 40.857928 20.228516 41.201172 L 21.21875 47.164062 A 1.0001 1.0001 0 0 0 22.205078 48 L 27.705078 48 A 1.0001 1.0001 0 0 0 28.691406 47.173828 L 29.751953 41.1875 C 30.920633 40.838997 32.033372 40.369697 33.082031 39.791016 L 38.070312 43.291016 A 1.0001 1.0001 0 0 0 39.351562 43.179688 L 43.240234 39.287109 A 1.0001 1.0001 0 0 0 43.34375 37.996094 L 39.787109 33.058594 C 40.355783 32.014958 40.813915 30.908875 41.154297 29.748047 L 47.171875 28.693359 A 1.0001 1.0001 0 0 0 47.998047 27.707031 L 47.998047 22.207031 A 1.0001 1.0001 0 0 0 47.160156 21.220703 L 41.152344 20.238281 C 40.80968 19.078827 40.350281 17.974723 39.78125 16.931641 L 43.289062 11.933594 A 1.0001 1.0001 0 0 0 43.177734 10.652344 L 39.287109 6.7636719 A 1.0001 1.0001 0 0 0 37.996094 6.6601562 L 33.072266 10.201172 C 32.023186 9.6248101 30.909713 9.1579916 29.738281 8.8125 L 28.691406 2.828125 A 1.0001 1.0001 0 0 0 27.705078 2 L 22.205078 2 z M 23.056641 4 L 26.865234 4 L 27.861328 9.6855469 A 1.0001 1.0001 0 0 0 28.603516 10.484375 C 30.066026 10.848832 31.439607 11.426549 32.693359 12.185547 A 1.0001 1.0001 0 0 0 33.794922 12.142578 L 38.474609 8.7792969 L 41.167969 11.472656 L 37.835938 16.220703 A 1.0001 1.0001 0 0 0 37.796875 17.310547 C 38.548366 18.561471 39.118333 19.926379 39.482422 21.380859 A 1.0001 1.0001 0 0 0 40.291016 22.125 L 45.998047 23.058594 L 45.998047 26.867188 L 40.279297 27.871094 A 1.0001 1.0001 0 0 0 39.482422 28.617188 C 39.122545 30.069817 38.552234 31.434687 37.800781 32.685547 A 1.0001 1.0001 0 0 0 37.845703 33.785156 L 41.224609 38.474609 L 38.53125 41.169922 L 33.791016 37.84375 A 1.0001 1.0001 0 0 0 32.697266 37.808594 C 31.44975 38.567585 30.074755 39.148028 28.617188 39.517578 A 1.0001 1.0001 0 0 0 27.876953 40.3125 L 26.867188 46 L 23.052734 46 L 22.111328 40.337891 A 1.0001 1.0001 0 0 0 21.365234 39.53125 C 19.90185 39.170557 18.522094 38.59371 17.259766 37.835938 A 1.0001 1.0001 0 0 0 16.171875 37.875 L 11.46875 41.169922 L 8.7734375 38.470703 L 12.097656 33.824219 A 1.0001 1.0001 0 0 0 12.138672 32.724609 C 11.372652 31.458855 10.793319 30.079213 10.427734 28.609375 A 1.0001 1.0001 0 0 0 9.6328125 27.867188 L 4.0019531 26.867188 L 4.0019531 23.052734 L 9.6289062 22.117188 A 1.0001 1.0001 0 0 0 10.435547 21.373047 C 10.804273 19.898143 11.383325 18.518729 12.146484 17.255859 A 1.0001 1.0001 0 0 0 12.111328 16.164062 L 8.8261719 11.46875 L 11.523438 8.7734375 L 16.185547 12.105469 A 1.0001 1.0001 0 0 0 17.28125 12.148438 C 18.536908 11.394293 19.919867 10.822081 21.384766 10.462891 A 1.0001 1.0001 0 0 0 22.132812 9.6523438 L 23.056641 4 z M 25 17 C 20.593567 17 17 20.593567 17 25 C 17 29.406433 20.593567 33 25 33 C 29.406433 33 33 29.406433 33 25 C 33 20.593567 29.406433 17 25 17 z M 25 19 C 28.325553 19 31 21.674447 31 25 C 31 28.325553 28.325553 31 25 31 C 21.674447 31 19 28.325553 19 25 C 19 21.674447 21.674447 19 25 19 z"></path>
+  </svg>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+<div class="ticker-container">
+  <div class="ticker-content ticker-font" style="width: 10000px;" id="ticker">
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+    <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+  </div>
+</div>
+<body id="bod">
+  
+  <div
+    style="width: 100vw; height: 100vh; background-color: transparent; position: absolute; top: 0; left: 0; z-index: 2000; pointer-events: none;">
+  </div>
+  <div class="man v n" style="filter: blur(40px);"></div>
+  <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+    <div id="menu" class="menu">
+        <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="/static/img/close.png" alt=""></a>
+        <br><br>
+        <div class="column">
+        <h4 onclick="window.location = '/home';" class="fb b">Home</h4>
+        </div>
+        <div class="column">
+        <h4>SHOP</h4>
+        <ul>
+            <li class="fb b">Item 1</li>
+            <li class="fb b">Item 1</li>
+            <li class="fb b">Item 1</li>
+        </ul>
+        </div>
+        <div class="column">
+        <h4>CATEGORIES</h4>
+        <ul>
+            <li class="fb b">Newest Collection</li>
+            <li class="fb b">Item 1</li>
+            <li class="fb b">Item 1</li>
+        </ul>
+        </div>
+    </div>
+    <div onclick="op()" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+</div><br>
+
+  <fk id="fkhead"></fk>
+  <header id="header" class="center"><svg style="width: 23px; margin-top: -25px; filter: invert(.3);" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+    <path d="M 22.205078 2 A 1.0001 1.0001 0 0 0 21.21875 2.8378906 L 20.246094 8.7929688 C 19.076509 9.1331971 17.961243 9.5922728 16.910156 10.164062 L 11.996094 6.6542969 A 1.0001 1.0001 0 0 0 10.708984 6.7597656 L 6.8183594 10.646484 A 1.0001 1.0001 0 0 0 6.7070312 11.927734 L 10.164062 16.873047 C 9.583454 17.930271 9.1142098 19.051824 8.765625 20.232422 L 2.8359375 21.21875 A 1.0001 1.0001 0 0 0 2.0019531 22.205078 L 2.0019531 27.705078 A 1.0001 1.0001 0 0 0 2.8261719 28.691406 L 8.7597656 29.742188 C 9.1064607 30.920739 9.5727226 32.043065 10.154297 33.101562 L 6.6542969 37.998047 A 1.0001 1.0001 0 0 0 6.7597656 39.285156 L 10.648438 43.175781 A 1.0001 1.0001 0 0 0 11.927734 43.289062 L 16.882812 39.820312 C 17.936999 40.39548 19.054994 40.857928 20.228516 41.201172 L 21.21875 47.164062 A 1.0001 1.0001 0 0 0 22.205078 48 L 27.705078 48 A 1.0001 1.0001 0 0 0 28.691406 47.173828 L 29.751953 41.1875 C 30.920633 40.838997 32.033372 40.369697 33.082031 39.791016 L 38.070312 43.291016 A 1.0001 1.0001 0 0 0 39.351562 43.179688 L 43.240234 39.287109 A 1.0001 1.0001 0 0 0 43.34375 37.996094 L 39.787109 33.058594 C 40.355783 32.014958 40.813915 30.908875 41.154297 29.748047 L 47.171875 28.693359 A 1.0001 1.0001 0 0 0 47.998047 27.707031 L 47.998047 22.207031 A 1.0001 1.0001 0 0 0 47.160156 21.220703 L 41.152344 20.238281 C 40.80968 19.078827 40.350281 17.974723 39.78125 16.931641 L 43.289062 11.933594 A 1.0001 1.0001 0 0 0 43.177734 10.652344 L 39.287109 6.7636719 A 1.0001 1.0001 0 0 0 37.996094 6.6601562 L 33.072266 10.201172 C 32.023186 9.6248101 30.909713 9.1579916 29.738281 8.8125 L 28.691406 2.828125 A 1.0001 1.0001 0 0 0 27.705078 2 L 22.205078 2 z M 23.056641 4 L 26.865234 4 L 27.861328 9.6855469 A 1.0001 1.0001 0 0 0 28.603516 10.484375 C 30.066026 10.848832 31.439607 11.426549 32.693359 12.185547 A 1.0001 1.0001 0 0 0 33.794922 12.142578 L 38.474609 8.7792969 L 41.167969 11.472656 L 37.835938 16.220703 A 1.0001 1.0001 0 0 0 37.796875 17.310547 C 38.548366 18.561471 39.118333 19.926379 39.482422 21.380859 A 1.0001 1.0001 0 0 0 40.291016 22.125 L 45.998047 23.058594 L 45.998047 26.867188 L 40.279297 27.871094 A 1.0001 1.0001 0 0 0 39.482422 28.617188 C 39.122545 30.069817 38.552234 31.434687 37.800781 32.685547 A 1.0001 1.0001 0 0 0 37.845703 33.785156 L 41.224609 38.474609 L 38.53125 41.169922 L 33.791016 37.84375 A 1.0001 1.0001 0 0 0 32.697266 37.808594 C 31.44975 38.567585 30.074755 39.148028 28.617188 39.517578 A 1.0001 1.0001 0 0 0 27.876953 40.3125 L 26.867188 46 L 23.052734 46 L 22.111328 40.337891 A 1.0001 1.0001 0 0 0 21.365234 39.53125 C 19.90185 39.170557 18.522094 38.59371 17.259766 37.835938 A 1.0001 1.0001 0 0 0 16.171875 37.875 L 11.46875 41.169922 L 8.7734375 38.470703 L 12.097656 33.824219 A 1.0001 1.0001 0 0 0 12.138672 32.724609 C 11.372652 31.458855 10.793319 30.079213 10.427734 28.609375 A 1.0001 1.0001 0 0 0 9.6328125 27.867188 L 4.0019531 26.867188 L 4.0019531 23.052734 L 9.6289062 22.117188 A 1.0001 1.0001 0 0 0 10.435547 21.373047 C 10.804273 19.898143 11.383325 18.518729 12.146484 17.255859 A 1.0001 1.0001 0 0 0 12.111328 16.164062 L 8.8261719 11.46875 L 11.523438 8.7734375 L 16.185547 12.105469 A 1.0001 1.0001 0 0 0 17.28125 12.148438 C 18.536908 11.394293 19.919867 10.822081 21.384766 10.462891 A 1.0001 1.0001 0 0 0 22.132812 9.6523438 L 23.056641 4 z M 25 17 C 20.593567 17 17 20.593567 17 25 C 17 29.406433 20.593567 33 25 33 C 29.406433 33 33 29.406433 33 25 C 33 20.593567 29.406433 17 25 17 z M 25 19 C 28.325553 19 31 21.674447 31 25 C 31 28.325553 28.325553 31 25 31 C 21.674447 31 19 28.325553 19 25 C 19 21.674447 21.674447 19 25 19 z"></path>
+    </svg>
+    <a style="flex:1;" onclick="menu()"><img style="width: 50px;"
+        src="/static/img/barsa.png" alt=""></a>
+    <div onclick="window.location = '/home';" class="one logo center" style="flex:1;position: absolute;"><img id="frg"
+        style="cursor: pointer; margin-top: 20px;" src="/static/img/frg.png"
+        alt=""></div>
+    <a class="one" align="right" style="flex: 1;">
+      <svg style="width: 23px; margin-top: -25px; filter: invert(.3);" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+        <path d="M 22.205078 2 A 1.0001 1.0001 0 0 0 21.21875 2.8378906 L 20.246094 8.7929688 C 19.076509 9.1331971 17.961243 9.5922728 16.910156 10.164062 L 11.996094 6.6542969 A 1.0001 1.0001 0 0 0 10.708984 6.7597656 L 6.8183594 10.646484 A 1.0001 1.0001 0 0 0 6.7070312 11.927734 L 10.164062 16.873047 C 9.583454 17.930271 9.1142098 19.051824 8.765625 20.232422 L 2.8359375 21.21875 A 1.0001 1.0001 0 0 0 2.0019531 22.205078 L 2.0019531 27.705078 A 1.0001 1.0001 0 0 0 2.8261719 28.691406 L 8.7597656 29.742188 C 9.1064607 30.920739 9.5727226 32.043065 10.154297 33.101562 L 6.6542969 37.998047 A 1.0001 1.0001 0 0 0 6.7597656 39.285156 L 10.648438 43.175781 A 1.0001 1.0001 0 0 0 11.927734 43.289062 L 16.882812 39.820312 C 17.936999 40.39548 19.054994 40.857928 20.228516 41.201172 L 21.21875 47.164062 A 1.0001 1.0001 0 0 0 22.205078 48 L 27.705078 48 A 1.0001 1.0001 0 0 0 28.691406 47.173828 L 29.751953 41.1875 C 30.920633 40.838997 32.033372 40.369697 33.082031 39.791016 L 38.070312 43.291016 A 1.0001 1.0001 0 0 0 39.351562 43.179688 L 43.240234 39.287109 A 1.0001 1.0001 0 0 0 43.34375 37.996094 L 39.787109 33.058594 C 40.355783 32.014958 40.813915 30.908875 41.154297 29.748047 L 47.171875 28.693359 A 1.0001 1.0001 0 0 0 47.998047 27.707031 L 47.998047 22.207031 A 1.0001 1.0001 0 0 0 47.160156 21.220703 L 41.152344 20.238281 C 40.80968 19.078827 40.350281 17.974723 39.78125 16.931641 L 43.289062 11.933594 A 1.0001 1.0001 0 0 0 43.177734 10.652344 L 39.287109 6.7636719 A 1.0001 1.0001 0 0 0 37.996094 6.6601562 L 33.072266 10.201172 C 32.023186 9.6248101 30.909713 9.1579916 29.738281 8.8125 L 28.691406 2.828125 A 1.0001 1.0001 0 0 0 27.705078 2 L 22.205078 2 z M 23.056641 4 L 26.865234 4 L 27.861328 9.6855469 A 1.0001 1.0001 0 0 0 28.603516 10.484375 C 30.066026 10.848832 31.439607 11.426549 32.693359 12.185547 A 1.0001 1.0001 0 0 0 33.794922 12.142578 L 38.474609 8.7792969 L 41.167969 11.472656 L 37.835938 16.220703 A 1.0001 1.0001 0 0 0 37.796875 17.310547 C 38.548366 18.561471 39.118333 19.926379 39.482422 21.380859 A 1.0001 1.0001 0 0 0 40.291016 22.125 L 45.998047 23.058594 L 45.998047 26.867188 L 40.279297 27.871094 A 1.0001 1.0001 0 0 0 39.482422 28.617188 C 39.122545 30.069817 38.552234 31.434687 37.800781 32.685547 A 1.0001 1.0001 0 0 0 37.845703 33.785156 L 41.224609 38.474609 L 38.53125 41.169922 L 33.791016 37.84375 A 1.0001 1.0001 0 0 0 32.697266 37.808594 C 31.44975 38.567585 30.074755 39.148028 28.617188 39.517578 A 1.0001 1.0001 0 0 0 27.876953 40.3125 L 26.867188 46 L 23.052734 46 L 22.111328 40.337891 A 1.0001 1.0001 0 0 0 21.365234 39.53125 C 19.90185 39.170557 18.522094 38.59371 17.259766 37.835938 A 1.0001 1.0001 0 0 0 16.171875 37.875 L 11.46875 41.169922 L 8.7734375 38.470703 L 12.097656 33.824219 A 1.0001 1.0001 0 0 0 12.138672 32.724609 C 11.372652 31.458855 10.793319 30.079213 10.427734 28.609375 A 1.0001 1.0001 0 0 0 9.6328125 27.867188 L 4.0019531 26.867188 L 4.0019531 23.052734 L 9.6289062 22.117188 A 1.0001 1.0001 0 0 0 10.435547 21.373047 C 10.804273 19.898143 11.383325 18.518729 12.146484 17.255859 A 1.0001 1.0001 0 0 0 12.111328 16.164062 L 8.8261719 11.46875 L 11.523438 8.7734375 L 16.185547 12.105469 A 1.0001 1.0001 0 0 0 17.28125 12.148438 C 18.536908 11.394293 19.919867 10.822081 21.384766 10.462891 A 1.0001 1.0001 0 0 0 22.132812 9.6523438 L 23.056641 4 z M 25 17 C 20.593567 17 17 20.593567 17 25 C 17 29.406433 20.593567 33 25 33 C 29.406433 33 33 29.406433 33 25 C 33 20.593567 29.406433 17 25 17 z M 25 19 C 28.325553 19 31 21.674447 31 25 C 31 28.325553 28.325553 31 25 31 C 21.674447 31 19 28.325553 19 25 C 19 21.674447 21.674447 19 25 19 z"></path>
+        </svg>
+      <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 50 50"><g><path d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0"></path></g></svg></a>
+      <a href="/cart" class="fb b abs"><svg class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1"><path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z"></path><path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z"></path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: white;" class="uxskpx" data-hook="items-count">0</text></svg></a>
+    </a>
+  </header><br><br><br>
+  <div class="center form" style="margin-top: 150px;">
+    <div style="padding: 25px 25px; background-color: antiquewhite; max-width: 450px; width: auto; margin-bottom: 70px;">
+      <h1 class="center" style="margin: 0; justify-content: start; align-items: start; margin-left: 10px; font-weight: 600; font-family: 'MyFont', sans-serif;"><img src="/static/img/warn.png" style="margin: 0px 15px;" alt="">CREATE A Category!</h1>
+      <p>Create a category before making a product <i onclick="window.location.href = '/admin/category'" class="pointer" style="margin: 0 5px; font-style: normal; color: rgb(255, 23, 23); text-decoration: underline;">here</i> so you can add the product to the category.</p>
+    </div>
+    <div style="margin-bottom: 105px;">
+      <h1 style="margin: 0; margin-left: 10px; font-weight: 600; font-family: 'MyFont', sans-serif;">ADD PRODUCT</h1>
+      <h4>Formulated Id: <i style="color: grey; font-style: normal;"></i></h4>
+    </div>
+      <div style="width: auto;max-width: 250px; justify-content: start;">
+      <h3 style="font-weight: 600; font-family: 'cool', sans-serif;">Name</h3>
+      <input type="text" placeholder="***" id="name" style="outline: 1px solid rgb(181, 181, 181); margin-bottom: 45px;">
+      <h3 style="font-weight: 600; font-family: 'cool', sans-serif;">Price</h3>
+      <input type="text" placeholder="***" id="price" style="max-width: 125px;outline: 1px solid rgb(181, 181, 181); margin-bottom: 45px;"><i>PKR</i>
+      <h3 style="font-weight: 600; font-family: 'cool', sans-serif;">Clothes For: <i style="color:#999999; font-style: normal; font-size: 14px; text-wrap: nowrap;">(PRESS ENTER TO ADD)</i></h3>
+      <input type="text" placeholder="***" id="input-tag1" id="gender" style="outline: 1px solid rgb(181, 181, 181);">
+        <div class="tags-input" style="width: 100%;">
+            <ul id="tags1" style="padding: 0; margin: 0;"></ul>
+        </div> 
+      <i style="color:grey; font-style: normal;margin-bottom: 45px;">ie: MEN, WOMEN, CHILDREN. <br>add any one or two of the above</i>
+      <div style="margin-bottom: 45px;"></div>
+      <h3 style="font-weight: 600; font-family: 'cool', sans-serif;">Type <i style="color:#999999; font-style: normal; font-size: 14px; text-wrap: nowrap;">(PRESS ENTER TO ADD)</i></h3>
+      <input type="text" placeholder="***" id="input-tag2" style="outline: 1px solid rgb(181, 181, 181);">
+      <div class="tags-input" style="width: 100%;">
+        <ul id="tags2" style="padding: 0; margin: 0;"></ul>
+    </div>
+      <i style="color:grey; font-style: normal;">ie: T-SHIRT, HOODIE, PANTS</i>
+      <div style="margin-bottom: 45px;"></div>
+        <h3>Description</h3>
+        <textarea name="description" style="margin-left: 8px; resize: none; width: 120%; height: 150px; outline: none; padding: 5px 25px;" id="description"></textarea>
+        <div class="row center" style="justify-content: start; margin-top: 30px;">
+          <div class="col">
+            <i style="color:grey; font-style: normal; text-wrap: nowrap;">Select your Item color</i>
+            <h3 id="colorname">None-Selected</h3>
+          </div>
+          <input type="color" id="color_input" style="border:1px solid grey;" onchange="document.getElementById('colorname').innerText = colourNameToHex(this.value)" name="head" value="#ffffff" />
+        </div><br>
+        <div class="row center" style="border-bottom: 1px solid black; padding: 25px 0; border-top: 1px solid black; justify-content: start; margin-top: 30px;">
+          <div class="col">
+            <div class="col">
+              <h3>Select Item for color variation</h3><br>
+              <i style="color:grey; font-style: normal;">(OPTIONAL)</i>
+            </div>
+            <div class="dropdown dropdown1" style="width: 100%;">
+              <button for="sizes" id="size" onselect="document.getElementById('jude').style.display = 'block';" style="width: 100%; height: 55px;" data-replace="Shit" class="dropbtn dropbtn1 a">&nbsp;None&nbsp;</button>
+              <div name="sizes" id="jude" align="start" class="dropdown-content dropdown-content1">
+                <a onclick="format['variation_id'] = ''; console.log(format);" class="ra selected">None</a>
+              </div>
+            </div><br><br>
+          <i style="color:grey; font-style: normal;">Select Item for making this product a variation of color for the selection</i>
+          </div>
+        </div><br><br><br>
+        <div class="row center" style="border-bottom: 1px solid black; padding: 25px 0; border-top: 1px solid black; justify-content: start; margin-top: 30px;">
+          <div class="col">
+            <div class="col">
+              <h3>Select A Category for product</h3><br>
+              <i style="color:grey; font-style: normal;">(OPTIONAL)</i>
+            </div>
+            <div class="dropdown dropdown2" style="width: 100%;">
+              <button for="sizes" id="size" onselect="document.getElementById('jude2').style.display = 'block';" style="width: 100%; height: 55px;" data-replace="Shit" class="dropbtn dropbtn2 a">&nbsp;None&nbsp;</button>
+              <div name="sizes" id="jude2" align="start" class="dropdown-content dropdown-content2">
+                <a onclick="format['belongs'] = ''; console.log(format);" class="ra selected">None</a>
+              </div>
+            </div><br><br>
+          <i style="color:grey; font-style: normal;">Select Item for making this product a variation of color for the selection</i>
+          </div>
+        </div><br><br><br>
+        <i style="color:grey; font-style: normal; text-wrap: nowrap;">number of Sizes availeble <i style="font-weight: 400; font-style: normal; color: #999999; font-family: 'cool', sans-serif;">(0 For None)</i></i>
+          <div class="row center" style="justify-content: start;">
+        <div class="col">
+          <h3>XL</h3>
+        </div>
+        <input type="number" value="1" onratechange="localStorage.setItem('xl', this.value);" onchange="localStorage.setItem('xl', this.value);" style="border: 1px solid black; width: auto; max-width: 109px;" id="xl" name="points" step="1">
+      </div>
+      <div class="row center" style="justify-content: start;">
+        <div class="col">
+          <h3>L</h3>
+        </div>
+        <input type="number" value="1" onratechange="localStorage.setItem('l', this.value);" onchange="localStorage.setItem('l', this.value);" style="border: 1px solid black; width: auto; max-width: 109px;" id="l" name="points" step="1">
+      </div>
+      <div class="row center" style="justify-content: start;">
+        <div class="col">
+          <h3>M</h3>
+        </div>
+        <input type="number" value="1" onratechange="localStorage.setItem('m', this.value);" onchange="localStorage.setItem('m', this.value);" style="border: 1px solid black; width: auto; max-width: 109px;" id="m" name="points" step="1">
+      </div>
+      <div class="row center" style="justify-content: start;">
+        <div class="col">
+          <h3>S</h3>
+        </div>
+        <input type="number" value="1" onratechange="localStorage.setItem('s', this.value);" onchange="localStorage.setItem('s', this.value);" style="border: 1px solid black; width: auto; max-width: 109px;" id="s" name="points" step="1">
+      </div>
+      </div>
+      <div style="padding: 25px 25px; flex-direction: row; display: flex; background-color: antiquewhite; max-width: 450px; width: auto; margin-bottom: 70px;">
+        <h1 class="center" style="margin: 0; justify-content: center; align-items: center; margin: 0; font-weight: 600; font-family: 'MyFont', sans-serif;"><img src="/static/img/warn.png" style="margin: 0px 15px;" alt=""></h1>
+        <p>Please add all images which are 2000 pixels wide meaning 2000px in width so they dont stretch</p>
+      </div>
+      <div style="width: auto;min-width: 325px; max-width: 450px; align-items: center; justify-content: start;">
+      <div id="response"></div>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="file-upload1" id="file1" class="custom-file-upload" accept="image/png, image/jpeg">
+          Upload image 1
+      </label>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input id="file-upload1" name="xhr2upload" onchange="document.getElementById('file1').style.background = '#ccc';document.getElementById('file1').innerText = 'Selected.. Image 1';" type="file">
+    </form>
+
+      <label for="file-upload2" id="file2" class="custom-file-upload"accept="image/png, image/jpeg" >
+        Upload image 2
+    </label>
+      <input id="file-upload2" name="xhr2upload" onchange="document.getElementById('file2').style.background = '#ccc';document.getElementById('file2').innerText = 'Selected.. Image 1';" type="file">
+      <h3 style="color: grey;">(OPTIONAL):</h3>
+      <label for="file-upload3" id="file3" class="custom-file-upload"accept="image/png, image/jpeg">
+        Upload image 3
+    </label>
+      <input id="file-upload3" name="xhr2upload" onchange="document.getElementById('file3').style.background = '#ccc';document.getElementById('file3').innerText = 'Selected.. Image 1';" type="file">
+      </form>
+      <br><br><br>
+      <h3 class="pointer" onclick="submit_product()" style="padding: 15px 25px; text-align: center; background-color: rgb(0, 0, 0); color: #ffffff;">Submit</h3>
+      <br><br><br><br>
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  var gender = [];
+  var type = [];
+  create_a("1", gender);
+  create_a("2", type);
+  function create_a(n, a) {
+    const tags = document.getElementById('tags'+n);
+    const input = document.getElementById('input-tag'+n);
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            const tagContent = input.value.trim().toUpperCase();
+            add_tag(event, tagContent, null,input);
+        }
+    });
+    tags.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-button')) {
+            delete_(text=event.target, parentRemove= event.target.parentNode);
+        }
+    });
+
+      function add_tag(event, tagContent, classes=null, input=null) {
+        event.preventDefault();
+        const fr = document.querySelectorAll(".list");
+        var loaf = false;
+        fr.forEach(function (el) {
+            const loaf_ = (el.innerText === tagContent);
+            if (loaf_){
+                loaf = loaf_;
+                return;
+            } 
+        });
+        if (loaf)
+            return;
+        const tag = document.createElement('li'); 
+        if (tagContent !== '') {
+            a.push(tagContent);
+            console.log(a);
+            tag.innerText = tagContent; 
+            tag.innerHTML += `<button class="delete-button"><img style="width: 15px; pointer-events: none;" src="/static/img/close.png" alt=""></button>`; 
+            tags.appendChild(tag);
+            if (input != null)
+            input.value = '';
+        }
+    }
+    function delete_(text, parentRemove=null, event=null) {
+        if (event != null)
+        event.preventDefault();
+      if (parentRemove != null)
+      parentRemove.remove();
+      a = a.filter(e => e !== text.parentNode.innerText);
+      console.log(a);
+    }
+  }
+    </script>
+<script>
+  document.getElementById("color_input").addEventListener("load", ()=> {
+    document.getElementById('colorname').innerText = colourNameToHex(document.getElementById("color_input").value)
+  })
+</script>
+<script>
+      document.getElementById("xl").value=localStorage.getItem('xl', "1") || 1;
+    document.getElementById("l").value=localStorage.getItem('l', "1") || 1;
+    document.getElementById("m").value=localStorage.getItem('m', "1") || 1;
+    document.getElementById("s").value=localStorage.getItem('s', "1") || 1;
+</script>
+
+<script>
+  var format = {
+    "xl":0,
+    "l":0,
+    "m":0,
+    "s":0,
+    "quantity": "",
+    "belongs": "",
+    "name":"",
+    "img":"",
+    "price":"",
+    "category":"",
+    "description":"",
+    "variation_id":"",
+  }
+  var imgs = [],
+  img = []
+  function end_() {
+      imgs.forEach(e => {img.push(e.img)});
+      console.log(img);
+      format["img"] = img.join("/").replace(/\'/g, "\\\'");;
+      format["xl"] = Math.floor(localStorage.getItem("xl", "1") || 1);
+      format["l"] = Math.floor(localStorage.getItem("l", "1") || 1);
+      format["m"] = Math.floor(localStorage.getItem("m", "1") || 1);
+      format["s"] = Math.floor(localStorage.getItem("s", "1") || 1);
+      format["quantity"] = Math.floor(format['xl'])+Math.floor(format['l'])+Math.floor(format['m'])+Math.floor(format['s']);
+      format["description"] = document.getElementById("description").value.replace(/\'/g, "\\\'");
+      format["price"] = document.getElementById("price").value.replace(/\'/g, "\\\'");
+      format["name"] = document.getElementById("name").value.replace(/\'/g, "\\\'");
+      format["category"] = gender.join("/").replace(/\'/g, "\\\'")+","+type.join(".").replace(/\'/g, "\\\'")+","+document.getElementById("colorname").innerText.replace(/\'/g, "\\\'")+"."+document.getElementById("color_input").value.replace(/\'/g, "\\\'");
+      console.log(format);
+      load_product(format);
+    }
+    let aw = 0
+    async function submit_product() {
+      await make_file("file-upload1");
+      await make_file("file-upload2");
+      await make_file("file-upload3");
+      imgs.sort((a, b) => a.f - b.f);
+      console.log(imgs);
+      let secondInterval = setInterval(interval_func_,25);
+      function interval_func_() {
+        if (aw == 40 && imgs.length == 2) {
+          end_()
+          clearInterval(secondInterval);
+          delete aw
+        } else if (imgs.length == 3) {
+          end_()
+          clearInterval(secondInterval);
+          delete aw
+        }
+        aw += 1;
+      };
+  }
+</script>
+<script>
+  $(document).ready(function() {
+    function make_f(f) {
+        var formData = new FormData();
+        var file = $('#'+f)[0].files[0];
+        formData.append('xhr2upload', file);
+        console.log("literally doing the file "+f);
+        $.ajax({
+            url: '/payload',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#response').html('<p>' + response[0] + '</p>');
+                imgs.push({f: Math.floor(f[f.length-1]), img:response[0]});
+                console.log(imgs);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $('#response').html('<p>Error: ' + errorThrown + '</p>');
+            }
+        });
+    };
+    window.make_file = make_f;
+  });
+</script>
+<script>
+  let t= document.getElementById("color_input");
+  t.style.background = t.value;
+</script>
+<script>
+  /*let num = localStorage.getItem("type", '');
+  document.querySelector(".d2-btn").innerText = num;
+  document.getElementById("price").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          event.preventDefault();
+          localStorage.setItem('type', this.value);
+          document.querySelector(".d2-btn").innerText = "All";
+          window.location.href = ""
+      }
+  });*/
+  
+</script>
+<script>
+  setInputFilter(document.getElementById("price"), function(value) {
+      return /^\d*\.?\d*$/.test(value);
+  }, "Only digits and '.' are allowed");
+</script>
+
+
+<script>
+  var off = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+  var on = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
+  function nestedButtonClick(event, thi, productid) {
+      event.preventDefault();
+      if (thi.innerHTML == off) {
+          thi.innerHTML = on;
+          //delete_(productid);
+          console.log("DELETED")
+      } else {
+          thi.innerHTML = off;
+          save(productid);
+      }
+  }
+
+</script>
+<script>
+    function updateSearch(name, fr) {
+        searchfor[name] = fr;
+    }
+    function searchFilter(bg, color, display) {
+        for (let i = 0; i< Object.keys(searchfor).length; i++) {
+            document.querySelectorAll(searchfor[Object.keys(searchfor)[i]]).forEach(function (el) {
+                const parent_element = el.closest('[href*="/product/"]');
+                parent_element.style.display = display;
+                el.style.background = bg;
+                el.style.color = color;
+            });
+        }
+    }
+    var searchfor = {};
+
+</script>
+<script>
+  window.onpageshow = function(event) {
+      if (event.persisted) {
+          window.location.reload();
+      }
+  };
+</script>
+<script>
+  var down = 0;
+function summonContext(event=NaN, id) {
+    if (event == NaN) {
+      event.preventDefault();
+    }
+    const context = document.getElementById('context_container');
+    context.style.display = 'flex';
+    down = 1;
+    document.querySelectorAll('.butts').forEach(function (el) {
+        el.addEventListener('mousedown', function () {
+            if (el.innerText == "SIGN IN/UP") {
+                el.setAttribute('href',v+"/"+id);
+            }
+        });
+    })
+    var txt = $('.context_container'),
+        sel = $('.add_menu');
+    //context.style.left = `${event.pageX}px`;
+    //context.style.top = `${event.pageY}px`;
+}
+document.addEventListener('mouseup', function () {
+    const context = document.getElementById('context_container');
+    if (down == 1) {
+        context.style.display = 'none';
+        down = 0;
+    }
+});
+
+pointer_();
+</script>
+<script>
+var tog = 0;
+$(".img_producto_container")
+  // tile mouse actions
+  .on("click", function() {
+    if (tog == 0) {
+      tog = 1;
+      $(this)
+        .children(".img_producto")
+        .css({ transform: "scale(" + $(this).attr("data-scale") + ")" });
+    } else {
+      tog = 0;
+      $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+    }
+  })
+  .on("mouseup", function() {
+    $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+  })
+  .on("mouseout", function() {
+    $(this)
+      .children(".img_producto")
+      .css({ transform: "scale(1)" });
+  })
+  .on("mousemove", function(e) {
+    $(this)
+      .children(".img_producto")
+      .css({
+        "transform-origin":
+          ((e.pageX - $(this).offset().left) / $(this).width()) * 130 +
+          "% " +
+          ((e.pageY - $(this).offset().top) / $(this).height()) * 130 +
+          "%"
+      });
+  });
+</script>
+<script>
+  const x = document.getElementById("demo");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  //getLocation();
+  function showPosition(position) {
+    document.getElementById('bod').innerHTML = "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+  }
+pointer_();
+
+</script>
+
+<script>
+  function e(e) {
+    return document.getElementById(e);
+  }
+  function ea(e) {
+    return document.querySelectorAll(e);
+  }
+
+  function cat(e_, c) {
+    c_ = c.split('.');
+    var a = [];
+    if (e_ == "color") a = [" style=\"background: ", ";\">"];
+    else if (e_ == "category") a = [" >", ""];
+    else if (e_ == "gender") a = [" >", ""];
+    for (let i = 0; i < c.length; i++) {
+      if (c_[i] == undefined)
+        break;
+      e(e_).innerHTML += "<div class=\"" + e_ + "\"" + a[0] + c_[i] + a[1] + "</div>";
+    }
+    return
+  }
+</script>
+<script>
+  var got = 0
+  function loadp(keys, dObj, rep=0) {
+    for (let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        const item = (dObj[key]);
+        document.getElementById('jude').innerHTML += `<a onclick="format['variation_id'] = '${item['id'].split("-")[0]}'; console.log(format);" class="ra"><img style="width: 45px; margin-right: 15px;" src="/static/products/${item['img'].split('/')[0]}">${TextAbstract(item['name'],20)}</a>`
+      }
+  }
+  function load_dp(a="1") {
+    var sel = $('.dropdown'+a),
+    txt = $('.dropbtn'+a),
+    options = $('.dropdown-content'+a);
+
+  sel.click(function (e) {
+    e.stopPropagation();
+    options.show();
+  });
+
+  $('body').click(function (e) {
+    options.hide();
+  });
+
+  options.children('a').click(function (e) {
+    e.stopPropagation();
+    txt.html($(this).html());
+    $(this).addClass('selected').siblings('a').removeClass('selected');
+    options.hide();
+  });
+  }
+  function egs(data) {
+        let len = data[1];
+        const d = data['d'];
+        const dObj = JSON.parse(d);
+        let keys = Object.keys(dObj);
+        let count = keys.length;
+        loadp(keys, dObj);
+        load_dp("1")
+        lazy_load();
+    }
+  $(document).ready(function() {
+        var token = '{{ token }}';
+        var view = '{{ style }}';
+        var socket = io("https://"+window.location.hostname, {
+            extraHeaders: {
+                Authorization: '' + token
+            }
+        });
+        socket.on(getcookie('evid'), function(data) {
+            window.data_ = data;
+            console.log(data)
+            if (data['goKaraleva'] == '1' && got == 0) {
+              got = 2;
+              egs(data);
+            }
+        });
+        socket.on(getcookie('evid')+"r", function(data_) {
+          const data = data_[0];
+            for (var i_ = 0; i_ < Object.keys(data).length; i_++) {
+              document.getElementById('jude2').innerHTML += `<a onclick="format['belongs'] = '${data[i_][0]}'; console.log(format);" class="ra"><img style="width: 45px; margin-right: 15px;" src="/static/products/${data[i_]['2']}">${TextAbstract(data[i_][1],20)}</a>`
+            }
+            load_dp("2");
+        });
+        function redund() {
+            const j = [`${getcookie('evid')}`,''];
+            socket.emit("red", `${j}`)
+            console.log("Retrying...")
+        }
+        function READ_CATS() {
+            socket.emit("request_category_read");
+            console.log("READING.");
+        }
+        function l_p(a) {
+            socket.emit("request_product", a);
+            console.log("Sending.");
+        }
+        function savef(p) {
+            socket.emit("save", p);
+        }
+        window.redundancy = redund;
+        window.load_product = l_p;
+        window.save = savef;
+        READ_CATS()
+    });
+    document.addEventListener('load',function () {
+        if (got != 2) {
+            redundancy();
+          }
+    })
+    let ninterval = setInterval(interval_func,600);
+    function interval_func() {
+        if (got != 2) {
+            redundancy()
+        } else {
+          clearInterval(ninterval);
+        }
+        return
+    }
+</script>
+<script>
+  function TextAbstract(text, length) {
+    if (text == null) {
+      return "";
+    }
+    if (text.length <= length) {
+      return text;
+    }
+    text = text.substring(0, length);
+    last = text.lastIndexOf(" ");
+    text = text.substring(0, last);
+    return text + "..";
+  }
+</script>
+
+<script>
+  function hexToRgb(hex) {
+    // Remove the hash at the start if it's there
+    hex = hex.replace(/^#/, '');
+
+    // Parse r, g, b values
+    let bigint = parseInt(hex, 16);
+    let r = (bigint >> 16) & 255;
+    let g = (bigint >> 8) & 255;
+    let b = bigint & 255;
+
+    return [r, g, b];
+}
+
+// Calculate the Euclidean distance between two RGB colors
+function colorDistance(color1, color2) {
+    let rDiff = color1[0] - color2[0];
+    let gDiff = color1[1] - color2[1];
+    let bDiff = color1[2] - color2[2];
+    
+    return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff);
+}
+
+// Find the closest color in the colors object
+function findClosestColor(selectedColor) {
+    let minDistance = Infinity;
+    let closestColor = null;
+    
+    let selectedRgb = hexToRgb(selectedColor);
+    
+    for (let hex in colours) {
+        let rgb = hexToRgb(hex);
+        let distance = colorDistance(selectedRgb, rgb);
+        
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestColor = hex;
+        }
+    }
+    
+    return closestColor;
+}
+
+  function colourNameToHex(colour)
+{
+  console.log(colour);
+  let closestColor = findClosestColor(colour);
+  document.getElementById('color_input').style.backgroundColor = closestColor;
+  return colours[closestColor];
+}
+</script>

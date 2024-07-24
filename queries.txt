@@ -1,0 +1,105 @@
+'''
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password=""
+)
+mycursor = mydb.cursor()
+server gather data **
+AL: after login*
+'''
+#'''
+'''
+mycursor.execute("""
+USE products;
+CREATE TABLE products (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    quantity INT NOT NULL,
+    category VARCHAR(100),
+    img TEXT,
+    colors INT,
+    likes INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+""")
+
+mycursor.execute("USE products")
+mycursor.execute(f"""
+INSERT INTO products (id,name, description, price, quantity, category, img) VALUES
+('{str(uuid.uuid4())}','fragile world tour tee', 'dark mode of the white tee with splendid design quality and ofc W in shaaat!!', 999.99, 5, 'men,t-shirt,black.white', 'minar e punkistan/fragile world tour tee (back).png/illusions of eternity tee.png');
+""")
+mydb.commit()
+
+mycursor.execute("USE products")
+mycursor.execute(f"""
+CREATE TABLE saved_products (
+    saved_id CHAR(36) PRIMARY KEY,
+    user_id CHAR(36),
+    product_id VARCHAR(36), #CHAR(36), this was accidently placed while making the table the first time!
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""")
+mydb.commit()
+mycursor.execute("USE products")
+mycursor.execute(f"""
+CREATE TABLE users (
+    user_id CHAR(36) PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    cart JSON,
+    savedpid TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""")
+mydb.commit()
+
+mydb.close()
+#CHAR(36), in product_id this was accidently placed while making the table the first time!
+mycursor.execute("USE products")
+mycursor.execute(f"""
+CREATE TABLE category (
+    category_id CHAR(36) PRIMARY KEY,
+    product_id VARCHAR(36),
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""")
+mydb.commit()
+mycursor.execute("USE products")
+mycursor.execute(f"""
+CREATE TABLE category (
+    category_id CHAR(36) PRIMARY KEY,
+    price_margins TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""")
+mydb.commit()
+alter_table_query = """
+    ALTER TABLE category 
+    ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+"""
+mycursor.execute("USE products")
+mycursor.execute(alter_table_query)
+mydb.commit()
+'''
+    cursor.execute(f"""
+    CREATE TABLE ticker (
+        value TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+    """)
+    mydb.commit()
+
+    #cursor.execute(f"INSERT INTO ticker (value) VALUES ('<b class=\"thic\" style=\"font-size: 23px; margin: 0 60px;\">USE CODE LOAF</b>/<b class=\"thic\" style=\"font-size: 23px; margin: 0 60px;\">GET 50% OFF</b>/');")

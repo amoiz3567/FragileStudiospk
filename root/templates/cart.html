@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title>Fragile</title>
+</head>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+<body id="bod">
+    <div id="dialogue_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #0000005d; backdrop-filter: blur(10px);">
+        <div id="dialogue" class="center" align="center" style="transition: .3s; position: absolute; height: 350px; width:650px; border-radius: 5px; background-color: rgb(255, 255, 255); z-index: 50; padding: 25px; padding-bottom: 55px;">
+            <a onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+            <br><br>
+            <div class="col">
+                <h1 style="font-size: 50px; font-weight: 200;">ARE YOU SURE YOU WANT TO <i style="text-decoration: underline;">REMOVE</i> THIS PRODUCT</h1>
+                <div class="row center" style="gap:15px;">
+                    <input type="checkbox" onfocus="console.log('hide next time')" style="margin: 0; display: flex; z-index: 25;position: absolute; left: -15%; width: 20px;height: 20px; justify-content: start; align-items: start; padding: 0; width: 100%;" value="Never ask again">
+                    <i style=" pointer-events: none; font-weight: 300;">NEVER ASK AGIAN?</i>
+                </div>
+                <div class="row" style="margin: 0; margin-top: 25px; width: 30%; padding: 0;">
+                    <a onmouseup="op('dialogue', 'dialogue_')" class="yes_" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">yes</a>
+                    <a onclick="op('dialogue', 'dialogue_')" style="margin: auto; padding: 5px 25px; background: black; color: #ffffff;">no</a>
+                </div>
+            </div>
+        </div>
+        <div onclick="op('dialogue', 'dialogue_')" style="width: 100vw; height: 100vh; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+    </div>
+    <div id="begone" style="margin: 0;">
+        <div class="ticker-container">
+            <div class="ticker-content" style="width: 10000px;" id="ticker">
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+            </div>
+        </div>
+        <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
+        </div>
+        <div class="man v pizzaria n"></div>
+        <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+            <div id="menu" class="menu">
+                <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+                <br><br>
+                <div class="column">
+                <h4 onclick="window.location = '/home';" class="b_ fb b">Home</h4>
+                </div>
+                <div class="column">
+                <h4 class="pointer b_" onclick="window.location.href = '/product'">SHOP</h4>
+                </div>
+                <div class="div center" style="margin: 25px; background-color: #ccc;"></div>
+                <div class="column">
+                <h4>CATEGORIES</h4>
+                <ul id="categories_list">
+
+                </ul>
+                </div>
+                <div class="div center" style="margin: 25px; background-color: #ccc; margin-top: 25px;"></div>
+                <div class="column">
+                    <h4 style="font-weight: 300;" onclick="window.location.href = '/cart'" style="font-weight: 1000;" class="b_ pointer">CART<svg style="width: 15px; margin-left:10px; margin-bottom: -2px; height: auto;" class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
+                        <path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z" fill="none" stroke="black" stroke-width="5"></path>
+                        <path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z" fill="none" stroke="black" stroke-width="5"></path>
+                        <text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: black; font-style: normal;" class="uxskpx" data-hook="items-count"></text>
+                    </svg>
+                      </h4>
+                    <h4 style="font-weight: 300;" onclick="window.location.href = '/saved'" class="b_ pointer">SAVED<svg style="width: 20px; color: #6e6e6e; margin-left:5px; margin-bottom: -3px; height: auto;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32" fill="#6e6e6e"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg></h4>
+                </div>
+            </div>
+            <div onclick="op()" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+        </div>
+        <fk id="fkhead"></fk>
+        <header id="header" class="center">
+            <a style="flex:1;" onclick="menu()"><img style="width: 50px;" src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+            <div onclick="window.location = '/home';" class="one logo center" style="flex:1;position: absolute;"><img id="frg" style="cursor: pointer; margin-top: 50px;" src="{{ url_for('static', filename='img/frg.png') }}" alt=""></div>
+            <a class="one" align="right" style="flex: 1;">
+                <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><g><path d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0"></path></g></svg></a>
+                <a href="/cart" class="fb b abs"><svg class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1"><path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z"></path><path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z"></path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: white;" class="uxskpx" data-hook="items-count">0</text></svg></a>
+            </a>
+        </header><br><br><br>
+    </div>
+    <br><br><br><br>
+    <div class="Collection">
+        <div class="center">
+            <div class="col">
+                <div align="center" class="title2 center cate"><img align="center" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><h1 id="typ_e" style="text-wrap: nowrap;" class="Title_"></h1></div>
+            </div>
+        </div>
+    </div><br><br><br>
+<script>
+        const titl_e = document.getElementById('typ_e');
+        titl_e.innerHTML += "{{type}}".toUpperCase();
+    </script>
+<h1 id="braw"></h1>
+<div id="cart_opp" style="display: none" class="center">
+    <div style="width: 100vw;">
+        <div class="one navigation" style="display: flex;">
+            <!--a href="/product/08c1e876-4839-4b79-a9d6-e8fa07b327f9" class="abs rowed">
+                <div class="container cont center" style="display: flex; width: 60vw; height: 150px; padding: 10px 25px; flex-direction: row;">
+                    <img class="img1" style="width: 180px;" src="/static/products/fragile%20world%20tour%20tee%20(front).png">
+                    <img class="img2" style="width: 180px;" src="/static/products/fragile%20world%20tour%20tee%20(back).png">
+                    <div style="display: flex; flex-direction: row; width: 100%; align-items: start;">
+                        <div class="details" style="display: flex; margin-left: 25px; margin-top: 0%; flex-direction: column; justify-content: flex-start; align-items: start;flex: 1;">
+                            <h4 style="font-size: 28px;">fragile world tour...</h4>
+                            <p style="font-weight: 100;">description*</p>
+                            <p id="cates" class="cats" style="padding: 3px 5px; font-weight: 100; color: rgb(0, 0, 0); background: rgba(0, 0, 0, 0);">T-SHIRT</p>
+                        </div>
+                        <div class="detail-container" style="display: flex; gap: 0px; flex-direction: row; text-wrap: nowrap; margin-right: 25px; align-items: end; flex: 1;">
+                            <div style="height: 7px; margin-top: 2%; width: 100%; display: flex; justify-content: end; align-items: start; flex: 1;" class="row">
+                                <i class="ao o" style="color: rgb(0, 0, 0); font-weight: 500; font-size: 22px;"><i class="ao o center" style="font-size: 22px; font-weight: 700; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: #ffff0085;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> 251</i></i>&nbsp;&nbsp;<s class="o"></s></i>&nbsp;&nbsp;<s class="o"></s>
+                            </div>
+                            <div align="right" class="save-container" style="flex:1; justify-content: end; align-items: center;">
+                                <i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, 'dnt do this error')">
+                                    <svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>
+                                </i>
+                            </div>
+                            <b></b>
+                        </div><br><br>
+                    </div>
+                </div>
+            </a-->
+            <!--a class="abs rowed" style="box-shadow: none; position: relative; top: 25px;">
+                <div class="container cont center" style="display: flex; width: 60vw; height: 100px; padding: 10px 25px; flex-direction: row; border: none; position: relative;">
+                    <div align="left" style="display: flex; flex-direction: row;margin-left: 50px; width: 100%; background: red; align-items: start;">
+                        <i style="font-size: 20px; margin-top: 5px; font-weight: 900;">IMAGES</i>
+                        <div class="details" style="display: flex; margin-left: 85px; margin-top: 0%; flex-direction: column; justify-content: flex-start; align-items: start;flex: 1;">
+                            <i style="font-size: 20px; font-weight: 900;">DETAILS</i>
+                        </div>
+                        <div align="right" class="detail-container" style="display: flex; gap: 0px; flex-direction: row;  background: rgb(89, 0, 255); text-wrap: nowrap; margin-right: 25px; align-items: end; flex: 1;  position: relative;">
+                            <div style="height: 100%; margin-top: 2%; width: 100%; display: flex; justify-content: end; align-items: start; flex: 1;" class="row">
+                                <i class="ao o" style="color: rgb(0, 0, 0); font-weight: 500; font-size: 22px; margin-right: 105px;">
+                                    <i style="font-size: 20px; font-weight: 900;">PRICE</i>
+                                </i>&nbsp;&nbsp;<s class="o"></s></i>&nbsp;&nbsp;<s class="o"></s>
+                                <div align="right" class="save-container" style="flex:0; justify-content: center; align-items: center;">
+                                    <i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;">
+                                        <i style="font-size: 20px;">QUANTITY</i>
+                                    </i>
+                                </div>
+                            </div>
+                            <b></b>
+                        </div>
+                    </div>
+                </div>
+            </a-->
+        </div>
+    </div>
+</div>
+<div class="center">
+    <div style="width: 100vw;">
+        <div id="items" class="one navigation" style="display: flex;">
+            <h1 id="none_"><i style="font-weight: 900;">NO PRODUCTS ADDED YET.</i></h1>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<div class="center">
+    <div style="width: 100vw; height: 60px; background: #000000; display: flex; justify-content: center; align-items: center;">
+        <a style="background-color: #ffffff; color: rgb(0, 0, 0); padding: 5px 25px;" class="weffect" data-replace="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ POLICIES"><span>READ POLICIES*</span></a>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    document.body.innerHTML += `<div id="context_container" style="width: auto; height: auto; position: absolute; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin: 10px; margin-left: -160px;">
+        <a class="butts"  style="background-color: rgba(255, 0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 0; color: balck; font-size: 24px;">more</a>
+        <a class="butts" style="background-color: rgb(255, 61, 61); padding:6px 35px; margin: 0; font-weight: 100; color: white; font-size:19px;">REMOVE</a>
+    </div>`;
+</script>
+<script>
+    var on = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+    var off = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
+function nestedButtonClick(event, thi, productid) {
+    event.preventDefault();
+    if (thi.innerHTML == off) {
+        thi.innerHTML = on;
+        save(productid);
+    } else {
+        thi.innerHTML = off;
+        console.log("DELETED")
+    }
+}
+function adjust_() {
+    if (window.innerWidth <= 790) {
+        document.querySelectorAll(".rowed").forEach(function (el) {
+            el.children[0].style.display = "flex";
+            el.querySelector(".save-container").style.display = "flex";
+            el.querySelector(".ao").style.display = "none";
+        });
+    } else {
+        document.querySelectorAll(".rowed").forEach(function (el) {
+            el.children[0].style.display = "none";
+            el.querySelector(".save-container").style.display = "none";
+            el.querySelector(".ao").style.display = "flex";
+        });
+    }
+    if (window.innerWidth <= 583) {
+        document.querySelectorAll(".rowed").forEach(function (el) {
+            el.children[0].style.display = "flex";
+            el.children[0].style.paddingTop = "35px";
+            el.children[0].style.height = "110%";
+            el.children[0].style.flexDirection = "column";
+            el.children[0].style.border = "1px solid grey";
+            el.children[0].classList.add("center");
+            el.children[0].children[2].classList.add("center");
+            el.children[0].children[2].style.alignItems = "center";
+            el.children[0].children[2].style.justifyContent = "center";
+            el.querySelector(".save-container").style.marginRight = "35px";
+            el.querySelector(".men_container").style.display = "block";
+            el.querySelector(".men_container").style.position = "relative";
+            el.querySelector(".men_container").style.marginRight = "-80vw";
+            el.querySelector(".men_container").style.right = "0";
+            el.querySelector(".men_container").style.marginTop = "-250px";
+        });
+    } else if (window.innerWidth >= 583) {
+        document.querySelectorAll(".rowed").forEach(function (el) {
+            el.children[0].style.display = "flex";
+            el.children[0].style.paddingTop = "0px";
+            el.children[0].style.height = "150px";
+            el.children[0].style.flexDirection = "row";
+            el.children[0].style.border = "";
+            el.children[0].classList.remove("center");
+
+            el.children[0].children[2].classList.remove("center");
+            el.children[0].children[2].style.alignItems = "start";
+            el.children[0].children[2].style.justifyContent = "center";
+            el.querySelector(".save-container").style.position = "relative";
+            el.querySelector(".save-container").style.marginRight = "50px";
+            el.querySelector(".save-container").style.fontSize = "19px";
+            el.querySelector(".save-container").style.paddingTop = "25px";
+            el.querySelector(".men_container").style.display = "block";
+            el.querySelector(".men_container").style.position = "absolute";
+            el.querySelector(".men_container").style.marginRight = "0px";
+            el.querySelector(".men_container").style.marginTop = "-20px";
+        });
+    }
+}
+window.addEventListener("resize", function () {
+    adjust_();
+});
+var down = 0;
+function summonContext(event=NaN, id) {
+    event.preventDefault();
+    const context = document.getElementById('context_container');
+    context.style.display = 'flex';
+    down = 1;
+    document.querySelectorAll('.butts').forEach(function (el) {
+        el.addEventListener('mousedown', async function () {
+            var v = "";
+            if (el.innerText == "REMOVE") {
+                v = "rmc";
+                res = await menu('dialogue', 'dialogue_');
+                res.addEventListener('click', async function asyncHelloWorld() {
+                    const l = await remove(id);
+                    if (l) {
+                        const el = document.querySelectorAll(`[href="/product/${id}"]`)[0];
+                        el.innerHTML = "";
+                        return
+                    }
+                });
+            }
+            else if (el.innerText == "more") {
+                v = "#more";
+                el.setAttribute('href',v+"/"+id);
+            }
+        });
+    })
+    var txt = $('.context_container'),
+        sel = $('.add_menu');
+    context.style.left = `${event.pageX}px`;
+    context.style.top = `${event.pageY}px`;
+}
+document.addEventListener('mouseup', function () {
+    const context = document.getElementById('context_container');
+    if (down == 1) {
+        context.style.display = 'none';
+        down = 0;
+    }
+});
+var g;
+</script>
+    <script>
+    var got = 0;
+    var la = 0;
+    function up(v) {
+        const value = v;
+        var ticker = document.getElementById('ticker');
+        ticker.innerHTML = '';
+        var a;
+        if (value.length> 12)
+            a = Math.floor(value.length+5);
+        else
+            a = Math.floor(value.length+100);
+        for (var i = 0; i < a; i++) {
+            var span = document.createElement('span');
+            span.innerHTML = value; // Set initial text
+            ticker.appendChild(span);
+        }
+    }
+    function loadpc(keys, dObj, count, rep=0) {
+        document.getElementById("cart_opp").style.display = "flex";
+        g = loadpc;
+        for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
+            let key = keys[i];
+            const item = (dObj[key]);
+            const container = document.getElementById('items');
+            //item.
+            const a = document.createElement("a");
+            const division = document.createElement("div");
+            const division2 = document.createElement("div");
+            const image = document.createElement("img");
+            const imageAh = document.createElement("img");
+            const secondDivision = document.createElement("div");
+            const img = String(item['img']);
+            const img1 = img.split('/')[0].replace(/ /g, "%20");
+            var img2 = "";
+            if (img[1] == '') {
+                img2 = img1;
+            } else {
+                img2 = img.split('/')[1].replace(/ /g, "%20");
+            }
+            a.setAttribute("href", `/product/${item['id']}`);
+            a.className = "abs rowed";
+            //a.classList.add("rowed");
+            division.setAttribute("class", "container cont center");
+            division.style = "display: flex; width: 98vw; height: 150px; padding: 10px 25px; flex-direction: row;";
+            image.classList.add("img1");
+            image.style = "width: 150px;";
+            division.appendChild(image);
+            image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/,/g, "").replace(/ /g, "%20"));
+            imageAh.classList.add("img2");
+            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replace(/,/g, "").replace(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
+            imageAh.style = "width: 150px;";
+            secondDivision.setAttribute("align", "left");
+            division.appendChild(imageAh);
+            var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
+            var cats = "";
+            taged = ["gender_", "type_", "color_"];
+            let lock = "";
+            for (var lor = 0; lor < cate.length; lor++) {
+                if (lor == 3)
+                    break;
+                    text_cate = cate[lor].replace(/ /g, '')
+                if (taged[lor] == "color_") {
+                  //text_cate = `${text_cate.split("/")[0]}<div class="color" style="position: relative; margin:auto; border-radius: 2px; background: ${text_cate.split("/")[1]};"></div>`;
+                  text_cate = `${text_cate.split("/")[0].replace(/ /g, "")}`;
+                  }
+                  let paired = text_cate.split("/")
+                  if (paired.length > 1 && taged[lor] != "color_") {
+                    for (let v = 0; v < paired.length; v++) {
+                      if (v == 1)
+                      lock = "display: none;"
+                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; font-size: 11px; padding: 3px 5px; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
+                  }
+                } else {
+                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/ /g, "").split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; font-size: 11px; padding: 3px 5px; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
+                }
+            }            division.innerHTML += `<div class="details" style="display: flex; margin-left: 25px; margin-top: 0%; flex-direction: column; justify-content: flex-start; align-items: start;flex: 1;">
+                    <h4 style="font-size: 28px; text-wrap: nowrap;">${TextAbstract(item['name'], 20)}</h4>
+                    <p style="font-weight: 100; text-wrap: nowrap;">${TextAbstract(item['description'], 36)}</p>
+                    <div style="display: flex;">${cats}</div></div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
+</div>`;     division2.style = "display: flex; flex-direction: row; width: 100%; align-items: start;";
+            secondDivision.classList.add("detail-container");
+            secondDivision.style = "display: flex; gap: 0px; flex-direction: row; text-wrap: nowrap; margin-right: 25px; align-items: end; flex: 1;";
+            const details = `<div style="height: 100%; margin-top: 2%; width: 100%; display: flex; justify-content: end; align-items: start; flex: 1;" class="row">
+                <i class="ao o" style="color: rgb(0, 0, 0); font-weight: 500; font-size: 22px; height: 100%; display: flex; margin-top: 7px; justify-content: center; align-items: center;"><i class="ao o center" style="font-size: 17px; font-weight: 700; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: transparent;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s></i>&nbsp;&nbsp;<s class="o"></s>
+                <div class="men_container" style="display: flex; position:absolute; flex-direction: row;  margin-top: -20px; margin-right: -10px;">
+                    <i class="second_price save-container add me bh pointer add_menu" style="position: relative;"><i style="font-weight: 700; margin-right: 15px;">PKR</i> ${item['price']}</i>
+<i class="save-container add me bh pointer add_menu" onclick="summonContext(event, '${item['id']}')" style="position: relative;">…</i>
+                    </div>
+                <div align="right" align="center" class="save-container" style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                    <i class="ao o bh pointer" id="save" style="font-size: 15px; font-weight: 200; font-style: normal;">
+                        <div class="row quantity_">
+                            <a class="up">&plus;</a>
+                            <a class="quantity__" style="color: black;"><span align="center" id="quantity" style="transform:none;" class="center">${item['quantity']} ${item['size']}</span></a>
+                            <a class="down">&#8722;</a>
+                            </div>
+                            </i>
+                                </div>
+                            </div>
+                            `
+            secondDivision.innerHTML = details;
+            division.appendChild(secondDivision);
+            a.appendChild(division);
+            container.append(a);
+            //routPointer();
+            adjust_();
+        }
+    }
+    function loadpw(keys, dObj, count, rep=0) {
+        console.log("theses area awr")
+        g = loadp;
+        for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
+            let key = keys[i];
+            const item = (dObj[key]);
+            const container = document.getElementById('items');
+            //item.
+            const a = document.createElement("a");
+            const division = document.createElement("div");
+            const image = document.createElement("img");
+            const imageAh = document.createElement("img");
+            const secondDivision = document.createElement("div");
+            const img = String(item['img']);
+            const img1 = img.split('/')[0].replace(/ /g, "%20");
+            var img2 = "";
+            if (img[1] == '') {
+                img2 = img1;
+            } else {
+                img2 = img.split('/')[1].replace(/ /g, "%20");
+            }
+            a.setAttribute("href", `/product/${item['id']}`);
+            a.classList.add("abs");
+            division.setAttribute("class", "container cont center");
+            var cate = item['category'].toUpperCase().replace(/\./g, ' / ').split(',');
+            var cats = "";
+            for (var lor = 0; lor < cate.length; lor++) {
+                if (lor == 3)
+                    break;
+                cats += `<p class="cats" style="font-weight: 100;">${cate[lor]}</p>`;
+            }
+            division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
+<i class="save-container add me bh pointer">…</i>
+</div>`
+            image.classList.add("img1");
+            division.appendChild(image);
+            image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
+            imageAh.classList.add("img2");
+            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replace(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
+            secondDivision.setAttribute("align", "left");
+            division.appendChild(imageAh);
+            secondDivision.classList.add("detail-container");
+            const details = `<div align="right" class="save-container"><i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');"><svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg></i></div>
+                    <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}${i}</h4>
+                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
+                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
+                    </div>
+                    <b><!--${item['quantity']}--></b>`
+            secondDivision.innerHTML = details;
+            division.appendChild(secondDivision);
+            a.appendChild(division);
+            container.append(a);
+            //routPointer();
+        }
+    }
+    function loadp(keys, dObj, count, rep=0) {
+        g=loadp;
+        for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
+            let key = keys[i];
+            const item = (dObj[key]);
+            const container = document.getElementById('items');
+            //item.
+            const a = document.createElement("a");
+            const division = document.createElement("div");
+            const image = document.createElement("img");
+            const imageAh = document.createElement("img");
+            const secondDivision = document.createElement("div");
+            a.innerHTML = `<div class="tag" id="matches">0</div>`;
+            const img = String(item['img']);
+            const img1 = img.split('/')[0].replace(/ /g, "%20");
+            var img2 = "";
+            if (img[1] == '') {
+                img2 = img1;
+            } else {
+                img2 = img.split('/')[1].replace(/ /g, "%20");
+            }
+            img2 =  img2.replace(/,/g, '');
+            console.log(img2, "this is image 2");
+            a.setAttribute("href", `/product/${item['id']}`);
+            a.setAttribute("id", `${item['id']}`)
+            a.classList.add("abs");
+            division.setAttribute("class", "container cont center");
+            var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
+            var cats = "";
+            taged = ["gender_", "type_", "color_"];
+            let lock = "";
+            for (var lor = 0; lor < cate.length; lor++) {
+                if (lor == 3)
+                    break;
+                    text_cate = cate[lor].replace(/ /g, '')
+                if (taged[lor] == "color_") {
+                    text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
+                  }
+                  let paired = text_cate.split("/")
+                  if (paired.length > 1 && taged[lor] != "color_") {
+                    for (let v = 0; v < paired.length; v++) {
+                      if (v == 2)
+                      lock = "display: none;"
+                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
+                      console.log(`${taged[lor]}${paired[v].replace(/ /g, '')}`)
+                  }
+                } else {
+                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/\'/g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
+                  console.log(`${taged[lor]}${cate[lor].replace(/\'/g, '').split('/')[0]}`, "this wttfffff");
+                }
+            }
+            division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
+    <i class="save-container add me bh pointer">…</i>
+    </div>`
+            const save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
+            image.classList.add("img1");
+            image.classList.add("imagus");
+            division.appendChild(image);
+            image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
+            imageAh.classList.add("img2");
+            imageAh.classList.add("imagus");
+            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replace(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
+            secondDivision.setAttribute("align", "left");
+            division.appendChild(imageAh);
+            secondDivision.classList.add("detail-container");
+            const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');">${save_svg}</i></div>
+                    <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
+                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
+                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
+                    </div>`
+            secondDivision.innerHTML = details;
+            container.querySelectorAll("#loading").forEach((el) =>{el.remove()})
+            division.appendChild(secondDivision);
+            a.appendChild(division);
+            container.append(a);
+            container.innerHTML += `<a id="loading" class="abs">
+                    <div class="container cont center" style=" background-color: rgba(0, 0, 0, 0.075);">
+                        <img class="img1" src="/static/img/works.gif">
+                        <img class="img2" src="/static/img/works.gif">
+                    </div>
+                </a>`
+            routPointer();
+            try {document.getElementById('items').querySelectorAll("#loading").forEach((el) =>{el.remove()})} catch(err) {}
+        }
+    }
+    var addinge = 0;
+    const loc = window.location.href;
+    $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() >= ($(document).height())-555 && got == 1 && addinge != segments.length) {
+                if (addinge <= segments.length) {
+                    console.log(segments[addinge][0]);
+                    g(loadedkeys, loadobj, segments[addinge][0], 1);
+                    addinge++;
+                }
+            }
+        });
+        function segments_(v, def=1) {
+        var list = [];
+        var res = [];
+        var f = 0;
+        for (var i = 0; i< v; i++) {
+            list.push(i.toString());
+            if (f == def || i == v-1) {
+                f = 0;
+                res.push([list]);
+                list = [];
+            }
+            f++;
+        }
+        return res;
+    }
+    function load_(data, func) {
+        la = 1;
+        var len = data[1];
+        const d = len;
+        const dObj = JSON.parse(d);
+        var keys = Object.keys(dObj);
+        var count = keys.length;
+        addinge++;
+        var a = segments_(keys.length, 12);
+        window.segments = a;
+        window.loadedkeys = keys;
+        window.loadobj = dObj;
+        console.log(a)
+        func(keys, dObj, a[0][0]);
+    }
+    $(document).ready(function() {
+        var token = '{{ token }}';
+        var type = '{{ type }}';
+        var socket = io("https://"+window.location.hostname, {
+            extraHeaders: {
+                Authorization: '' + token,
+                Type: '' + type,
+                Pricemargin: '' + localStorage.getItem("margins", "")
+            }
+        });
+        socket.on("crate"+getcookie('id')+"{{type}}", function(data) {
+            console.log(data)
+            if (data[0] == 'cart' && la == 0 && data[1] != '{}') {
+                document.getElementById('none_').remove();
+                console.log("cart_");
+                load_(data,loadpc);
+                document.getElementById("cart_opp").innerHTML += `<div style="position: fixed; width: 350px; right: 5%; bottom: 0; z-index: 5000;" class="row">
+              <a class="cta darth abs bh pointer" style="width: 97%; height: 40px; color: white; border: 2px solid rgba(0, 0, 0, 0.569); background-color: black; border: 1px solid white;"><span align="center" class="center">CHECK OUT&nbsp;&nbsp;&nbsp; &#65291;</span></a>
+              </div>
+              `
+            } else if (data[0] == 'saved' && la == 0 && data[1] != '{}') {
+                console.log("saved");
+                document.getElementById('none_').remove();
+                load_(data,loadp);
+            } else if (data[1] == '{}')
+                la = 1;
+        });
+        socket.on(getcookie('evid'), function(data) {
+            console.log(data)
+            if (data['goKaraleva'] == '1' && got != 1) {
+                document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+                got = 1;
+                console.log(data);
+                up(data['ticker']);
+            }
+        });
+        socket.on(getcookie('evid')+"r", function(data) {
+            if (data[2] != "") {
+                for (let v = 0; v< data[0].length;v++) {
+                    if (v != 0)
+                    document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
+                    else
+                    document.getElementById("categories_list").innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
+                }
+            }
+        });
+
+        function redund() {
+            const j = [`${getcookie('evid')}`,''];
+            socket.emit("red", `${j}`)
+            socket.emit("get_category_read", "alldata_")
+            socket.emit("get_category_read", "")
+            console.log("Retrying...")
+        }
+        window.redundancy = redund;
+        function retlisting(a) {
+            console.log(a);
+            socket.emit("saved", "ok");
+            socket.emit("get_category_read", "alldata_")
+            socket.emit("get_category_read", "")
+        }
+        function savef(p) {
+            socket.emit("save", p);
+        }
+        function rmc(id) {
+            a = socket.emit('rmc', {0:id}, function (data) {
+                if (data == "done")
+                    return true;
+                else
+                    return false;
+            });
+            console.log("down");
+            return a;
+        }
+        window.remove = rmc;
+        window.save = savef;
+        window.ea = retlisting;
+    });
+        
+    window.addEventListener('load', function() {
+        if (got != 1){
+            try {
+                if (la != 1) {
+                    console.log("trying")
+                    ea(1);
+                }
+                if (got != 1)
+                    redundancy()
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        my_inter();
+    var my_interval_variable = setInterval(my_inter,1500);
+    function my_inter() {
+        if (got != 1) {
+            if (la != 1) {
+                console.log("trying")
+                ea(1);
+            }
+            if (got != 1)
+                redundancy()
+            } else {
+                clearInterval(my_interval_variable);
+            }
+        }
+        let images = document.querySelectorAll(".imagus");
+    });
+
+    </script>
+    <script>
+        function TextAbstract(text, length) {
+            if (text.length > length) {
+                return text.substring(0, length - 3) + '..';
+            }
+            return text;
+    }
+
+    </script>
+

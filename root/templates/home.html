@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1">
+    <script nonce="{{ csp_nonce() }}" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+    <!--script src="{{ url_for('static', filename='js/header.js') }}"></script-->
+    <script nonce="{{ csp_nonce() }}" src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title>Fragile Studios</title>
+</head>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+<div id="btnpointer" class="btnpointer"></div>
+<style>
+    @font-face {
+      font-family: 'secondfont';
+      src: url("{{ url_for('static', filename='fonts/Uomo Expanded.otf') }}") format('opentype');
+    }
+    @font-face {
+        font-family: 'MyFont';
+        src: url("{{ url_for('static', filename='fonts/DIN Bold.ttf') }}") format('opentype');
+        }
+        @font-face {
+            font-family: 'cool';
+            src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") format('opentype');
+            }
+                i, .cats {
+                font-family: 'MyFont', sans-serif;
+                font-weight: 1000;
+                }
+    * {
+    /*font-family: 'La', sans-serif;*/
+        font-family: 'Labrador A', sans-serif;
+        font-weight: 100;
+    }
+    </style>
+<body id="bod">
+    <div class="man v pizzaria n"></div>
+    <div id="DTitle" style="transition: .5s; position: absolute; z-index: 1000; pointer-events: none;" class="man center">
+        <img id="Dgif" style="transition: 0.2s; width: 65vw; display: flex; mix-blend-mode: difference; filter: invert(0);" class="l" src="{{ url_for('static', filename='img/2.gif') }}" alt="">
+    </div>
+
+    <div id="cart_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+        <div onclick="op('cart', 'cart_')" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+        <div id="cart" class="menu" style="display: flex; flex-direction: column; min-width: 50%;">
+            <a onclick="op('cart', 'cart_')" style="padding: 10px; position: absolute; top: 0; z-index: 1; right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+            <br><br><br><br>
+            <!--iframe id="cart_frame" src="/cart" style="position: absolute; width: 100%; height: 109%; bottom: 0; z-index: -1;" frameborder="0"></iframe-->
+        </div>
+    </div>
+    <div id="enter">
+        <div class="frao man man_ dark center">
+        </div>
+        <div class="man fr"></div>
+        <div style="position: absolute; z-index: 1000;" class="frao man center">
+            <div class="col">
+                <div class="center wrapper">
+                    <a onclick="stopGif()" class="cta">
+                      <span style="padding: 10px 15px; color: black; font-size: 15px;">Enter</span>
+                    </a>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
+    </div>
+    <div class="ticker-container" style="height: 35px; margin-bottom: 0; background-color: #000000;">Get 25% off on your next Perchase</div>
+    <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+        <div id="menu" class="menu">
+            <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+            <br><br>
+            <div class="column">
+            <h4 onclick="window.location = '/home';" class="b_ fb b">Home</h4>
+            </div>
+            <div class="column">
+            <h4 class="pointer b_" onclick="window.location.href = '/product'">SHOP</h4>
+            </div>
+            <div class="div center" style="margin: 25px; background-color: #ccc;"></div>
+            <div class="column">
+            <h4>CATEGORIES</h4>
+            <ul id="categories_list">
+
+            </ul>
+            </div>
+            <div class="div center" style="margin: 25px; background-color: #ccc; margin-top: 25px;"></div>
+            <div class="column">
+                <h4 style="font-weight: 300;" onclick="window.location.href = '/cart'" style="font-weight: 1000;" class="b_ pointer">CART<svg style="width: 15px; margin-left:10px; margin-bottom: -2px; height: auto;" class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
+                    <path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z" fill="none" stroke="black" stroke-width="5"></path>
+                    <path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z" fill="none" stroke="black" stroke-width="5"></path>
+                    <text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: black; font-style: normal;" class="uxskpx" data-hook="items-count"></text>
+                </svg>
+                  </h4>
+                <h4 style="font-weight: 300;" onclick="window.location.href = '/saved'" class="b_ pointer">SAVED<svg style="width: 20px; color: #6e6e6e; margin-left:5px; margin-bottom: -3px; height: auto;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32" fill="#6e6e6e"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg></h4>
+            </div>
+        </div>
+        <div onclick="op()" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+    </div>
+    <fk id="fkhead"></fk>
+    <header id="header" class="center">
+        <a align="left" style="flex: 0;">
+            <a style="flex:0;margin: 0;" onclick="menu()"><img style="width: 50px;" src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+            <a style="flex: 1;margin: 0; display: flex; justify-content: start; align-items: start;" href="#saerch"><svg class="svg p" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 16 16"><path d="M 10.5 1 C 8.019531 1 6 3.019531 6 5.5 C 6 6.558594 6.382813 7.523438 7 8.292969 L 2.023438 13.269531 L 2.726563 13.980469 L 7.707031 9 C 8.476563 9.617188 9.441406 10 10.5 10 C 12.980469 10 15 7.980469 15 5.5 C 15 3.019531 12.980469 1 10.5 1 Z M 10.5 2 C 12.4375 2 14 3.5625 14 5.5 C 14 7.4375 12.4375 9 10.5 9 C 8.5625 9 7 7.4375 7 5.5 C 7 3.5625 8.5625 2 10.5 2 Z" stroke="black" stroke-width="0.4"></path></svg></a>
+        </a>
+        <div onclick="window.location = '/home';" class="one logo center" style="flex:1;position: absolute;"><img id="frg" style="cursor: pointer; margin-top: 20px;" src="{{ url_for('static', filename='img/frg.png') }}"alt=""></div>
+        <a class="one" align="right" style="flex: 1;">
+            <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><g><path d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0"></path></g></svg></a>
+            <a  href="/cart" class="fb b abs"><svg class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1"><path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z"></path><path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z"></path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: white;" class="uxskpx" data-hook="items-count">0</text></svg></a>
+        </a>
+    </header>
+    <br><br><br><br><br>
+    <div align="center" class="ticker-container chrome" style="transition: 0s; overflow: visible; height: 55px; background: linear-gradient(180deg, #0000000c , transparent ); ">
+        <div class="row" style="display: inline-block;">
+            <a class="weffect" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" href="/product#search" data-replace="FIND WHAT YOU LOVE"><span>CHECK OUT STOCKED ITEMS</span></a>
+            <a href="/product" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" class="weffect" data-replace="FIND WHAT YOU LOVE"><span>VISIT ALL PRODUCTS SHOP</span></a>
+            <a href="/credits" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" class="weffect" data-replace="CREDITS"><span>CREDITS</span></a>
+        </div>
+    </div>
+    <div class="Collection">
+        <div class="center">
+            <div class="col">
+                <div align="center" class="title2 center cate"><img align="center" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><h1 id="name_cat" style="text-wrap: nowrap;" class="Title_">NEW ARRIVALS</h1></div>
+            </div>
+        </div>
+    </div><br><br>
+
+        <div>
+        <div style="width: 100vw;">
+            <div class="one navigation2 af" style="display: flex;">
+                <div style="width: 100vw;"><img class="imagus" style="width: 100vw; height: auto;" id="wallpaper" alt=""><i class="for">NEW</i><h1 class="pr" id="loafy" style="justify-content: center; align-items: center; height: 100%;"><a class="cta weffect dialBack" id="visit_" data-replace="GET NOW" style="border: 2px solid #000000; background: white; font-size: 22px; padding: 5px 25px; min-width: 120px;"><span style="color: black; font-size: 15px;">VIEW IN STORE</span></a></h1></div>
+                <div style="display: none;" class="center wrapper">
+                    <a class="cta" href="#">
+                      <span>More</span>
+                    </a>
+                  </div>
+            </div>
+        </div>
+    </div>
+        <div class="ticker-container">
+        <div class="ticker-content" style="width: 10000px;" id="ticker">
+            <!-- Your text goes here, repeat the text for looping -->
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+            <span style="color: transparent;">shpooooooooooooooooooooooooooooooooooooooooooooooooooot</span>
+        </div>
+    </div>
+    <div class="H_item">
+        <div id="items_" class="one scrollSide scrollSide0 af H_scroll">
+            <div class="slideButtons slideButtons0" style="width: 100vw; position: absolute; display: flex; left: 0; border: none; background: none; margin: 0; padding: 0; flex-direction: row; justify-content: space-between; transition: 0.2s; pointer-events: none;">
+                <a onclick="slide(-1)" style="border-radius: 0 100% 100% 0;"><svg version="1.1" id="svg4-Layer_1" xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve"><path d="M13,26c-0.256,0-0.512-0.098-0.707-0.293l-12-12c-0.391-0.391-0.391-1.023,0-1.414l12-12c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L2.414,13l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414C13.512,25.902,13.256,26,13,26z" /></svg></a>
+                <h1 class="meta" style="display: flex; flex: 1;">H</h1>
+                <a onclick="slide(1)" style="padding-right: 35px;border-radius: 100% 0 0 100%;"><svg version="1.1" id="svg5-Layer_1" xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve"><path d="M1,0c0.256,0,0.512,0.098,0.707,0.293l12,12c0.391,0.391,0.391,1.023,0,1.414l-12,12c-0.391,0.391-1.023,0.391-1.414,0s-0.391-1.023,0-1.414L11.586,13L0.293,1.707c-0.391-0.391-0.391-1.023,0-1.414C0.488,0.098,0.744,0,1,0z" /></svg></a>
+            </div>
+        </div>
+    </div>
+<!--div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile world tour tee (back).png') }}" alt=""><i>MEN Category</i><h1>MEN's bra collection&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
+<div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile metal tee.png') }}" alt=""><i>MEN Category</i><h1>No toes and hoes&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
+<div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><i>MEN Category</i><h1>Shoes and brass&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
+<div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile world tour tee (front).png') }}" alt=""><i>MEN Category</i><h1>Shoes and brass&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
+<div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile world tour tee (front).png') }}" alt=""><i>MEN Category</i><h1>Shoes and brass&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
+<div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile world tour tee (front).png') }}" alt=""><i>MEN Category</i><h1>Shoes and brass&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div-->
+<br><br><br><br>
+    <div class="Collection">
+        <div class="center" style="flex-direction: column;">
+            <div class="col">
+                <div align="center" style="background-color: transparent; color: black; padding: 25px;" class="title2 center pointer" onmouseover="this.style.outline= '5px solid #ccc';" onmouseleave="this.style.outline= '0px solid black';" onclick="window.location.href = '/product'"><h1 class="Title_" style="color: black; margin-right: 12px;">EXPLORE</h1></div>
+            </div><br>
+            <div class="row">
+                <a style="color: #ffffff; padding: 5px 15px; background-color: black;" href="/product#search"><span>CHECK OUT STOCKED ITEMS</span></a>
+                <a href="/product" style="color: #ffffff; padding: 5px 15px; background-color: black;"><span>VISIT ALL PRODUCTS SHOP</span></a>
+                <a href="/credits" style="color: #ffffff; padding: 5px 15px; background-color: black;"><span>CREDITS</span></a>
+            </div>
+        </div>
+    </div><br><br>
+    <div class="center">
+        <div style="width: 800px;" align="center">
+            <p class="pip" style="font-size: 20px; color: #7a7a7a;">View All the Products for Sale, (EVERYTHING) BUY NOW because the <a href="/product#search" style="text-decoration: underline; font-weight: 100; color: grey;">stock</a> is limited And time is ticking ⏰</p>
+        </div>
+    </div><br><br><br>
+</body>
+</html>
+<script nonce="{{ csp_nonce() }}">
+    function slide(num, didnot="scrollSide0", did="slideButtons0") {
+        $("."+didnot).scrollLeft((num*505)+$("."+didnot).scrollLeft());
+        const b_ = document.querySelector("."+did);
+        const a_ = document.querySelector("."+didnot);
+        if (window.innerWidth <= 540)
+        b_.children[0].style.display = "none";
+        if (!(a_.scrollWidth > a_.clientWidth)) {
+            document.querySelector("#items_").classList.add("center");
+            b_.style.display = "none";
+        }
+        $('.scrollSide').scroll(function () {
+            if ($('.scrollSide').scrollLeft() > 5)
+            b_.children[2].style.display = "none";
+            else
+            b_.children[2].style.display = "flex";
+
+        });
+    }
+    /*document.getElementById("cart_frame").addEventListener("load", function () {
+        $("#cart_frame").contents().find("#begone").remove();
+        $("#cart_frame").contents().find("#display_").css("display", "flex");
+    });*/
+</script>
+<script nonce="{{ csp_nonce() }}">
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    window.scrollTo(0,0);
+    var dtitle = document.getElementById('DTitle');
+    bod.style.overflow = "hidden";
+    var enter = 0;
+
+    function stopGif() {
+        var dtitle = document.getElementById('DTitle');
+        bod.style.overflow = "visible";
+        bod.style.overflowX = "hidden";
+        document.getElementById('enter').style.opacity = "0";
+        document.getElementById('DTitle').style.top = "-20px";
+        document.getElementById('DTitle').style.height = "0";
+        document.getElementById('Dgif').style.width = "0vh";
+
+        setTimeout(function() {
+            document.getElementById('enter').style.display = "none";
+            enter = 1;
+        }, 300);
+        //[].slice.apply(document.images).filter(is_gif_image).map(freeze_gif);
+    }
+
+    function is_gif_image(i) {
+        return /^(?!data:).*\.gif/i.test(i.src);
+    }
+
+    function freeze_gif(i) {
+        var c = document.createElement('canvas');
+        var w = c.width = i.width;
+        var h = c.height = i.height;
+        c.getContext('2d').drawImage(i, 0, 0, w, h);
+        try {
+            i.src = c.toDataURL("image/gif"); // if possible, retain all css aspects
+        } catch(e) { // cross-domain -- mimic original with all its tag attributes
+            for (var j = 0, a; a = i.attributes[j]; j++)
+                c.setAttribute(a.name, a.value);
+            i.parentNode.replaceChild(c, i);
+        }
+    }
+</script>
+
+
+    <script nonce="{{ csp_nonce() }}">
+        var got = 0;
+    function up(v) {
+        const value = v;
+        var ticker = document.getElementById('ticker');
+        ticker.innerHTML = '';
+        var a;
+        if (value.length> 20)
+            a = Math.floor(value.length+5);
+        else
+            a = Math.floor(value.length+100);
+        for (var i = 0; i < a; i++) {
+            var span = document.createElement('span');
+            span.innerHTML = value; // Set initial text
+            ticker.appendChild(span);
+        }
+    }
+    const loc = window.location.href;
+    console.log(loc);
+    var a = 0;
+    var b = 0;
+    $(document).ready(function() {
+        var token = '{{ token }}';
+        var socket = io("wss://fragilestudiospk.com", {
+            extraHeaders: {
+                Authorization: '' + token
+            }
+        });
+        socket.on(getcookie('evid'), function(data) {
+            if (data['goKaraleva'] == '1' && got != 1) {
+                document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+                got = 1;
+                up(data['ticker']);
+            }
+        });
+        socket.on(getcookie('evid')+"r", function(data) {
+            console.log(data, "bruh");
+            if (data[1] != "a" && b == 0) {
+                b = 1;
+                for (let v = 0; v < data[0].length; v++) {
+                    console.log(v, data);
+                    if (data[2] === 0)
+                    document.getElementById("items_").innerHTML += `<div class="pointer imagus" style="max-width: 25%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', ''); window.location.href = '/products/${data[0][v]['belongs'].toUpperCase()}#${data[0][v]['id']}';"><img class="imagus" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
+                    else {
+                        document.getElementById("items_"+data[2]).innerHTML += `<div class="pointer imagus" style="max-width: 25%; width: 250px; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', ''); window.location.href = '/products/${data[0][v]['belongs'].toUpperCase()}#${data[0][v]['id']}';"><img class="imagus" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
+                    }
+                }
+                slide(0, `scrollSide${data[2]}`, `slideButtons${data[2]}`)
+                //lazy_load();
+            } else if (a == 0) {
+                a = 1;
+                const el_ = document.getElementById("name_cat");
+                el_.innerText = data[0][0]['name'].toUpperCase();
+                el_.classList.add("pointer");
+                el_.parentNode.parentNode.setAttribute("onclick",`window.location.href = "/products/${data[0][0]['category_id'].toUpperCase()}";`);
+                el_.parentNode.parentNode.innerHTML += `
+                <p style="font-size: 19px;">CAME OUT ${data[0][0].created_at[1].split(".")[0] == "0" ? data[0][0].created_at[0].replace(".", ' '):""} ${data[0][0].created_at[0].split(".")[1] != "0" ? data[0][0].created_at[1].replace(".", ' '):""} ${data[0][0].created_at[2].split(".")[0] != "0" ? data[0][0].created_at[2].replace(".", ' '):""} ${data[0][0].created_at[3].split(".")[0] != "0" ? data[0][0].created_at[3].replace(".", ' '):""} AGO</p>
+                `;
+                console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
+                document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
+                document.getElementById("visit_").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
+                //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
+                for (let v = 0; v< data[0].length;v++) {
+                    if (v != 0) {
+                    document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
+                    document.body.innerHTML += `
+                    <div align="center" class="ticker-container chrome" style="transition: 0s; overflow: visible; height: 55px; background: linear-gradient(180deg, #0000000c , transparent );">
+        <div class="row" style="display: inline-block;">
+        </div>
+    </div>
+                    <div class="Collection">
+        <div class="center">
+            <div class="col">
+                <div align="center" onclick="window.location.href = '/products/${data[0][v].category_id}';" class="title2 center cate pointer"><img align="center" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><h1 style="text-wrap: nowrap;" class="Title_">${data[0][v].name.toUpperCase()}</h1></div>
+                <p style="font-size: 19px;">CAME OUT ${data[0][v].created_at[1].split(".")[0] == "0" ? data[0][v].created_at[0].replace(".", ' '):""} ${data[0][v].created_at[0].split(".")[1] != "0" ? data[0][v].created_at[1].replace(".", ' '):""} ${data[0][v].created_at[2].split(".")[0] != "0" ? data[0][v].created_at[2].replace(".", ' '):""} ${data[0][v].created_at[3].split(".")[0] != "0" ? data[0][v].created_at[3].replace(".", ' '):""} AGO</p>
+            </div>
+        </div>
+    </div><br><br><br><br><br>
+
+    <div class="H_item" style="z-index: 1;position: relative;">
+        <div id="items_${v}" class="one scrollSide scrollSide${v} af H_scroll">
+            <div class="slideButtons slideButtons${v}" style="width: 100vw; position: absolute; display: flex; left: 0; border: none; background: none; margin: 0; padding: 0; flex-direction: row; justify-content: space-between; transition: 0.2s; pointer-events: none;">
+                <a onclick="slide(-1, 'scrollSide${v}', 'slideButtons${v}')" style="border-radius: 0 100% 100% 0;"><svg version="1.1" id="svg4-Layer_1" xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve"><path d="M13,26c-0.256,0-0.512-0.098-0.707-0.293l-12-12c-0.391-0.391-0.391-1.023,0-1.414l12-12c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L2.414,13l11.293,11.293c0.391,0.391,0.391,1.023,0,1.414C13.512,25.902,13.256,26,13,26z" /></svg></a>
+                <h1 class="meta" style="display: flex; flex: 1;">H</h1>
+                <a onclick="slide(1, 'scrollSide${v}', 'slideButtons${v}')" style="padding-right: 35px;border-radius: 100% 0 0 100%;"><svg version="1.1" id="svg5-Layer_1" xmlns="http://www.w3.org/2000/svg"xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="14px" height="26px"viewBox="0 0 14 26" enable-background="new 0 0 14 26" xml:space="preserve"><path d="M1,0c0.256,0,0.512,0.098,0.707,0.293l12,12c0.391,0.391,0.391,1.023,0,1.414l-12,12c-0.391,0.391-1.023,0.391-1.414,0s-0.391-1.023,0-1.414L11.586,13L0.293,1.707c-0.391-0.391-0.391-1.023,0-1.414C0.488,0.098,0.744,0,1,0z" /></svg></a>
+            </div>
+        </div>
+    </div>`} else
+    document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
+                    get_products(data[0][v].category_id, v);
+                }
+            }
+        });
+
+        // Evidence that user has logged or signed in.
+        socket.on(getcookie('id'), function(data) {
+            console.log(data)
+        });
+        function get_cat() {
+            socket.emit("get_category_read", 'alldata_')
+            console.log("[1]: Reading...")
+        }
+        function get_products(ide, nom) {
+            socket.emit("get_products_read", ide, nom)
+            console.log("[2]: Reading...")
+        }
+        function redund() {
+            const j = [`${getcookie('evid')}`,''];
+            socket.emit("red", `${j}`)
+            console.log("redund")
+        }
+        window.redunduncy = redund;
+        window.getcat = get_cat;
+    });
+    window.addEventListener('load', function() {
+        if (got != 1){
+            try {
+                getcat();
+                redunduncy();
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        console.log("wTF");
+        my_inter();
+    var my_interval_variable = setInterval(my_inter,1500);
+    function my_inter() {
+        if (got != 1) {
+            redunduncy();
+                getcat();
+            } else {
+                clearInterval(my_interval_variable);
+            }
+        }
+        let images = document.querySelectorAll(".imagus");
+        //lazyload(images);
+        //$("img.imagus").lazyload();
+        pointer_();
+        //lazy_load();
+    });
+    </script>
+    <script nonce="{{ csp_nonce() }}">
+        function TextAbstract(text, length) {
+        if (text == null) {
+            return "";
+        }
+        if (text.length <= length) {
+            return text;
+        }
+        text = text.substring(0, length);
+        last = text.lastIndexOf(" ");
+        text = text.substring(0, last);
+        return text + "...";
+    }
+
+    </script>

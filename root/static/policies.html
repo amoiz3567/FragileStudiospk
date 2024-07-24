@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Policies</title>
+    <style>
+         @font-face {
+            font-family: 'secondfont';
+            src: url("{{ url_for('static', filename='fonts/Uomo.otf') }}") format('opentype');
+        }
+        * {
+            font-family: 'secondfont', sans-serif;
+        }
+
+        body {
+            font-family: 'secondfont', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5em;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 1em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+
+        p {
+            margin: 1em 0;
+        }
+
+        a {
+            color: #238dff;
+            text-decoration: none;
+            border-bottom: 1px dotted #238dff;
+            filter: invert(1);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style: disc inside;
+            padding: 0;
+            margin-left: 1em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        .info-box {
+            border-left: 4px solid #ff6f00;
+            background: #fef4e9;
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f9f9f9;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+        }
+
+        .contact {
+            margin-top: 2em;
+            padding-top: 1em;
+            border-top: 1px solid #eee;
+        }
+        .caw {
+            font-family: 'secondfont', sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="POLICIES">Company Policies</h1>
+
+        <h2 id="Exchange Policy">Exchange Policy</h2>
+        <p>To exchange one or more items from an order, all of the following conditions must be met:</p>
+        <ul>
+            <li>The exchange must be requested within 7 days of the delivery date.</li>
+            <li>The item must be in its original, unused, unaltered and unwashed condition.</li>
+            <li>The item must be returned with the tags and packaging in their original condition.</li>
+        </ul>
+        
+        <div class="info-box">
+            <h3>Steps to Initiate an Exchange</h3>
+            <ul>
+                <li>You can DM us at our Instagram social or email us at <a href="mailto:abcd@gmail.com">abcd@gmail.com</a> where you will be provided with an exchange form that can be filled online.</li>
+                <li>After approval, you are required to send back the items using any courier service to our given address and the exchanged item will be sent back to you.</li>
+            </ul>
+        </div>
+        
+        <h2>Delivery Policy</h2>
+        <ul>
+            <li>The delivery time range is 4-7 working days from the purchase date.</li>
+            <li>The delivery may be delayed in case there are public holidays, natural disasters, and/or logistical errors.</li>
+        </ul>
+
+        <div class="contact">
+            <h2>Contact Us</h2>
+            <p>To reach out to us for any queries you may:</p>
+            <ul>
+                <li>DM us at our official Instagram social (<a href="https://www.instagram.com/fragile__studios" target="_blank">fragile__studios</a>).</li>
+                <li>Email us at <a href="mailto:abcd@gmail.com">abcd@gmail.com</a>.</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>Additional Information</h3>
+            <p>Please ensure that you retain your order confirmation email as proof of purchase. This will help expedite the exchange process. For any urgent queries or concerns, you can also contact our customer service hotline at 1-800-123-4567 during business hours (Monday to Friday, 9 AM - 5 PM).</p>
+            <p>Thank you for shopping with us. We value your satisfaction and strive to provide the best service possible.</p>
+        </div>
+    </div>
+</body>
+</html>

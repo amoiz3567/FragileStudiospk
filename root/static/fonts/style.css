@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Labrador A';
+    src: local('Labrador A Black'), local('Labrador-A-Black'),
+        url('LabradorA-Black.woff2') format('woff2'),
+        url('LabradorA-Black.woff') format('woff'),
+        url('LabradorA-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+  }

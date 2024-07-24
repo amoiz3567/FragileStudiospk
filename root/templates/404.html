@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
+    <title>Fragile</title>
+</head>
+<!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
+<body id="bod">
+    <div class="ticker-container">
+        <div class="ticker-content" style="width: 10000px;" id="ticker">
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+          <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
+        </div>
+      </div>
+    <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
+    </div>
+    <div class="man v pizzaria n"></div>
+    <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
+        <div id="menu" class="menu">
+            <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+            <br><br>
+            <div class="column">
+            <h4 onclick="window.location = '/home';" class="b_ fb b">Home</h4>
+            </div>
+            <div class="column">
+            <h4 class="pointer b_" onclick="window.location.href = '/product'">SHOP</h4>
+            </div>
+            <div class="div center" style="margin: 25px; background-color: #ccc;"></div>
+            <div class="column">
+            <h4>CATEGORIES</h4>
+            <ul id="categories_list">
+                
+            </ul>
+            </div>
+            <div class="div center" style="margin: 25px; background-color: #ccc; margin-top: 25px;"></div>
+            <div class="column">
+                <h4 style="font-weight: 300;" onclick="window.location.href = '/cart'" style="font-weight: 1000;" class="b_ pointer">CART<svg style="width: 15px; margin-left:10px; margin-bottom: -2px; height: auto;" class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
+                    <path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z" fill="none" stroke="black" stroke-width="5"></path>
+                    <path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z" fill="none" stroke="black" stroke-width="5"></path>
+                    <text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: black; font-style: normal;" class="uxskpx" data-hook="items-count"></text>
+                </svg>
+                  </h4>
+                <h4 style="font-weight: 300;" onclick="window.location.href = '/saved'" class="b_ pointer">SAVED<svg style="width: 20px; color: #6e6e6e; margin-left:5px; margin-bottom: -3px; height: auto;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32" fill="#6e6e6e"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg></h4>
+            </div>
+        </div>
+        <div onclick="op()" style="width: 100%; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+    </div>
+    <fk id="fkhead"></fk>
+    <header id="header" class="center">
+        <a style="flex:1;" onclick="menu()"><img style="width: 50px;" src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+        <div onclick="window.location = '/home';" class="one logo center" style="flex:1;position: absolute;"><img id="frg" style="cursor: pointer; margin-top: 50px;" src="{{ url_for('static', filename='img/frg.png') }}" alt=""></div>
+        <a class="one" align="right" style="flex: 1;">
+            <a href="/auth" class="fb b abs"><svg data-bbox="0 0 50 50" class="svg p" data-type="shape" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><g><path d="M25 48.077c-5.924 0-11.31-2.252-15.396-5.921 2.254-5.362 7.492-8.267 15.373-8.267 7.889 0 13.139 3.044 15.408 8.418-4.084 3.659-9.471 5.77-15.385 5.77m.278-35.3c4.927 0 8.611 3.812 8.611 8.878 0 5.21-3.875 9.456-8.611 9.456s-8.611-4.246-8.611-9.456c0-5.066 3.684-8.878 8.611-8.878M25 0C11.193 0 0 11.193 0 25c0 .915.056 1.816.152 2.705.032.295.091.581.133.873.085.589.173 1.176.298 1.751.073.338.169.665.256.997.135.515.273 1.027.439 1.529.114.342.243.675.37 1.01.18.476.369.945.577 1.406.149.331.308.657.472.98.225.446.463.883.714 1.313.182.312.365.619.56.922.272.423.56.832.856 1.237.207.284.41.568.629.841.325.408.671.796 1.02 1.182.22.244.432.494.662.728.405.415.833.801 1.265 1.186.173.154.329.325.507.475l.004-.011A24.886 24.886 0 0 0 25 50a24.881 24.881 0 0 0 16.069-5.861.126.126 0 0 1 .003.01c.172-.144.324-.309.49-.458.442-.392.88-.787 1.293-1.209.228-.232.437-.479.655-.72.352-.389.701-.78 1.028-1.191.218-.272.421-.556.627-.838.297-.405.587-.816.859-1.24a26.104 26.104 0 0 0 1.748-3.216c.208-.461.398-.93.579-1.406.127-.336.256-.669.369-1.012.167-.502.305-1.014.44-1.53.087-.332.183-.659.256-.996.126-.576.214-1.164.299-1.754.042-.292.101-.577.133-.872.095-.89.152-1.791.152-2.707C50 11.193 38.807 0 25 0"></path></g></svg></a>
+            <a href="/cart"><svg class="svg s" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1"><path d="M99.8 28.4c0-1.2-0.9-2-2.1-2h-15c0 3.2 0 7.6 0 8.2 0 1.5-1.2 2.6-2.6 2.9 -1.5 0.3-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.9 0-4.7 0-8.2H40.1c0 3.2 0 7.3 0 8.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-0.6 0-5 0-8.2h-15c-1.2 0-2 0.9-2 2L8.3 124c0 1.2 0.9 2.1 2.1 2.1h96.3c1.2 0 2.1-0.9 2.1-2.1L99.8 28.4z"></path><path d="M59.1 5.9c-2.9 0-2 0-2.9 0 -2 0-4.4 0.6-6.4 1.5 -3.2 1.5-5.9 4.1-7.6 7.3 -0.9 1.8-1.5 3.5-1.8 5.6 0 0.9-0.3 1.5-0.3 2.3 0 1.2 0 2.1 0 3.2 0 1.5-1.2 2.9-2.6 2.9 -1.5 0-2.9-0.9-3.2-2.3 0-0.3 0-0.3 0-0.6 0-1.2 0-2.3 0-3.5 0-3.2 0.9-6.4 2-9.4 1.2-2.3 2.6-4.7 4.7-6.4 3.2-2.9 6.7-5 11.1-5.9C53.5 0.3 55 0 56.7 0c1.5 0 2.9 0 4.4 0 2.9 0 5.6 0.6 7.9 1.8 2.6 1.2 5 2.6 6.7 4.4 3.2 3.2 5.3 6.7 6.4 11.1 0.3 1.5 0.6 3.2 0.6 4.7 0 1.2 0 2.3 0 3.2 0 1.5-1.2 2.6-2.6 2.9s-2.9-0.9-3.2-2.3c0-0.3 0-0.3 0-0.6 0-1.2 0-2.6 0-3.8 0-2.3-0.6-4.4-1.8-6.4 -1.5-3.2-4.1-5.9-7.3-7.3 -1.8-0.9-3.5-1.8-5.9-1.8C61.1 5.9 59.1 5.9 59.1 5.9L59.1 5.9z"></path><text x="58.5" y="77" dy=".35em" text-anchor="middle" style="color: white;" class="uxskpx" data-hook="items-count">0</text></svg></a>
+        </a>
+    </header><br><br><br><br><br><br><br>
+    <div class="section center">
+        <div class="col" align="center">
+            <h1 nonece="{{ nonce }}" class="ferrari center" style="background-image: url('/static/img/404.gif');">404</h1>
+            <script>
+                var elem = $(".dis");
+                if(elem.attr("style").search("background-image") > -1){
+                console.log(elem[0].style.backgroundImage)
+                }
+            </script>
+            <!--img src="https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif?cid=790b76118trl1i3udzuxz9ooii2delftggwniyxrkmjawsky&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt=""-->
+            <div class="page">DO NOT PANIC! <i style="font-weight: 500; font-style: normal;">&nbsp; :( Something Just went wrong!<br> Or the Product doesn't seem to exist</i>.</div>
+            <a class="back-home" href="/product"><p>RETURN TO SHOP</p></a>
+            <h3>OR</h3>
+            <h3>Check out Categories</h3>
+            <ul style="display: flex; width: auto; min-width: 25px; justify-content: center; flex-direction: column; align-items: start;" id="categories_list">
+                
+            </ul>
+
+        </div>
+    </div>
+</body>
+</html>
+    <script>
+    var got = 0;
+    function up(v) {
+        const value = v;
+        var ticker = document.getElementById('ticker');
+        ticker.innerHTML = '';
+        var a;
+        if (value.length> 12) 
+            a = Math.floor(value.length+5);
+        else
+            a = Math.floor(value.length+100);
+        for (var i = 0; i < a; i++) {
+            var span = document.createElement('span');
+            span.innerHTML = value; // Set initial text
+            ticker.appendChild(span);
+        }
+    }
+    const loc = window.location.href;
+    console.log(loc)
+    $(document).ready(function() {
+        var token = '{{ token }}';
+        var socket = io("https://"+window.location.hostname, {
+            extraHeaders: {
+                Authorization: '' + token
+            }
+        });
+        socket.on(getcookie('evid')+"r", function(data) {
+            if (data[2] != "") {
+                for (let v = 0; v< data[0].length;v++) {
+                    if (v != 0)
+                    document.querySelectorAll("#categories_list").forEach(el => {el.innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`});
+                    else
+                    document.querySelectorAll("#categories_list").forEach(el => {el.innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`});
+                }
+            }
+        });
+        socket.on(getcookie('evid'), function(data) {
+            if (data['goKaraleva'] == '1') {
+                got = 1;
+                document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+                up(data['ticker']);
+            }
+        });
+        // Evidence that user has logged or signed in.
+        socket.on(getcookie('evid'), function(data) {
+            console.log(data)
+        });
+        function redund() {
+            const j = [`${getcookie('evid')}`,''];
+            socket.emit("red", `${j}`)
+            socket.emit("get_category_read", "alldata_")
+            console.log("Retrying...")
+        }
+        window.redunduncy = redund;
+    });
+    var my_interval_variable = setInterval(my_inter,500);
+    function my_inter(){
+        if (got != 1) {
+            redunduncy()
+        } else
+        clearInterval(my_interval_variable)
+    }
+    
+    </script>
+    <script>
+        function TextAbstract(text, length) {
+            if (text.length > length) { 
+                return text.substring(0, length - 3) + '...'; 
+            } 
+            return text;
+    }
+    
+    </script>
