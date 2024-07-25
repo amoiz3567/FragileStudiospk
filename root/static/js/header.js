@@ -9,7 +9,7 @@ document.addEventListener('scroll', (event) => {
             header.classList.add("frao");
             header.style.transform = "translate(0, 0%)";
             fk.style.display = "block";
-            frg.style.margin = "0";
+            frg.style.margin = "-20px";
             frg.style.width = "140px";
             //setTimeout(() => header.style.transition ="0s", 50);
         }, 1);
