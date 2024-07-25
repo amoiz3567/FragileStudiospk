@@ -950,6 +950,25 @@ ul {
 
   
 }
+header {
+  /*flex-direction: column;
+          align-items: flex-start;*/
+  width: auto;
+  /* Allow header to shrink */
+  padding: 10px;
+  /* Reduce padding */
+
+}
+
+.ham {
+  display: block;
+}
+
+.menu {
+  width: 80vw;
+}
+
+
 @media (max-width: 882px) {
   .cont {
     width: 100%;
