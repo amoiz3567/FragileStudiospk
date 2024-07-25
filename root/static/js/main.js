@@ -72,11 +72,11 @@ function averageColor(imageElement) {
         = Math.floor(rgb.b / count);
     */
     rgb.r
-        = Math.floor(imgData.data[1]);
+        = Math.floor(imgData.data[4]);
     rgb.g
-        = Math.floor(imgData.data[2]);
+        = Math.floor(imgData.data[5]);
     rgb.b
-        = Math.floor(imgData.data[3]);
+        = Math.floor(imgData.data[6]);
     return rgb;
 }
 var rgb;
