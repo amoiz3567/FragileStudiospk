@@ -785,6 +785,12 @@ var g;
             routPointer();
         }
     }
+    function getcolors_(img_, a) {
+        rgb = averageColor(document.getElementById(img_));
+        document.querySelectorAll(a).forEach((e) => {
+            e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        });
+    }
     function loadp(keys, dObj, count, rep=0) {
         g=loadp;
         for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
@@ -804,7 +810,7 @@ var g;
             if (img[1] == '') {
                 img2 = img1;
             } else {
-                img2 = img.split('/')[1].replace(/ /g, "%20");
+                img2 = img.split('/')[2].replace(/ /g, "%20");
             }
             img2 =  img2.replace(/,/g, '');
             console.log(img2, "this is image 2");
@@ -812,6 +818,7 @@ var g;
             a.setAttribute("id", `${item['id']}`)
             a.classList.add("abs");
             division.setAttribute("class", "container cont center");
+            division.classList.add(`pd${i}`);
             var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
@@ -838,7 +845,7 @@ var g;
             }
             division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
     <i class="save-container add me bh pointer">…</i>
-    </div>`
+    </div>`;
             var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
             console.log(item['saved'], "-------------------------------------------------------------------------");
             if (item['saved'] == 1){
@@ -846,6 +853,7 @@ var g;
             }
             image.classList.add("img1");
             image.classList.add("imagus");
+            image.classList.setAttribute("id",`img${i}`);
             division.appendChild(image);
             image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
             imageAh.classList.add("img2");
@@ -872,6 +880,7 @@ var g;
                     </div>
                 </a>`
             routPointer();
+            getcolors_(`img${i}`, `pd${i}`);
         }
     }
 
