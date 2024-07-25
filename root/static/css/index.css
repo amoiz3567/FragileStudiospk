@@ -2147,3 +2147,8 @@ le>la {
     height: 10px;
   }
 }
+
+#description {width:220px; background: transparent; border:1px solid transparent;}
+#description ul{margin:0; padding:0; list-style-type: circle;}
+#description ul li{display:block; border-bottom:1px dotted #0c2f5f; height:30px;}
+#description ul li a{text-decoration:none; color:#0c2f5f; text-transform:uppercase; font-size:12px; padding:9px 0 0 22px; font-weight:bold; display:block;}
