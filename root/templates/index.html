@@ -846,9 +846,9 @@ var g;
             }
             image.classList.add("img1");
             image.classList.add("imagus");
-            //image.classList.setAttribute();
-            setAttribute(image, {"id": `imag${i}`, "src": "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20")});
+            image.setAttribute("id", `imag${i}`);
             division.appendChild(image);
+            image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
             //image.setAttribute();
             imageAh.classList.add("img2");
             imageAh.classList.add("imagus");
