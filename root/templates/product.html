@@ -660,7 +660,7 @@ pointer_();
             const details = `<div align="right" class="save-container"><i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtnonce="{{ csp_nonce() }}" onclick(event, this, '${item['id']}');">${save_svg}</i></div>
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
                     <p style="font-weight: 100;">${TextAbstract(item['description'], 36).replace(/&lt;/g, /</g).replace(/&gt;/g, />/g)}</p>
-                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
+                    <div style="height: 5px; margin-top: 15px; display: flex; git justify-content: start; align-items: start;" class="row">
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>
                     <b><!--${item['quantity']}--></b>`
@@ -708,8 +708,8 @@ pointer_();
     document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
     document.getElementById("quantity_many").parentElement.innerText = QUANTITY_ != 0 ? document.getElementById("quantity_many").parentElement.innerText:document.getElementById("quantity_many").parentElement.innerText.replace("Only", '');
     window.pname = item['name'];
-    e("description").innerText = TextAbstract(item['description'], 128).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-    e("desc_2").innerText = item['description'].replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    e("description").innerHTML = TextAbstract(item['description'], 128).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    e("desc_2").innerHTML = item['description'].replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     e("d").innerText = item['name']+" - Fragile";
     var str = item['img'].split('/');
     const a = document.getElementById('gal');
