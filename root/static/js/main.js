@@ -79,6 +79,10 @@ function averageColor(imageElement) {
         = Math.floor(imgData.data[6]);
         *
     return rgb;*/
+    const edges = [];
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    // Collect grayscale values from the edges
     for (let x = 0; x < canvas.width; x++) {
         edges.push(getGrayscaleValue(imageData, x, 0, canvas.width));
         edges.push(getGrayscaleValue(imageData, x, canvas.height - 1, canvas.width));
@@ -88,16 +92,15 @@ function averageColor(imageElement) {
         edges.push(getGrayscaleValue(imageData, canvas.width - 1, y, canvas.width));
     }
 
-    // Determine the most frequent color
-    const colorFrequency = {};
-    edges.forEach(color => {
-        const key = color.join(',');
-        colorFrequency[key] = (colorFrequency[key] || 0) + 1;
+    // Determine the most frequent grayscale value
+    const grayscaleFrequency = {};
+    edges.forEach(value => {
+        grayscaleFrequency[value] = (grayscaleFrequency[value] || 0) + 1;
     });
 
-    const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
+    const mostFrequentGrayscale = Object.keys(grayscaleFrequency).reduce((a, b) => grayscaleFrequency[a] > grayscaleFrequency[b] ? a : b);
 
-    return `rgb(${mostFrequentColor})`;
+    return `rgb(${mostFrequentGrayscale}, ${mostFrequentGrayscale}, ${mostFrequentGrayscale})`;
 }
 function getGrayscaleValue(imageData, x, y, width) {
     const index = (y * width + x) * 4;
