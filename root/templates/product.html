@@ -651,7 +651,7 @@ pointer_();
             division.appendChild(secondDivision);
             a.appendChild(division);
             container.append(a);
-            routPointer();
+            ////routPointer();
         }
     }
     function hide() {
@@ -714,7 +714,7 @@ pointer_();
       a.innerHTML +=  `<div id="blo" class="blo" style="position: absolute; opacity: 0.2;top: 0;left: 0;width: 100%;height: 100%; margin-bottom: 25px;filter: invert(100%);z-index: -1; /* Position behind the content */"></div><img class="v abs" id="img" target="_self" nonce="{{ csp_nonce() }}" onclick="slideIndex = ${v+1};showSlides(slideIndex);e('fur').style.display = 'flex';"  ${escal}
       src="{{ url_for('static', filename='products/') }}${str[v].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}" style="filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.05)); padding: 55px 10px 85px 25px; margin-bottom: 25px;" alt="">`;
     }
-    routPointer();
+    ////routPointer();
     document.querySelectorAll('.chrome').forEach(element => {
       element.classList.remove("chrome");
     });
