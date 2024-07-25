@@ -1965,6 +1965,9 @@ le>la {
 .tags-input ul {
   list-style: none;
 }
+#categories_list ul {
+  list-style: none;
+}
 
 .tags-input li { 
   display: inline-block;
@@ -2168,5 +2171,5 @@ header {
 }
 
 #description {width:220px; background:transparent; border:1px solid transparent;}
-ul{margin:0; padding:0; list-style-position: circle; font-size:16px; }
-ul li{list-style-type: circle; border-bottom:1px dotted transparent; height:30px; margin-left:10px;}
+ul{margin:0; padding:0; list-style-position:dot; font-size:16px; }
+ul li{list-style-type: dot; border-bottom:1px dotted transparent; height:30px; margin-left:10px;}
