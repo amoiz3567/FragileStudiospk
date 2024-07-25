@@ -55,6 +55,7 @@ function averageColor(imageElement) {
         imageElement.width;
 
     context.drawImage(imageElement, 0, 0);
+    const edges = [];
     imgData = context.getImageData(0, 0, width, height);
     length = imgData.data.length;
 

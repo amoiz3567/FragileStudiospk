@@ -1064,11 +1064,75 @@ var g;
 
     </script>
     <script>
+        function averageColor__(imageElement) {
+    var canvas
+        = document.createElement('canvas'),
+        context
+            = canvas.getContext &&
+            canvas.getContext('2d'),
+        imgData, width, height,
+        length,
+        rgb = { r: 0, g: 0, b: 0 },
+        count = 0;
+    height = canvas.height =
+        imageElement.naturalHeight ||
+        imageElement.offsetHeight ||
+        imageElement.height;
+    width = canvas.width =
+        imageElement.naturalWidth ||
+        imageElement.offsetWidth ||
+        imageElement.width;
+
+    context.drawImage(imageElement, 0, 0);
+    const edges = [];
+    imgData = context.getImageData(0, 0, width, height);
+    length = imgData.data.length;
+
+    /*for (var i = 0; i < length; i += 4) {
+        rgb.r += imgData.data[i];
+        rgb.g += imgData.data[i + 1];
+        rgb.b += imgData.data[i + 2];
+        count++;
+    }
+    rgb.r
+        = Math.floor(rgb.r / count);
+    rgb.g
+        = Math.floor(rgb.g / count);
+    rgb.b
+        = Math.floor(rgb.b / count);
+    
+    rgb.r
+        = Math.floor(imgData.data[4]);
+    rgb.g
+        = Math.floor(imgData.data[5]);
+    rgb.b
+        = Math.floor(imgData.data[6]);
+        *
+    return rgb;*/
+    for (let x = 0; x < canvas.width; x++) {
+        edges.push(getPixel(imageData, x, 0, canvas.width));
+        edges.push(getPixel(imageData, x, canvas.height - 1, canvas.width));
+    }
+    for (let y = 0; y < canvas.height; y++) {
+        edges.push(getPixel(imageData, 0, y, canvas.width));
+        edges.push(getPixel(imageData, canvas.width - 1, y, canvas.width));
+    }
+    console.log("this is shatihw ta aw -aw- -a-f-a -shitttttt");
+    // Determine the most frequent color
+    const colorFrequency = {};
+    edges.forEach(color => {
+        const key = color.join(',');
+        colorFrequency[key] = (colorFrequency[key] || 0) + 1;
+    });
+    const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
+    return `rgb(${mostFrequentColor})`;
+}
+
     function getcolors_(img_, a) {
         setTimeout(() => {
             var rgb;
             try {
-                rgb = averageColor(document.getElementById(img_));
+                rgb = averageColor__(document.getElementById(img_));
                 document.querySelectorAll(a).forEach((e) => {
                     console.log(rgb);
                     e.style.background = rgb;
