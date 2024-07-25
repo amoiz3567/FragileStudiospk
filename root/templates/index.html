@@ -786,6 +786,7 @@ var g;
         }
     }
     function getcolors_(img_, a) {
+        var rgb;
         rgb = averageColor(document.getElementById(img_));
         document.querySelectorAll(a).forEach((e) => {
             e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
