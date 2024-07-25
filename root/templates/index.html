@@ -1065,19 +1065,21 @@ var g;
     </script>
     <script>
     function getcolors_(img_, a) {
-        var rgb;
-        try {
-            rgb = averageColor(document.getElementById(img_));
-            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-            document.querySelectorAll(a).forEach((e) => {
+        setTimeout(() => {
+            var rgb;
+            try {
+                rgb = averageColor(document.getElementById(img_));
                 console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-                e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-            });
-        }
-        catch (err) {
-            console.log(err, "the error occurred.");
-        }
+                document.querySelectorAll(a).forEach((e) => {
+                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                    e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                });
+            }
+            catch (err) {
+                console.log(err, "the error occurred.");
+            }        
+        }, 600);
     }
     </script>
     <script nonce="{{ csp_nonce() }}">
