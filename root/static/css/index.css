@@ -130,7 +130,7 @@ header {
   justify-content: center;
   /* Center the content */
   align-items: center;
-  width: 700px;
+  width: 100vw;
   /* Initial width to be half of the content */
   margin: 0 auto;
   /* Center the header */
