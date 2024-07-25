@@ -1127,6 +1127,10 @@ var g;
     const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
     return `rgb(${mostFrequentColor})`;
 }
+    function getPixel(imageData, x, y, width) {
+        const index = (y * width + x) * 4;
+        return [imageData[index], imageData[index + 1], imageData[index + 2]];
+    }
 
     function getcolors_(img_, a) {
         setTimeout(() => {
