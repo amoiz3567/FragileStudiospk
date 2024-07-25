@@ -80,12 +80,12 @@ function averageColor(imageElement) {
         *
     return rgb;*/
     for (let x = 0; x < canvas.width; x++) {
-        edges.push(getPixel(imageData, x, 0, canvas.width));
-        edges.push(getPixel(imageData, x, canvas.height - 1, canvas.width));
+        edges.push(getGrayscaleValue(imageData, x, 0, canvas.width));
+        edges.push(getGrayscaleValue(imageData, x, canvas.height - 1, canvas.width));
     }
     for (let y = 0; y < canvas.height; y++) {
-        edges.push(getPixel(imageData, 0, y, canvas.width));
-        edges.push(getPixel(imageData, canvas.width - 1, y, canvas.width));
+        edges.push(getGrayscaleValue(imageData, 0, y, canvas.width));
+        edges.push(getGrayscaleValue(imageData, canvas.width - 1, y, canvas.width));
     }
 
     // Determine the most frequent color
@@ -99,9 +99,13 @@ function averageColor(imageElement) {
 
     return `rgb(${mostFrequentColor})`;
 }
-function getPixel(imageData, x, y, width) {
+function getGrayscaleValue(imageData, x, y, width) {
     const index = (y * width + x) * 4;
-    return [imageData[index], imageData[index + 1], imageData[index + 2]];
+    const r = imageData[index];
+    const g = imageData[index + 1];
+    const b = imageData[index + 2];
+    const grayscale = Math.round((r + g + b) / 3);
+    return grayscale;
 }
 
 var rgb;
