@@ -1065,24 +1065,31 @@ var g;
     </script>
     <script>
         function averageColor__(imageElement) {
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = image.width;
-            canvas.height = image.height;
+            var canvas = document.createElement('canvas'),
+                context = canvas.getContext && canvas.getContext('2d'),
+                imgData, width, height,
+                rgb = { r: 0, g: 0, b: 0 },
+                count = 0;
+            
+            height = canvas.height = imageElement.naturalHeight ||
+                                      imageElement.offsetHeight ||
+                                      imageElement.height;
+            width = canvas.width = imageElement.naturalWidth ||
+                                   imageElement.offsetWidth ||
+                                   imageElement.width;
 
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
+            context.drawImage(imageElement, 0, 0);
             const edges = [];
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+            imgData = context.getImageData(0, 0, width, height);
 
             // Collect pixels from the edges
-            for (let x = 0; x < canvas.width; x++) {
-                edges.push(getPixel(imageData, x, 0, canvas.width));
-                edges.push(getPixel(imageData, x, canvas.height - 1, canvas.width));
+            for (let x = 0; x < width; x++) {
+                edges.push(getPixel(imgData.data, x, 0, width));
+                edges.push(getPixel(imgData.data, x, height - 1, width));
             }
-            for (let y = 0; y < canvas.height; y++) {
-                edges.push(getPixel(imageData, 0, y, canvas.width));
-                edges.push(getPixel(imageData, canvas.width - 1, y, canvas.width));
+            for (let y = 0; y < height; y++) {
+                edges.push(getPixel(imgData.data, 0, y, width));
+                edges.push(getPixel(imgData.data, width - 1, y, width));
             }
 
             // Determine the most frequent color
@@ -1094,14 +1101,29 @@ var g;
 
             const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
 
-            return `rgb(${mostFrequentColor})`;
-}
-    function getPixel(imageData, x, y, width) {
+            const [r, g, b] = mostFrequentColor.split(',').map(Number);
+            return `rgb(${r}, ${g}, ${b})`;
+    }
+    function getPixel(data, x, y, width) {
         const index = (y * width + x) * 4;
-        return [imageData[index], imageData[index + 1], imageData[index + 2]];
+        return [data[index], data[index + 1], data[index + 2]];
     }
 
     function getcolors_(img_, a) {
+        /*setTimeout(() => {
+            var rgb;
+            try {
+                rgb = averageColor__(document.getElementById(img_));
+                document.querySelectorAll(a).forEach((e) => {
+                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                    e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                });
+            }
+            catch (err) {
+                console.log(err, "the error occurred.");
+            }        
+        }, 600);*/
         setTimeout(() => {
             var rgb;
             try {
