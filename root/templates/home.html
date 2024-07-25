@@ -46,7 +46,7 @@
     </div>
     <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
     </div-->
-    <div class="ticker-container" style="height: 35px; margin-bottom: 0; background-color: #000000;">FREE DELIVERY ON ORDERS ABOVE 4000 PKR</div>
+    <div class="ticker-container" style="height: 35px; margin-bottom: 0; font-size: 13px; background-color: #000000;">FREE DELIVERY ON ORDERS ABOVE 4000 PKR 🔥</div>
     <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
         <div id="menu" class="menu">
             <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
@@ -90,17 +90,10 @@
         </a>
     </header>
     <br><br><br><br><br>
-    <div align="center" class="ticker-container chrome" style="transition: 0s; overflow: visible; height: 55px; background: linear-gradient(180deg, #0000000c , transparent ); ">
-        <div class="row" style="display: inline-block;">
-            <a class="weffect" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" href="/product#search" data-replace="FIND WHAT YOU LOVE"><span>CHECK OUT STOCKED ITEMS</span></a>
-            <a href="/product" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" class="weffect" data-replace="FIND WHAT YOU LOVE"><span>VISIT ALL PRODUCTS SHOP</span></a>
-            <a href="/credits" style="color: black; padding: 5px 15px; background-color: white; border: 1px solid black;" class="weffect" data-replace="CREDITS"><span>CREDITS</span></a>
-        </div>
-    </div>
     <div class="Collection">
         <div class="center">
             <div class="col">
-                <div align="center" class="title2 center cate"><img align="center" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><h1 id="name_cat" style="text-wrap: nowrap;" class="Title_">NEW ARRIVALS</h1></div>
+                <div align="center" class="title2 center cate"><h1 id="name_cat" style="text-wrap: nowrap;" class="Title_">...</h1></div>
             </div>
         </div>
     </div><br><br>
@@ -108,7 +101,7 @@
         <div>
         <div style="width: 100vw;">
             <div class="one navigation2 af" style="display: flex;">
-                <div style="width: 100vw;"><img class="imagus" style="width: 100vw; height: auto;" id="wallpaper" alt=""><i class="for">NEW</i><h1 class="pr" id="loafy" style="justify-content: center; align-items: center; height: 100%;"><a class="cta weffect dialBack" id="visit_" data-replace="GET NOW" style="border: 2px solid #000000; background: white; font-size: 22px; padding: 5px 25px; min-width: 120px;"><span style="color: black; font-size: 15px;">VIEW IN STORE</span></a></h1></div>
+                <div style="width: 100vw;"><img class="imagus" id="dafirstimage" style="width: 100vw; height: auto;" id="wallpaper" alt=""><i class="for">NEW</i><h1 class="pr" id="loafy" style="justify-content: center; align-items: center; height: 100%;"><a class="cta weffect dialBack" id="visit_" data-replace="GET NOW" style="border: 2px solid #000000; background: white; font-size: 22px; padding: 5px 25px; min-width: 120px;"><span style="color: black; font-size: 15px;">VIEW IN STORE</span></a></h1></div>
                 <div style="display: none;" class="center wrapper">
                     <a class="cta" href="#">
                       <span>More</span>
@@ -292,12 +285,13 @@
                 el_.innerText = data[0][0]['name'].toUpperCase();
                 el_.classList.add("pointer");
                 el_.parentNode.parentNode.setAttribute("onclick",`window.location.href = "/products/${data[0][0]['category_id'].toUpperCase()}";`);
-                el_.parentNode.parentNode.innerHTML += `
+                /*el_.parentNode.parentNode.innerHTML += `
                 <p style="font-size: 19px;">CAME OUT ${data[0][0].created_at[1].split(".")[0] == "0" ? data[0][0].created_at[0].replace(".", ' '):""} ${data[0][0].created_at[0].split(".")[1] != "0" ? data[0][0].created_at[1].replace(".", ' '):""} ${data[0][0].created_at[2].split(".")[0] != "0" ? data[0][0].created_at[2].replace(".", ' '):""} ${data[0][0].created_at[3].split(".")[0] != "0" ? data[0][0].created_at[3].replace(".", ' '):""} AGO</p>
-                `;
+                `;*/
                 console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 document.getElementById("visit_").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
+                document.getElementById("dafirstimage").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
                 for (let v = 0; v< data[0].length;v++) {
                     if (v != 0) {
@@ -310,8 +304,8 @@
                     <div class="Collection">
         <div class="center">
             <div class="col">
-                <div align="center" onclick="window.location.href = '/products/${data[0][v].category_id}';" class="title2 center cate pointer"><img align="center" src="{{ url_for('static', filename='products/illusions of eternity tee.png') }}" alt=""><h1 style="text-wrap: nowrap;" class="Title_">${data[0][v].name.toUpperCase()}</h1></div>
-                <p style="font-size: 19px;">CAME OUT ${data[0][v].created_at[1].split(".")[0] == "0" ? data[0][v].created_at[0].replace(".", ' '):""} ${data[0][v].created_at[0].split(".")[1] != "0" ? data[0][v].created_at[1].replace(".", ' '):""} ${data[0][v].created_at[2].split(".")[0] != "0" ? data[0][v].created_at[2].replace(".", ' '):""} ${data[0][v].created_at[3].split(".")[0] != "0" ? data[0][v].created_at[3].replace(".", ' '):""} AGO</p>
+                <div align="center" onclick="window.location.href = '/products/${data[0][v].category_id}';" class="title2 center cate pointer"><h1 style="text-wrap: nowrap;" class="Title_">${data[0][v].name.toUpperCase()}</h1></div>
+                <!--p style="font-size: 19px;">CAME OUT ${data[0][v].created_at[1].split(".")[0] == "0" ? data[0][v].created_at[0].replace(".", ' '):""} ${data[0][v].created_at[0].split(".")[1] != "0" ? data[0][v].created_at[1].replace(".", ' '):""} ${data[0][v].created_at[2].split(".")[0] != "0" ? data[0][v].created_at[2].replace(".", ' '):""} ${data[0][v].created_at[3].split(".")[0] != "0" ? data[0][v].created_at[3].replace(".", ' '):""} AGO</p-->
             </div>
         </div>
     </div><br><br><br><br><br>

@@ -576,12 +576,12 @@ script[nonce~="whatever"] {
 
 
 .title2 {
-  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0);
   height: 6vh;
   overflow: hidden;
   position: relative;
-  border: 2px solid black;
-  box-shadow: 5px 45px 55px #110f1a18;
+  border: 2px solid rgba(0, 0, 0, 0);
+  box-shadow: 5px 45px 55px transparent;
   border-radius: 3px;
 }
 
@@ -590,7 +590,7 @@ script[nonce~="whatever"] {
   /*mix-blend-mode: difference;
     filter: invert(0);*/
   overflow: hidden;
-  color: white;
+  color: black;
   width: 100%;
 }
 
