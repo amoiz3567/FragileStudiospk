@@ -768,7 +768,7 @@ pointer_();
               document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
               document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
               create_dp();
-              document.querySelector(".dropbtn").innerHTML = `${intent.xl != 0 ? `&nbsp;XL (${intent.xl})&nbsp;`:intent.l != 0 ? `&nbsp;L (${intent.l})&nbsp;`:intent.m != 0 ? `&nbsp;M (${intent.m})&nbsp;`:intent.s != 0 ? `&nbsp;XL (${intent.s})&nbsp;`:"SOLD OUT"}`;
+              document.querySelector(".dropbtn").innerHTML = `${intent.xl != 0 ? `&nbsp;XL&nbsp;`:intent.l != 0 ? `&nbsp;L&nbsp;`:intent.m != 0 ? `&nbsp;M&nbsp;`:intent.s != 0 ? `&nbsp;XL&nbsp;`:"SOLD OUT"}`;
               console.log("done 1");
               setup(key, dObj, i, count);
               console.log("done 2");
