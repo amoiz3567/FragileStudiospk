@@ -797,7 +797,7 @@ pointer_();
             exclude.push(intent['id'])
             document.getElementById('color').innerHTML += `<br><a nonce="{{ csp_nonce() }}" onclick="location.replace('/product/${intent['id']}');" style=\"margin: 0;\"><div class=\"color\" style=\"${l}background: ` + category[2].split('.')[1]+";\"></div>"+`</a>`;
           }
-          var rgb;
+          /*var rgb;
           setTimeout(async () => {
             rgb = averageColor(document.getElementById('img'));
             const all = document.querySelectorAll(".blo");
@@ -807,7 +807,7 @@ pointer_();
                 all[n].style.backgroundColor =
                 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
               }
-            }, 0);
+            }, 0);*/
           } else if (got == 2) {
             var data_ = JSON.parse(data);
             var keys = Object.keys(data_);

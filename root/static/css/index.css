@@ -1396,7 +1396,8 @@ span:nth-child(2) {
   pointer-events: none;
   animation: noise 8s steps(10) infinite;
   image-rendering: pixelated;
-  background-image: url("/static/img/grain.png");
+  /*background-image: url("/static/img/grain.png");*/
+  display: none;
   background-size: 15vw;
   filter:invert(1);
 }
