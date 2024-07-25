@@ -1069,11 +1069,10 @@ var g;
             var rgb;
             try {
                 rgb = averageColor(document.getElementById(img_));
-                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
                 document.querySelectorAll(a).forEach((e) => {
-                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-                    e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-                    console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                    console.log(rgb);
+                    e.style.background = rgb;
+                    console.log(rgb);
                 });
             }
             catch (err) {

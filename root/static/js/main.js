@@ -79,36 +79,27 @@ function averageColor(imageElement) {
         = Math.floor(imgData.data[6]);
         *
     return rgb;*/
-    const edges = [];
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-    // Collect grayscale values from the edges
     for (let x = 0; x < canvas.width; x++) {
-        edges.push(getGrayscaleValue(imageData, x, 0, canvas.width));
-        edges.push(getGrayscaleValue(imageData, x, canvas.height - 1, canvas.width));
+        edges.push(getPixel(imageData, x, 0, canvas.width));
+        edges.push(getPixel(imageData, x, canvas.height - 1, canvas.width));
     }
     for (let y = 0; y < canvas.height; y++) {
-        edges.push(getGrayscaleValue(imageData, 0, y, canvas.width));
-        edges.push(getGrayscaleValue(imageData, canvas.width - 1, y, canvas.width));
+        edges.push(getPixel(imageData, 0, y, canvas.width));
+        edges.push(getPixel(imageData, canvas.width - 1, y, canvas.width));
     }
-
-    // Determine the most frequent grayscale value
-    const grayscaleFrequency = {};
-    edges.forEach(value => {
-        grayscaleFrequency[value] = (grayscaleFrequency[value] || 0) + 1;
+    console.log("this is shatihw ta aw -aw- -a-f-a -shitttttt");
+    // Determine the most frequent color
+    const colorFrequency = {};
+    edges.forEach(color => {
+        const key = color.join(',');
+        colorFrequency[key] = (colorFrequency[key] || 0) + 1;
     });
-
-    const mostFrequentGrayscale = Object.keys(grayscaleFrequency).reduce((a, b) => grayscaleFrequency[a] > grayscaleFrequency[b] ? a : b);
-
-    return `rgb(${mostFrequentGrayscale}, ${mostFrequentGrayscale}, ${mostFrequentGrayscale})`;
+    const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
+    return `rgb(${mostFrequentColor})`;
 }
-function getGrayscaleValue(imageData, x, y, width) {
+function getPixel(imageData, x, y, width) {
     const index = (y * width + x) * 4;
-    const r = imageData[index];
-    const g = imageData[index + 1];
-    const b = imageData[index + 2];
-    const grayscale = Math.round((r + g + b) / 3);
-    return grayscale;
+    return [imageData[index], imageData[index + 1], imageData[index + 2]];
 }
 
 var rgb;
