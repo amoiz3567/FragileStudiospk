@@ -16,29 +16,6 @@
 </head>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <div id="btnpointer" class="btnpointer"></div>
-<style>
-    @font-face {
-      font-family: 'secondfont';
-      src: url("{{ url_for('static', filename='fonts/Uomo Expanded.otf') }}") format('opentype');
-    }
-    @font-face {
-        font-family: 'MyFont';
-        src: url("{{ url_for('static', filename='fonts/DIN Bold.ttf') }}") format('opentype');
-        }
-        @font-face {
-            font-family: 'cool';
-            src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") format('opentype');
-            }
-                i, .cats {
-                font-family: 'MyFont', sans-serif;
-                font-weight: 1000;
-                }
-    * {
-    /*font-family: 'La', sans-serif;*/
-        font-family: 'Labrador A', sans-serif;
-        font-weight: 100;
-    }
-    </style>
 <body id="bod">
     <!--div class="man v pizzaria n"></div-->
     <!--div id="DTitle" style="transition: .5s; position: absolute; z-index: 1000; pointer-events: none;" class="man center">
@@ -216,7 +193,7 @@
         $("#cart_frame").contents().find("#display_").css("display", "flex");
     });*/
 </script>
-<script nonce="{{ csp_nonce() }}">
+<!--script nonce="{{ csp_nonce() }}">
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
@@ -259,9 +236,7 @@
             i.parentNode.replaceChild(c, i);
         }
     }
-</script>
-
-
+</script-->
     <script nonce="{{ csp_nonce() }}">
         var got = 0;
     function up(v) {

@@ -16,32 +16,6 @@
   </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
-<style>
-  @font-face {
-    font-family: 'secondfont';
-    src: url("{{ url_for('static', filename='fonts/Uomo Expanded.otf') }}") format('opentype');
-  }
-  @font-face {
-    font-family: 'MyFont';
-    src: url("{{ url_for('static', filename='fonts/DIN.ttf') }}") format('opentype');
-  }
-  i, .cats {
-    font-family: 'MyFont', sans-serif;
-    font-weight: 1000;
-  }
-  .co {
-    font-family: 'Arial', sans-serif;
-    font-weight: 1000;
-    background-color: #c3c3c3;
-    width: 100vw;
-    font-style: normal;
-    text-align: center;
-  }
-  * {
-    font-family: 'MyFont', sans-serif;
-    font-weight: 1000;
-  }
-</style>
   <div id="dialogue_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #0000005d; backdrop-filter: blur(10px);">
     <div id="dialogue" class="center" align="center" style="transition: .3s; position: absolute; height: auto; width:auto; max-width: 645px; border-radius: 5px; background-color: rgb(255, 255, 255); z-index: 50; padding: 25px;">
         <a nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
