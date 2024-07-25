@@ -820,10 +820,9 @@ var g;
             img2 =  img2.replace(/,/g, '');
             console.log(img2, "this is image 2");
             a.setAttribute("href", `/product/${item['id']}`);
-            a.setAttribute("id", `${item['id']}`)
+            a.setAttribute("id", `${item['id']}`);
             a.classList.add("abs");
-            division.setAttribute("class", "container cont center");
-            division.classList.add(`pd${i}`);
+            division.setAttribute("class", `container cont center pd${i}`);
             var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
@@ -859,7 +858,7 @@ var g;
             image.classList.add("img1");
             image.classList.add("imagus");
             //image.classList.setAttribute();
-            setAttribute(image, {"id": `img${i}`, "src": "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20")});
+            setAttribute(image, {"id": `imag${i}`, "src": "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20")});
             division.appendChild(image);
             //image.setAttribute();
             imageAh.classList.add("img2");
@@ -873,7 +872,7 @@ var g;
                     <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
                     <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
-                    </div>`
+                    </div>`;
             secondDivision.innerHTML = details;
             container.querySelectorAll("#loading").forEach((el) =>{el.remove()})
             division.appendChild(secondDivision);
@@ -884,9 +883,9 @@ var g;
                         <img class="img1" src="/static/img/works.gif">
                         <img class="img2" src="/static/img/works.gif">
                     </div>
-                </a>`
+                </a>`;
             //routPointer();
-            getcolors_(`img${i}`, `pd${i}`);
+            getcolors_(`imag${i}`, `pd${i}`);
         }
     }
 
