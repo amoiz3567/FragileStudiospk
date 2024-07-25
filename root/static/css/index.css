@@ -136,7 +136,7 @@ header {
   /* Center the header */
   z-index: 600;
   transform: translate(0, 50%);
-
+  margin-top:0;
 }
 
 fk {
