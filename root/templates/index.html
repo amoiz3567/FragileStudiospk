@@ -787,9 +787,13 @@ var g;
     }
     function getcolors_(img_, a) {
         var rgb;
+            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
         rgb = averageColor(document.getElementById(img_));
+            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
         document.querySelectorAll("."+a).forEach((e) => {
+            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
             e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
         });
     }
     function loadp(keys, dObj, count, rep=0) {
