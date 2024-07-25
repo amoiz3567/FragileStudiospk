@@ -58,7 +58,7 @@ function averageColor(imageElement) {
     imgData = context.getImageData(0, 0, width, height);
     length = imgData.data.length;
 
-    for (var i = 0; i < length; i += 4) {
+    /*for (var i = 0; i < length; i += 4) {
         rgb.r += imgData.data[i];
         rgb.g += imgData.data[i + 1];
         rgb.b += imgData.data[i + 2];
@@ -70,15 +70,34 @@ function averageColor(imageElement) {
         = Math.floor(rgb.g / count);
     rgb.b
         = Math.floor(rgb.b / count);
-    /*
+    
     rgb.r
         = Math.floor(imgData.data[4]);
     rgb.g
         = Math.floor(imgData.data[5]);
     rgb.b
         = Math.floor(imgData.data[6]);
-        */
-    return rgb;
+        *
+    return rgb;*/
+    for (let x = 0; x < canvas.width; x++) {
+        edges.push(getPixel(imageData, x, 0, canvas.width));
+        edges.push(getPixel(imageData, x, canvas.height - 1, canvas.width));
+    }
+    for (let y = 0; y < canvas.height; y++) {
+        edges.push(getPixel(imageData, 0, y, canvas.width));
+        edges.push(getPixel(imageData, canvas.width - 1, y, canvas.width));
+    }
+
+    // Determine the most frequent color
+    const colorFrequency = {};
+    edges.forEach(color => {
+        const key = color.join(',');
+        colorFrequency[key] = (colorFrequency[key] || 0) + 1;
+    });
+
+    const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
+
+    return `rgb(${mostFrequentColor})`;
 }
 var rgb;
 /*setTimeout(() => {
