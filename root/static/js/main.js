@@ -99,6 +99,11 @@ function averageColor(imageElement) {
 
     return `rgb(${mostFrequentColor})`;
 }
+function getPixel(imageData, x, y, width) {
+    const index = (y * width + x) * 4;
+    return [imageData[index], imageData[index + 1], imageData[index + 2]];
+}
+
 var rgb;
 /*setTimeout(() => {
     rgb = averageColor(document.getElementById('img'));
