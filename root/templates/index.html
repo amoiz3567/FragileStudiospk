@@ -973,10 +973,10 @@ var g;
             if (data[3] != undefined) {
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
-                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${i}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${i}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
+                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
                     else
-                    document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${i}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${i}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
-                    getcolors_(`imagi${i}`, `.pdi${i}`);
+                    document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
+                    getcolors_(`imagi${v}`, `.pdi${v}`);
                 }
                 lazy_load();
             } else {
@@ -1141,7 +1141,7 @@ var g;
             catch (err) {
                 console.log(err, "the error occurred.");
             }        
-        }, 600);
+        }, 250);
     }
     </script>
     <script nonce="{{ csp_nonce() }}">
