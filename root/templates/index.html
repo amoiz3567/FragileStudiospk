@@ -18,6 +18,15 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
     <title>Fragile Store</title>
 </head>
+<style>
+    @font-face {
+      font-family: 'cool';
+      src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") format('opentype');
+    }
+    .des_nodot {
+      font-family: 'cool', sans-serif;
+    }
+    </style>    
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
     <div id="context_container" style="width: auto; height: auto; position: fixed; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin-left:37%; margin-top: 230px; border: none; padding-bottom: 15px; background-color: #c7c7c7;">
@@ -742,7 +751,7 @@ var g;
                 }
             }            division.innerHTML += `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div class="details" style="display: flex; margin-left: 25px; margin-top: 0%; flex-direction: column; justify-content: flex-start; align-items: start;flex: 1;">
                     <h4 style="font-size: 28px; text-wrap: nowrap;">${TextAbstract(item['name'], 20)}</h4>
-                    <p style="font-weight: 100; text-wrap: nowrap;">${TextAbstract(item['description'], 36)}</p>
+                    <p style="font-weight: 100; text-wrap: nowrap;" class="des_nodot">${TextAbstract(item['description'], 36)}</p>
                     <div style="display: flex;">${cats}</div></div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
 </div>`;     division2.style = "display: flex; flex-direction: row; width: 100%; align-items: start;";
             secondDivision.classList.add("detail-container");

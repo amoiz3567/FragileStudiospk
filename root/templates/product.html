@@ -34,6 +34,15 @@
     </div>
     <div nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="width: 100vw; height: 100vh; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
 </div>
+<style>
+@font-face {
+  font-family: 'cool';
+  src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") format('opentype');
+}
+.des_nodot {
+  font-family: 'cool', sans-serif;
+}
+</style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <div class="ticker-container">
   <div class="ticker-content ticker-font" style="width: 10000px;" id="ticker">
@@ -64,7 +73,7 @@
         <br><br>
         <div class="col">
             <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Description*</i></h1><br>
-            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;">umm... hmm... something doesn't add up :/</i></h1><br>
+            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;">umm... hmm... something doesn't add up :/</i></h1><br>
         </div>
     </div>
     <div nonce="{{ csp_nonce() }}" onclick="op('description_', 'description__');" style="width: 100vw; height: 100vh; background-color: #5a5a5a86;"></div>
@@ -633,7 +642,7 @@ pointer_();
             secondDivision.classList.add("detail-container");
             const details = `<div align="right" class="save-container"><i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtnonce="{{ csp_nonce() }}" onclick(event, this, '${item['id']}');">${save_svg}</i></div>
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
-                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36).replace(/&lt;/g, /</g).replace(/&gt;/g, />/g)}</p>
+                    <p style="font-weight: 100;" class="des_nodot">${TextAbstract(item['description'], 36).replace(/&lt;/g, /</g).replace(/&gt;/g, />/g)}</p>
                     <div style="height: 5px; margin-top: 15px; display: flex; git justify-content: start; align-items: start;" class="row">
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>
