@@ -104,14 +104,14 @@ br {
   .title {
     font-size: 25px;
   }
-}
+}/*
 .header {
   width: 100vw;
   height: 60px;
   box-shadow: 0px 0px 3px #0000004d;
   padding-left: 25px;
   padding-right: 25px;
-}
+}*/
 
 .row {
   display: flex;
