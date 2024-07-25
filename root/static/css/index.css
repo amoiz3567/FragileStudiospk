@@ -2149,5 +2149,5 @@ le>la {
 }
 
 #description {width:220px; padding-left: 20px; background:transparent; border:1px solid transparent;}
-#description  ul{margin:0; padding:0; list-style-position: inside;  font-size:16px; }
-#description  ul li{display: list-item; border-bottom:1px dotted transparent; height:30px; margin-left:30px;}
+#description  ul{margin:0; padding:0; list-style-position: circle; font-size:16px; }
+#description  ul li{display: list-item; list-style-type: circle; border-bottom:1px dotted transparent; height:30px; margin-left:30px;}
