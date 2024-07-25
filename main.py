@@ -1266,6 +1266,12 @@ def credits():
 @app.route("/")
 def tohome():
     return redirect("/home")
+@app.route("/explore")
+def tohome_():
+    return redirect("/home")
+@app.route("/shop")
+def tohome__():
+    return redirect("/home")
 
 @app.route('/payload', methods=['GET', 'POST'])
 @before_mid
@@ -1280,6 +1286,9 @@ def upload_file():
                 file.save(os.path.join(current_path+"/root/static/products/"+file_))
 
                 return make_response(jsonify({0: file_}))
+            abort(404)
+        abort(404)
+    abort(404)
 
 def authed_user_admin():
     external_ip = ""
