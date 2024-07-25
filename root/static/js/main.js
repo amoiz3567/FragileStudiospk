@@ -58,7 +58,7 @@ function averageColor(imageElement) {
     imgData = context.getImageData(0, 0, width, height);
     length = imgData.data.length;
 
-    /*for (var i = 0; i < length; i += 4) {
+    for (var i = 0; i < length; i += 4) {
         rgb.r += imgData.data[i];
         rgb.g += imgData.data[i + 1];
         rgb.b += imgData.data[i + 2];
@@ -70,13 +70,14 @@ function averageColor(imageElement) {
         = Math.floor(rgb.g / count);
     rgb.b
         = Math.floor(rgb.b / count);
-    */
+    /*
     rgb.r
         = Math.floor(imgData.data[4]);
     rgb.g
         = Math.floor(imgData.data[5]);
     rgb.b
         = Math.floor(imgData.data[6]);
+        */
     return rgb;
 }
 var rgb;
