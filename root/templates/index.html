@@ -785,21 +785,6 @@ var g;
             //routPointer();
         }
     }
-    function getcolors_(img_, a) {
-        var rgb;
-        try {
-            rgb = averageColor(document.getElementById(img_));
-            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-            document.querySelectorAll(a).forEach((e) => {
-                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-                e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
-            });
-        }
-        catch (err) {
-            console.log(err, "the error occurred.");
-        }
-    }
     function loadp(keys, dObj, count, rep=0) {
         g=loadp;
         for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
@@ -1077,6 +1062,23 @@ var g;
         lazy_load();
     });
 
+    </script>
+    <script>
+    function getcolors_(img_, a) {
+        var rgb;
+        try {
+            rgb = averageColor(document.getElementById(img_));
+            console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+            document.querySelectorAll(a).forEach((e) => {
+                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                e.style.background = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                console.log(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+            });
+        }
+        catch (err) {
+            console.log(err, "the error occurred.");
+        }
+    }
     </script>
     <script nonce="{{ csp_nonce() }}">
         function TextAbstract(text, length) {
