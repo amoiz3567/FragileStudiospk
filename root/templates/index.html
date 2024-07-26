@@ -975,8 +975,8 @@ var g;
             lazy_load();
         });
         socket.on(getcookie('evid')+"r", function(data) {
-            console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
             try {
+                console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
             if (data[3] != undefined) {
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
@@ -1038,7 +1038,7 @@ var g;
         function get_cat() {
             //socket.emit("get_category_read", "")
             socket.emit("get_products_read", category_, 4424)
-            //socket.emit("get_category_read", "alldata_")
+            socket.emit("get_category_read", "alldata_")
             console.log("Reading...")
         }
         function savef(p) {
