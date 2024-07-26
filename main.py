@@ -815,13 +815,14 @@ def savedData(d):
                 pid_ = json.loads(test_id.replace("\'", "\""))
                 pid = pid_['productId']
                 quantity = pid_['quantity']
+                price = pid_['price']
                 size = pid_['size']
             print(pid, "thiaisf")
             mcursor.execute(selectppid+" = %s;", (pid,))
             vr = (mcursor.fetchone())
             print(vr)
             print(v, "------------------------")
-            av.update({v: {"id": vr[0], "name": vr[1], "description": vr[2], "price": vr[3], "quantity": quantity, "category": vr[5], "size": size, "img": vr[6]+","},})
+            av.update({v: {"id": vr[0], "name": vr[1], "description": vr[2], "price": int(vr[3])*int(quantity), "quantity": quantity, "category": vr[5], "size": size, "img": vr[6]+","},})
         print(av)
         socketio.emit("crate"+evid+type_, {0: type_, 1: json.dumps(av, cls=DecimalEncoder)})
         mcursor.close()
