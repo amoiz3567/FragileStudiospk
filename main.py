@@ -390,7 +390,7 @@ def cart(format):
             'another_key': 123
         }
         response = Response(json.dumps(data), mimetype='application/json')
-        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
+        #response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
         #'''except mysql.connector.Error as err:
         #    print("Error:", err)
         #    return "Error"
