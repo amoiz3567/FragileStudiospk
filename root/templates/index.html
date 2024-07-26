@@ -952,7 +952,7 @@ var g;
     window.onbeforeunload = function(e) {
         localStorage.setItem('scrollpos', window.scrollY);
     };
-    var caw = 0;
+
     $(document).ready(function() {
         var token = '{{ token }}';
         const category_ = "{{ category }}";
@@ -974,70 +974,10 @@ var g;
             }
             lazy_load();
         });
-        socket.on(getcookie('evid')+"roo", function(data) {
+        socket.on(getcookie('evid')+"r", function(data) {
             try {
                 console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
-                console.log(data, " - - -- ---- ----- ------ ------- bruh");
-            if (caw != 1 && data[3] == null) {
-                caw = 1;
-                for (let v = 0; v < data[0].length; v++) {
-                    if (v == 0)
-                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
-                    else
-                    document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
-                    setTimeout(() => {
-                        let images = document.querySelectorAll(".imagus");
-                        lazyload(images);
-                        $("img.imagus").lazyload();
-                        //pointer_();
-                        lazy_load();
-                        getcolors_(`imagi${v}`, `.pdi${v}`);
-                    }, 400);
-                }
-                lazy_load();
-            } else {
-                if (data[2] != "") {
-                    for (let v = 0; v< data[0].length;v++) {
-                        if (v != 0)
-                        document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
-                    else
-                    document.getElementById("categories_list").innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
-            }
-        } else {
-            console.log("nwice the awfawfa wfba uif- ----")
-                    var data_ = data[0]
-                    for (let i = 0; i< Object.keys(data_).length; i++) {
-                        console.log(data_);
-                        if (data[1] != "b") {
-                            document.getElementById("name_cat").innerText = data_[i]['name'].toUpperCase();
-                            document.getElementById("description_cat").innerText = data_[i]['description'];
-                        } else {
-                            document.getElementById("name_cat").innerText = "ALL PRODUCTS";
-                            document.getElementById("description_cat").style.display = "none";
-                        }
-                        let margin = (data_[i]['price_margins'].split('.'));
-                        for (let v = 0; v< margin.length; v++) {
-                            console.log(margin[v]);
-                            var j = document.querySelectorAll("#jude1");
-                            var l = ['#search', ''];
-                            for (let i = 0; i< j.length; i++)
-                            j[i].innerHTML += `<a class="ra selected" onclick="localStorage.setItem('margins', '${margin[v]}'); window.location.href = '${l[i]}';window.location.reload();">${margin[v]}</a>`
-                    }
-                    load_dp("2");
-                }
-            }
-        }
-    } catch (err) {
-        console.log("WTFFF", err);
-    }
-        lazy_load();
-    });
-    socket.on(getcookie('evid')+"r", function(data) {
-        try {
-                console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
-                console.log(data, " - - -- ---- ----- ------ ------- bruh");
-            if (caw != 1 && data[3] == null) {
-                caw = 1;
+            if (data[3] != null) {
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
                     document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
@@ -1098,7 +1038,7 @@ var g;
         function get_cat() {
             socket.emit("get_category_read", "")
             socket.emit("get_products_read", category_, 4424)
-            socket.emit("get_category_read", "alldata_")
+            //socket.emit("get_category_read", "alldata_")
             console.log("Reading...")
         }
         function savef(p) {
@@ -1115,7 +1055,6 @@ var g;
         window.save = savef;
         window.getcat = get_cat;
     });
-    getcat();
     window.addEventListener('load', function() {
         if (got != 1){
             try {
