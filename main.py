@@ -1152,7 +1152,7 @@ def request_ca_read():
     if (authed_user_admin() == True):
         mycursor.execute("USE products")
         mycursor.execute(f"""SELECT category_id,name, img FROM category""")
-        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall(), 1:None, 2:None, 3:None})
+        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall()})
 
         return make_response(jsonify({0: 200}))
     abort(403)
@@ -1218,7 +1218,7 @@ WHERE
     row_num = 1 OR
     row_num = total_rows OR
     row_num = (total_rows / 2) OR
-    row_num = (total_rows / 2) + 1
+    row_num = (total_rows / 2) + 1s
 ORDER BY row_num;
     """
     cursor.execute(query)
@@ -1227,7 +1227,7 @@ ORDER BY row_num;
     #if (nom == 4424):
     #    socketio.emit(request.cookies.get("evid")+"roo", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 3:None})
     #else:
-    socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 3:None})
+    socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "loaf", 2: nom})
     cursor.close()
     #abort(400)
 
@@ -1249,7 +1249,7 @@ def request_ca_read(data):
             days = time_difference.days
             weeks = days // 7
             result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
-        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar", 3:None})
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar"})
         cursor.close()
         return make_response(jsonify({0: 200}))
     row_id = request.headers.get('Authorization')
@@ -1262,12 +1262,12 @@ def request_ca_read(data):
         cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
         r = cursor.fetchall()
         print(r)
-        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "", 3:None})
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
         cursor.close()
         return make_response(jsonify({0: 200}))
     cursor.execute(f"""SELECT price_margins FROM category""")
     r = cursor.fetchall()
-    socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: "", 3:None})
+    socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: ""})
     cursor.close()
     del r, exists, res
     #abort(400)
