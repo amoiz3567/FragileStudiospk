@@ -597,28 +597,28 @@ $(".img_producto_container")
             a.setAttribute("id", `${item['id']}`);
             a.classList.add("abs");
             division.setAttribute("class", `container cont center pd${i}`);
-            var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
+            var cate = item['category'].toUpperCase().replace(/\./g, ' / ').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
             let lock = "";
             for (var lor = 0; lor < cate.length; lor++) {
                 if (lor == 3)
                     break;
-                    text_cate = cate[lor].replace(/ /g, '')
+                text_cate = cate[lor].replace(/ /g, '')
                 if (taged[lor] == "color_") {
-                    text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
+                  text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
                   }
-                  let paired = text_cate.split("/")
+                  let paired = text_cate.split(/[.\/]/)
                   if (paired.length > 1 && taged[lor] != "color_") {
                     for (let v = 0; v < paired.length; v++) {
                       if (v == 2)
                       lock = "display: none;"
-                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
+                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
                       console.log(`${taged[lor]}${paired[v].replace(/ /g, '')}`)
                   }
                 } else {
-                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/\'/g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
-                  console.log(`${taged[lor]}${cate[lor].replace(/\'/g, '').split('/')[0]}`, "this wttfffff");
+                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
+                  console.log(`${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}`);
                 }
             }
             division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
@@ -643,16 +643,9 @@ $(".img_producto_container")
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
             secondDivision.innerHTML = details;
-            container.querySelectorAll("#loading").forEach((el) =>{el.remove()})
             division.appendChild(secondDivision);
             a.appendChild(division);
             container.append(a);
-            container.innerHTML += `<a id="loading" class="abs">
-                    <div class="container cont center" style=" background-color: rgba(0, 0, 0, 0.075);">
-                        <img class="img1" src="/static/img/works.gif">
-                        <img class="img2" src="/static/img/works.gif">
-                    </div>
-                </a>`;
             ////routPointer();
             getcolors_(`imag${i}`, `.pd${i}`);
         }
