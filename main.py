@@ -386,12 +386,12 @@ def cart(format):
         #mydb.commit()
         #cursor.close()
         response = make_response("Valid")
+        response.headers['Content-Type'] = 'text/plain'
         response.set_cookie("11025Cart", f"{json.dumps(res)}")
-        '''except mysql.connector.Error as err:
-            print("Error:", err)
-            return "Error"
-
-        finally:'''
+        #'''except mysql.connector.Error as err:
+        #    print("Error:", err)
+        #    return "Error"
+        #finally:'''
         return response
 
 @app.route('/500')
