@@ -389,9 +389,9 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        response = make_response()
-        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
-        return response
+        response_ = make_response()
+        response_.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
+        return response_
 
 @app.route('/500')
 def err():
