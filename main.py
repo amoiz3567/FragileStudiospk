@@ -385,7 +385,7 @@ def cart(format):
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
-        response = make_response()
+        response = make_response(jsonify({0: "valid"}))
         response.headers['Content-Type'] = 'text/plain'
         response.set_cookie("11025Cart", f"{json.dumps(res)}")
         #'''except mysql.connector.Error as err:
