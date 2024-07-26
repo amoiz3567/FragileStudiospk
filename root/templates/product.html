@@ -741,7 +741,7 @@ $(".img_producto_container")
       });
       socket.on(getcookie('evid'), function (data) {
         if (data['goKaraleva'] == '0') {
-          window.location.href = "/404";
+          document.headers.innerHTML += `<meta http-equiv="refresh" content="0; URL=/404"/>`;
         } else if (data['goKaraleva'] == '1' && got <= 1) {
           got = 1;
           document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
