@@ -418,7 +418,7 @@ def cart(format):
 def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-    session['yourCart'] = str(f"{json.dumps(res)}")
+    session['yourCart'] = str(ds)
     return response
     #abort(404)
 
