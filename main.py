@@ -729,8 +729,6 @@ def saved():
 @app.route('/cart')
 def viewCart():
     id = req.cookies.get('id')
-    if(id == None or validuuid(id)):
-        return redirect(url_for("auth"))
     bruv = make_response(render_template('cart.html', type='cart'))
     if request.cookies.get('evid') == None:
         bruv.set_cookie('evid', str(uuid.uuid4()), secure=True)
