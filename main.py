@@ -756,7 +756,7 @@ def savedData(d):
         a = "cart"
     elif type_ == 'saved':
         a = "savedpid"
-    if (d== "ok" and id != None):
+    if (d== "ok"):
         id = request.cookies.get('id')
         #print(a, "this is a")
         if type_ == 'cart':
