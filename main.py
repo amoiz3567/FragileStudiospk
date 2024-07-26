@@ -700,17 +700,18 @@ def ret(id, products=None, p=None):
     a =cursor.fetchone()
     #cursor.fetchall()
     try:
-        id_ = request.cookies.get('id')
+        id_ = request.cookies.get('evid')
     except:
         id_ = None
     crate_len = 0
     if (id_ != None and not validuuid(id_)):
-        query_user = "SELECT cart FROM users WHERE user_id = %s"
-        cursor.execute(query_user, (id_,))
-        crate_result = cursor.fetchone()
-        cursor.fetchall()
-        if (crate_result['cart'] != "{}" and crate_result):
-            crate_len = len(json.loads(crate_result['cart']).values())
+        #query_user = "SELECT cart FROM users WHERE user_id = %s"
+        #cursor.execute(query_user, (id_,))
+        #crate_result = cursor.fetchone()
+        #cursor.fetchall()
+        crate_result = request.cookies.get('yourCart')
+        if (crate_result != None and crate_result):
+            crate_len = len(json.loads(crate_result).values())
     cursor.close()
     res = {"ticker": a['value'], "goKaraleva": "1", "amount": crate_len}
     res.update({"d": json.dumps(data, cls=DecimalEncoder)})
