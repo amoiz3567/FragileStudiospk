@@ -390,6 +390,7 @@ def cart(format):
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
         res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
+        res['price'] = res['price']*res['quantity']
         #mydb.commit()
         #cursor.close()
         #'''except mysql.connector.Error as err:
