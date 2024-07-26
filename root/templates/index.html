@@ -1035,30 +1035,37 @@ var g;
             try {
                 console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
                 console.log(data, " - - -- ---- ----- ------ ------- bruh");
-            if (data[3] != null) {
-            console.log("nwice the awfawfa wfba uif- ----")
-                    var data_ = data[0]
-                    for (let i = 0; i< Object.keys(data_).length; i++) {
-                        console.log(data_);
-                        if (data[1] != "b") {
-                            document.getElementById("name_cat").innerText = data_[i]['name'].toUpperCase();
-                            document.getElementById("description_cat").innerText = data_[i]['description'];
-                        } else {
-                            document.getElementById("name_cat").innerText = "ALL PRODUCTS";
-                            document.getElementById("description_cat").style.display = "none";
-                        }
-                        let margin = (data_[i]['price_margins'].split('.'));
-                        for (let v = 0; v< margin.length; v++) {
-                            console.log(margin[v]);
-                            var j = document.querySelectorAll("#jude1");
-                            var l = ['#search', ''];
-                            for (let i = 0; i< j.length; i++)
-                            j[i].innerHTML += `<a class="ra selected" onclick="localStorage.setItem('margins', '${margin[v]}'); window.location.href = '${l[i]}';window.location.reload();">${margin[v]}</a>`
-                    }
-                    load_dp("2");
+                if (data[2] != "") {
+                    for (let v = 0; v< data[0].length;v++) {
+                        if (v != 0)
+                        document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
+                    else
+                    document.getElementById("categories_list").innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
                 }
-            }
-    } catch (err) {
+            } else {
+                console.log("nwice the awfawfa wfba uif- ----")
+                        var data_ = data[0]
+                        for (let i = 0; i< Object.keys(data_).length; i++) {
+                            console.log(data_);
+                            if (data[1] != "b") {
+                                document.getElementById("name_cat").innerText = data_[i]['name'].toUpperCase();
+                                document.getElementById("description_cat").innerText = data_[i]['description'];
+                            } else {
+                                document.getElementById("name_cat").innerText = "ALL PRODUCTS";
+                                document.getElementById("description_cat").style.display = "none";
+                            }
+                            let margin = (data_[i]['price_margins'].split('.'));
+                            for (let v = 0; v< margin.length; v++) {
+                                console.log(margin[v]);
+                                var j = document.querySelectorAll("#jude1");
+                                var l = ['#search', ''];
+                                for (let i = 0; i< j.length; i++)
+                                j[i].innerHTML += `<a class="ra selected" onclick="localStorage.setItem('margins', '${margin[v]}'); window.location.href = '${l[i]}';window.location.reload();">${margin[v]}</a>`
+                        }
+                        load_dp("2");
+                    }
+                }
+            } catch (err) {
         console.log("WTFFF", err);
     }
         lazy_load();
