@@ -385,9 +385,12 @@ def cart(format):
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
+        print(json.dumps(res))
+        print("done with the dum")
         response = make_response("Valid")
         response.headers['Content-Type'] = 'text/plain'
         response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
+        print("all seems good")
         #'''except mysql.connector.Error as err:
         #    print("Error:", err)
         #    return "Error"
