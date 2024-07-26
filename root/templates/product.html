@@ -571,6 +571,7 @@ $(".img_producto_container")
     return
   }
     function loadp(keys, dObj, count, rep=0) {
+      try {
           for (let i = 0; i < count; i++) {
             console.log(i)
             let key = Math.floor(keys[i]);
@@ -649,6 +650,9 @@ $(".img_producto_container")
             ////routPointer();
             getcolors_(`imag${i}`, `.pd${i}`);
         }
+      } catch (err) {
+        console.log("errrrr", err);
+      }
     }
 
     function hide() {
