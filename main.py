@@ -389,11 +389,11 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        bruv = make_response(render_template('product.html'))
-        token = generate_token(uuid.uuid4())
-        session['mid2912'] = token
-        bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
-        return bruv
+        response = Response()
+        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
+        # Manually set headers to simulate setting a cookie
+        headers = dict(response.headers)
+        return "Valid"
 
 @app.route('/500')
 def err():
