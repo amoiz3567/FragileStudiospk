@@ -353,7 +353,7 @@ def cart(format):
     #cursor = mydb.cursor(buffered=True)
     #try:
     ## Please get the cookies for the products in cart.
-    category_data = request.get.cookies("11025Cart")
+    category_data = request.cookies.get("11025Cart")
     #db_memoized(cursor,f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #category_data = cursor.fetchall()
