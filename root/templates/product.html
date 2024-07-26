@@ -749,6 +749,7 @@ $(".img_producto_container")
           video.style.left = "0";
           video.style.height = "100%";
           video.style.width = "100%";
+          body.appendChild(video);
         } else if (data['goKaraleva'] == '1' && got <= 1) {
           got = 1;
           document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
