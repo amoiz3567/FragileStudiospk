@@ -389,8 +389,11 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        response_ = make_response()
-        return response_
+        bruv = make_response(render_template('product.html', nonce=nonce))
+        token = generate_token(uuid.uuid4())
+        session['mid2912'] = token
+        bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+        return bruv
 
 @app.route('/500')
 def err():
