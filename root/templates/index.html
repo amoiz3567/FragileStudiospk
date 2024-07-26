@@ -952,7 +952,7 @@ var g;
     window.onbeforeunload = function(e) {
         localStorage.setItem('scrollpos', window.scrollY);
     };
-
+    var caw = 0;
     $(document).ready(function() {
         var token = '{{ token }}';
         const category_ = "{{ category }}";
@@ -978,7 +978,8 @@ var g;
             try {
                 console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
                 console.log(data, " - - -- ---- ----- ------ ------- bruh");
-            if (data[3] == null) {
+            if (caw != 1 && data[3] == null) {
+                caw = 1;
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
                     document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
@@ -1078,7 +1079,7 @@ var g;
         function get_cat() {
             socket.emit("get_category_read", "")
             socket.emit("get_products_read", category_, 4424)
-            //socket.emit("get_category_read", "alldata_")
+            socket.emit("get_category_read", "alldata_")
             console.log("Reading...")
         }
         function savef(p) {
@@ -1095,6 +1096,7 @@ var g;
         window.save = savef;
         window.getcat = get_cat;
     });
+    getcat();
     window.addEventListener('load', function() {
         if (got != 1){
             try {
