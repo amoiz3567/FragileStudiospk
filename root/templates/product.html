@@ -832,7 +832,8 @@ $(".img_producto_container")
         //if (getcookie("id") != null) {
           socket.emit("submitcart", formation, function (data) {
             if (data[0] == "Invalid")
-            summonContext('auth');
+            console.log("Invalid");
+            //summonContext('auth');
             else if (data[0] == "Valid") {
               console.log("done the cart has added!");
               function thru() {
