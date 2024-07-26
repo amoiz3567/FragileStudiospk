@@ -978,6 +978,11 @@ var g;
                     else
                     document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
                     getcolors_(`imagi${v}`, `.pdi${v}`);
+                    let images = document.querySelectorAll(".imagus");
+                    lazyload(images);
+                    $("img.imagus").lazyload();
+                    //pointer_();
+                    lazy_load();
                 }
                 lazy_load();
             } catch (err) {
@@ -1063,11 +1068,11 @@ var g;
                 clearInterval(my_interval_variable);
             }
         }
-        //let images = document.querySelectorAll(".imagus");
-        //lazyload(images);
-        //$("img.imagus").lazyload();
+        let images = document.querySelectorAll(".imagus");
+        lazyload(images);
+        $("img.imagus").lazyload();
         //pointer_();
-        //lazy_load();
+        lazy_load();
     });
 
     </script>
