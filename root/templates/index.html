@@ -970,7 +970,7 @@ var g;
         });
         socket.on(getcookie('evid')+"r", function(data) {
             console.log(data, "bruh");
-            if (data[3] != undefined) {
+            if (!data[3]) {
                 try {
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
