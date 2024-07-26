@@ -977,7 +977,7 @@ var g;
         socket.on(getcookie('evid')+"r", function(data) {
             try {
                 console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
-            if (caw = 0 && data[3] != null) {
+            if (caw = 0 && data[3] == null) {
                 caw = 1;
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
@@ -1066,9 +1066,14 @@ var g;
                 console.log(err);
             }
         }
+        var images = document.querySelectorAll(".imagus");
+        lazyload(images);
+        $("img.imagus").lazyload();
+        //pointer_();
+        lazy_load();
         console.log("wTF");
         my_inter();
-    var my_interval_variable = setInterval(my_inter,1500);
+        var my_interval_variable = setInterval(my_inter,1500);
     function my_inter() {
         if (got != 1) {
                 redundancy();
@@ -1077,7 +1082,15 @@ var g;
                 clearInterval(my_interval_variable);
             }
         }
-        let images = document.querySelectorAll(".imagus");
+        var getch = setInterval(getch_funct,1500);
+    function getch_funct() {
+        if (caw != 1) {
+                getcat();
+            } else {
+                clearInterval(getch);
+            }
+        }
+        var images = document.querySelectorAll(".imagus");
         lazyload(images);
         $("img.imagus").lazyload();
         //pointer_();
