@@ -351,7 +351,7 @@ def cart(format):
     #####
     print("adding "+str(format['productId']))
     #id = req.cookies.get('id')
-    #cursor = mydb.cursor(buffered=True)
+    cursor = mydb.cursor(buffered=True)
     #try:
     ## Please get the cookies for the products in cart.
 
@@ -361,8 +361,18 @@ def cart(format):
     except:
         category_data = None
     #db_memoized(cursor,f"{selectp}")
-    #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
+    a = ""
+    if (!validuuid(format['id'])):
+        cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['id']),))
+        a = cursor.fetchone()
+    else if (validuuid(format['id'])):
+        abort(404)
     #category_data = cursor.fetchall()
+    print(a)
+    if (format['quantity'] != 0):
+        format['price'] = a*format['quantity']
+    else:
+        abort(404)
     try:
         print(category_data)
         car_json = json.loads(category_data)
@@ -390,13 +400,13 @@ def cart(format):
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
         res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
-        res['price'] = res['price']*res['quantity']
         #mydb.commit()
         #cursor.close()
         #'''except mysql.connector.Error as err:
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
+        session['yourCart'] = str(f"{json.dumps(res)}")
         return {0: "Valid", 1: str(f"{json.dumps(res)}")}
 
 @app.route('/cart_set_cookie/<path:ds>', methods=['POST'])
@@ -404,7 +414,6 @@ def cart(format):
 def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-    session['yourCart'] = str(ds)
     return response
     #abort(404)
 
