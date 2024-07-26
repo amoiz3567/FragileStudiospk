@@ -643,7 +643,7 @@ $(".img_producto_container")
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
                     <p style="font-weight: 100;" class="des_nodot">${TextAbstract(item['description'], 36).replace(/&lt;/g, /</g).replace(/&gt;/g, />/g)}</p>
                     <div style="height: 5px; margin-top: 15px; display: flex; git justify-content: start; align-items: start;" class="row">
-                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${item['price']}</i></i>&nbsp;&nbsp;<s class="o"></s>
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>
                     <b><!--${item['quantity']}--></b>`
             secondDivision.innerHTML = details;
@@ -681,10 +681,10 @@ $(".img_producto_container")
     });
     ea("#price").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
-      el.innerText = item['price'];
+      el.innerText = Math.round(item['price']);
     });
     window.pid = item['id'];
-    window.pprice = item['price'];
+    window.pprice = Math.round(item['price']);
     window.pquantity = item['quantity'];
     const QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
     document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
