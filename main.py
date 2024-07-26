@@ -411,7 +411,6 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        session['yourCart'] = str(f"{json.dumps(res)}")
         return {0: "Valid", 1: str(f"{json.dumps(res)}")}
 
 @app.route('/cart_set_cookie/<path:ds>', methods=['POST'])
@@ -419,6 +418,7 @@ def cart(format):
 def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
+    session['yourCart'] = str(f"{json.dumps(res)}")
     return response
     #abort(404)
 
