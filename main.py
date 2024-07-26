@@ -759,9 +759,10 @@ def savedData(d):
     if (d== "ok" and id != None):
         id = request.cookies.get('id')
         #print(a, "this is a")
-        if (a == "cart"):
+        if type_ == 'cart':
             saveds = request.cookies.get('yourCart')
             saveid = json.loads(saveds)
+            print(saveid)
         else:
             try:
                 mcursor.execute(f"SELECT {a} FROM users WHERE user_id = %s;", (id,))
