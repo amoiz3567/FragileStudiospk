@@ -21,7 +21,7 @@
         <a nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
         <br><br>
         <div class="col">
-            <h1 style="font-size: 50px;"><i>THE PRODUCT ALREADY IS IN UR CART <i style="text-decoration: underline;">(ADD ANYWAYS)</i></i></h1>
+            <h1 style="font-size: 50px;"><i style="font-weight: 100; font-size: 21px;">Please Select another size to add to Cart</i></h1>
             <div class="row center" style="gap:15px;">
               <input type="checkbox" onfocus="console.log('hide next time')" style="margin: 0; display: flex; z-index: 25;position: absolute; left: -15%; width: 20px;height: 20px; justify-content: start; align-items: start; padding: 0; width: 100%;" value="Never ask again">
               <i style=" pointer-events: none;">NEVER ASK AGIAN?</i>
