@@ -604,60 +604,53 @@ $(".img_producto_container")
             for (var lor = 0; lor < cate.length; lor++) {
                 if (lor == 3)
                     break;
-                    text_cate = cate[lor].replace(/ /g, '')
+                text_cate = cate[lor].replace(/ /g, '')
                 if (taged[lor] == "color_") {
-                    text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
+                  text_cate = `${text_cate.split("/")[0]}<div class="color" style="osition: relative; margin:0; background: ${text_cate.split("/")[1]};"></div>`;
                   }
-                  let paired = text_cate.split("/")
+                  let paired = text_cate.split(/[.\/]/)
                   if (paired.length > 1 && taged[lor] != "color_") {
                     for (let v = 0; v < paired.length; v++) {
                       if (v == 2)
                       lock = "display: none;"
-                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
+                      cats += `<p class="cats bh ${taged[lor]}${paired[v].replace(/ /g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;${lock}">${paired[v]}</p>`;
                       console.log(`${taged[lor]}${paired[v].replace(/ /g, '')}`)
                   }
                 } else {
-                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/\'/g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
-                  console.log(`${taged[lor]}${cate[lor].replace(/\'/g, '').split('/')[0]}`, "this wttfffff");
+                  cats += `<p class="cats bh ${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}" nonce="{{ csp_nonce() }}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
+                  console.log(`${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}`);
                 }
             }
             division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
     <i class="save-container add me bh pointer">…</i>
-    </div>`;
+    </div>`
             var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
-            console.log(item['saved'], "-------------------------------------------------------------------------");
+            console.log(item['saved'])
+            console.log(item['saved'])
             if (item['saved'] == 1){
                 save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
             }
             image.classList.add("img1");
             image.classList.add("imagus");
-            image.setAttribute("id", `imag${i}`);
             division.appendChild(image);
             image.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img1.replace(/ /g, "%20"));
-            //image.setAttribute();
             imageAh.classList.add("img2");
             imageAh.classList.add("imagus");
-            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replace(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
+            imageAh.setAttribute("src", "{{ url_for('static', filename='products/') }}"+img2.replasce(/ /g, "%20") || img.split(",")[0].replace(/ /g, "%20"));
             secondDivision.setAttribute("align", "left");
             division.appendChild(imageAh);
             secondDivision.classList.add("detail-container");
-            const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');">${save_svg}</i></div>
+            const details = `<div align="right" class="save-container"><i class="ao o bh pointer" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" nonce="{{ csp_nonce() }}" onclick="nestedButtnonce="{{ csp_nonce() }}" onclick(event, this, '${item['id']}');">${save_svg}</i></div>
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
-                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
-                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
-                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
-                    </div>`;
-            secondDivision.innerHTML = details;
-            container.querySelectorAll("#loading").forEach((el) =>{el.remove()})
-            division.appendChild(secondDivision);
-            a.appendChild(division);
-            container.append(a);
-            container.innerHTML += `<a id="loading" class="abs">
-                    <div class="container cont center" style=" background-color: rgba(0, 0, 0, 0.075);">
-                        <img class="img1" src="/static/img/works.gif">
-                        <img class="img2" src="/static/img/works.gif">
+                    <p style="font-weight: 100;" class="des_nodot">${TextAbstract(item['description'], 36).replace(/&lt;/g, /</g).replace(/&gt;/g, />/g)}</p>
+                    <div style="height: 5px; margin-top: 15px; display: flex; git justify-content: start; align-items: start;" class="row">
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>
-                </a>`;
+                    <b><--${item['quantity']}-></b>`
+                    secondDivision.innerHTML = details;
+                    division.appendChild(secondDivision);
+                    a.appendChild(division);
+                    container.append(a);
             ////routPointer();
             getcolors_(`imag${i}`, `.pd${i}`);
         }
