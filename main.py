@@ -362,21 +362,22 @@ def cart(format):
         category_data = None
     #db_memoized(cursor,f"{selectp}")
     a = ""
-    if (not validuuid(format['productId'])):
-        cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['productId']),))
-        a = cursor.fetchone()[0]
-    elif (validuuid(format['productId'])):
-        abort(404)
-    #category_data = cursor.fetchall()
-    print(a)
-    if (format['quantity'] != 0):
+    if (format['ping'] != 1):
+        if (not validuuid(format['productId'])):
+            cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['productId']),))
+            a = cursor.fetchone()[0]
+        elif (validuuid(format['productId'])):
+            abort(404)
+        #category_data = cursor.fetchall()
         print(a)
-        print(type(a))
-        print(format['quantity'])
-        print(type(format['quantity']))
-        format['price'] = int(a)*int(format['quantity'])
-    else:
-        abort(404)
+        if (format['quantity'] != 0):
+            print(a)
+            print(type(a))
+            print(format['quantity'])
+            print(type(format['quantity']))
+            format['price'] = int(a)*int(format['quantity'])
+        else:
+            abort(404)
     try:
         print(category_data)
         car_json = json.loads(category_data)
