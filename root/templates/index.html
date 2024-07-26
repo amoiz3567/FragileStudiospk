@@ -1036,9 +1036,9 @@ var g;
             console.log("Retrying...")
         }
         function get_cat() {
-            //socket.emit("get_category_read", "")
+            socket.emit("get_category_read", "")
             socket.emit("get_products_read", category_, 4424)
-            socket.emit("get_category_read", "alldata_")
+            //socket.emit("get_category_read", "alldata_")
             console.log("Reading...")
         }
         function savef(p) {
