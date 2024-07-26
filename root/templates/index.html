@@ -675,6 +675,9 @@ var g;
         });
     }, 100);
 </script>
+<script>
+        bod.style.overflow = "hidden";
+</script>
     <script nonce="{{ csp_nonce() }}">
     var got = 0;
     function up(v) {
@@ -939,7 +942,8 @@ var g;
                 }
             };
             });
-
+            bod.style.overflow = "visible";
+            bod.style.overflowX = "hidden";
             if (addinge == 0 || segments.length <= 1)
             try {document.getElementById('items').querySelectorAll("#loading").forEach((el) =>{el.remove()})} catch(err) {}
     }
