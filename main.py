@@ -385,16 +385,12 @@ def cart(format):
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
-        data = {
-            'key': 'value',
-            'another_key': 123
-        }
-        response = Response(json.dumps(data), mimetype='application/json')
-        #response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
         #'''except mysql.connector.Error as err:
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
+        response = make_response()
+        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
         return response
 
 @app.route('/500')
