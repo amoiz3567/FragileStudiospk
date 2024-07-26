@@ -223,7 +223,6 @@ name    </h1>
               <div class="dropdown">
                 <button for="sizes" id="size" onselect="document.getElementById('jude').style.display = 'flex';" class="dropbtn abs chrome al">&nbsp;XL&nbsp;</button>
                 <div name="sizes" id="jude" align="start" class="chrome dropdown-content">
-                <a class="ra selected">&nbsp;XL&nbsp;</a>
                 <a class="ra">&nbsp;L&nbsp;</a>
                 <a class="ra">&nbsp;M&nbsp;</a>
                 <s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp;</s>
@@ -260,10 +259,10 @@ name    </h1>
         <div class="row">
         <div class="col counter" style="position: relative; user-select: none; display: block;"><a id="up">+</a><a id="down">-</a></div>
         <a class="quantity al" id="nums"><span align="center" id="quantity" class="center">0</span></a>
-        <div class="tooltip" id="context_container" style="width: auto; height: auto; position: absolute; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin-left:37%; margin-top: 230px; border: none; padding-bottom: 15px; background-color: #c7c7c7;">
+        <!--div class="tooltip" id="context_container" style="width: auto; height: auto; position: absolute; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin-left:37%; margin-top: 230px; border: none; padding-bottom: 15px; background-color: #c7c7c7;">
           <p class="butts"  style="background-color: rgba(255, 0, 0, 0); color: rgb(0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 25px 0 0 0; color: balck; font-size: 18px;">For performing this action</p>
           <a class="butts" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/auth';"  style="background-color: rgba(255, 0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 0px 0 25px 0px; text-decoration: underline; color: #000000; font-size: 19px;">sign in / up</a>
-        </div>
+        </div-->
 
         <a class="cta darth abs bh pointer" id="car" style="width: 100%;" nonce="{{ csp_nonce() }}" onclick="addtocart(event);"><span align="center" class="center">ADD TO CART&nbsp;&nbsp;&nbsp;<div style="width: 12%;"><svg class="svg s"
                 style="fill: white; width: 50%;" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%"
@@ -361,7 +360,7 @@ name    </h1>
       }
   };
 </script>
-<script nonce="{{ csp_nonce() }}">
+<!--script nonce="{{ csp_nonce() }}">
   var down = 0;
 function summonContext(event=NaN, id) {
     if (event == NaN) {
@@ -390,7 +389,7 @@ document.addEventListener('mouseup', function () {
     }
 });
 
-</script>
+</script-->
 <script nonce="{{ csp_nonce() }}">
 var formation = {
   "productId": '',
@@ -723,7 +722,7 @@ $(".img_producto_container")
     });
     const scr = document.querySelectorAll('.img_producto_container');
     console.log(scr);
-    global_num_length = item['xl'];
+    global_num_length = item['l'];
     ric(global_num_length);
     document.querySelectorAll('#ident').forEach(function (el) {el.innerText = `${item['id']}`});
     try {
@@ -769,6 +768,7 @@ $(".img_producto_container")
               document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
               create_dp();
               document.querySelector(".dropbtn").innerHTML = `${intent.xl != 0 ? `&nbsp;XL&nbsp;`:intent.l != 0 ? `&nbsp;L&nbsp;`:intent.m != 0 ? `&nbsp;M&nbsp;`:intent.s != 0 ? `&nbsp;XL&nbsp;`:"SOLD OUT"}`;
+              global_num_length = intent.xl != 0 ? intent.xl:intent.l != 0 ? intent.l:intent.m != 0 ? intent.m:intent.s != 0 ? intent.s:0;
               console.log("done 1");
               setup(key, dObj, i, count);
               console.log("done 2");
@@ -827,7 +827,7 @@ $(".img_producto_container")
       }
       function submit() {
         formation['ping'] = 0;
-        if (getcookie("id") != null) {
+        //if (getcookie("id") != null) {
           socket.emit("submitcart", formation, function (data) {
             if (data == "Invalid")
             summonContext('auth');
@@ -841,9 +841,9 @@ $(".img_producto_container")
             }
           });
           console.log("Submiting");
-        } else {
-          summonContext('auth');
-        }
+        //} else {
+        //  summonContext('auth');
+        //}
       }
       function savef(p) {
           socket.emit("save", p);

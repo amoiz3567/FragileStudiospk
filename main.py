@@ -344,21 +344,24 @@ def before_event(f):
 @socketio.on("submitcart")  # Now the add to cart is gonna send it to the original signed in  id after results.
 @before_mid
 def cart(format):
-    id = request.cookies.get('id')
-    if(id == None or validuuid(id)):
-        return "Invalid"
+    ##id = request.cookies.get('id')
+    ##if(id == None or validuuid(id)):
+    ##    return "Invalid"
     #####
     print("adding "+str(format['productId']))
-    id = req.cookies.get('id')
-    cursor = mydb.cursor(buffered=True)
+    #id = req.cookies.get('id')
+    #cursor = mydb.cursor(buffered=True)
     #try:
-    db_memoized(cursor,f"{selectp}")
-    cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
-    category_data = cursor.fetchall()
+    ## Please get the cookies for the products in cart.
+    category_data = request.get.cookies("11025Cart")
+    #db_memoized(cursor,f"{selectp}")
+    #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
+    #category_data = cursor.fetchall()
     try:
-        car_json = json.loads(category_data[0][0])
+        print(category_data)
+        car_json = json.loads(category_data[0])
         l = len(car_json)
-        data = str(category_data[0][0])
+        data = str(category_data[0])
         length_data = data[1:len(data)-1]
         r = ","
     except:
@@ -379,15 +382,17 @@ def cart(format):
         del format['ping']
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
         res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
-        cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
-        mydb.commit()
-        cursor.close()
+        #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
+        #mydb.commit()
+        #cursor.close()
+        response = make_response("Valid")
+        response.set_cookie("11025Cart", json.dumps(res))
         '''except mysql.connector.Error as err:
             print("Error:", err)
             return "Error"
 
         finally:'''
-        return "Valid"
+        return response, 200
 
 @app.route('/500')
 def err():
