@@ -1022,9 +1022,17 @@ def retProduct(p=None, raf=None):
     if product == [] or o == 0:
         return None
     return product
-@app.route("/4024152558o8239h")
+@app.route("/BadproductTurn/<path:p>")
+def send400(p):
+    return render_template('404.html')
+
+@app.route("/productTurn")
 def send400():
     return render_template('404.html')
+@app.route("/BadproductTurn/<path:>")
+def send400():
+    return render_template('404.html')
+
 @socketio.on("red")
 @before_mid
 def red(data):

