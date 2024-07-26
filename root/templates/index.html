@@ -789,6 +789,8 @@ var g;
                     </div>
                 </a>`
             ////routPointer();
+            bod.style.overflow = "visible";
+            bod.style.overflowX = "hidden";
         }
     }
     function loadp(keys, dObj, count, rep=0) {
@@ -881,6 +883,8 @@ var g;
                 </a>`;
             ////routPointer();
             getcolors_(`imag${i}`, `.pd${i}`);
+            bod.style.overflow = "visible";
+            bod.style.overflowX = "hidden";
         }
     }
 
@@ -942,8 +946,6 @@ var g;
                 }
             };
             });
-            bod.style.overflow = "visible";
-            bod.style.overflowX = "hidden";
             if (addinge == 0 || segments.length <= 1)
             try {document.getElementById('items').querySelectorAll("#loading").forEach((el) =>{el.remove()})} catch(err) {}
     }
