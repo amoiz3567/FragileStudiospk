@@ -759,13 +759,17 @@ def savedData(d):
     if (d== "ok" and id != None):
         id = request.cookies.get('id')
         #print(a, "this is a")
-        try:
-            mcursor.execute(f"SELECT {a} FROM users WHERE user_id = %s;", (id,))
-            saveds = mcursor.fetchall()[0]
-            saveid = (json.loads(saveds[0]))
-        except:
-            print("done for it")
-            saveid = []
+        if (a == "cart"):
+            saveds = request.cookies.get('yourCart')
+            saveid = json.loads(saveds)
+        else:
+            try:
+                mcursor.execute(f"SELECT {a} FROM users WHERE user_id = %s;", (id,))
+                saveds = mcursor.fetchall()[0]
+                saveid = (json.loads(saveds[0]))
+            except:
+                print("done for it")
+                saveid = []
         av = {}
         for v in saveid:
             test_id = saveid[f'{v}']
