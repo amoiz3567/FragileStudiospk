@@ -1197,10 +1197,7 @@ def request_pr_read(data, nom):
         """
         cursor.execute(query, (data,))
         r = cursor.fetchall()
-        #if (nom == 4424):
-        #socketio.emit(request.cookies.get("evid")+"roo", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
-        #else:
-        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "loaf", 2: nom})
+        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
         cursor.close()
         return make_response(jsonify({0: 200}))
     cursor.execute("SET @row_num = 0;")
@@ -1218,16 +1215,13 @@ WHERE
     row_num = 1 OR
     row_num = total_rows OR
     row_num = (total_rows / 2) OR
-    row_num = (total_rows / 2) + 1s
+    row_num = (total_rows / 2) + 1
 ORDER BY row_num;
     """
     cursor.execute(query)
     r = cursor.fetchall()
     print(json.loads(json.dumps(r, cls=DecimalEncoder)), '-----------------------------------------')
-    #if (nom == 4424):
-    #    socketio.emit(request.cookies.get("evid")+"roo", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 3:None})
-    #else:
-    socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "loaf", 2: nom})
+    socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
     cursor.close()
     #abort(400)
 

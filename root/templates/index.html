@@ -977,7 +977,7 @@ var g;
         socket.on(getcookie('evid')+"r", function(data) {
             try {
                 console.log(data[3], " - - -- ---- ----- ------ ------- bruh");
-            if (caw = 0 && data[3] == "loaf") {
+            if (caw == 0 && data[3] != undefined) {
                 console.log("hey baby");
                 caw = 1;
                 for (let v = 0; v < data[0].length; v++) {
