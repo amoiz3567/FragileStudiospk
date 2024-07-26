@@ -356,7 +356,10 @@ def cart(format):
     ## Please get the cookies for the products in cart.
 
     #category_data = request.cookies.get('yourCart')
-    category_data = session['yourCart']
+    try:
+        category_data = session['yourCart']
+    except:
+        category_data = None
     #db_memoized(cursor,f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #category_data = cursor.fetchall()
@@ -714,7 +717,10 @@ def ret(id, products=None, p=None):
         #cursor.fetchall()
 
         #crate_result = request.cookies.get('yourCart')
-        crate_result = session['yourCart']
+        try:
+            crate_result = session['yourCart']
+        except:
+            crate_result = None
         if (crate_result != None and crate_result):
             crate_len = len(json.loads(crate_result).values())
     cursor.close()
@@ -768,7 +774,10 @@ def savedData(d):
         #print(a, "this is a")
         if type_ == 'cart':
             #saveds = request.cookies.get('yourCart')
-            saveds = session['yourCart']
+            try:
+                saveds = session['yourCart']
+            except:
+                saveds = "{"+"}"
             saveid = json.loads(saveds)
             print(saveid)
         else:
