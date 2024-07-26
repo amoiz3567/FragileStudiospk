@@ -392,7 +392,7 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        return response, 200
+        return response
 
 @app.route('/500')
 def err():
