@@ -1200,7 +1200,7 @@ def request_pr_read(data, nom):
         #if (nom == 4424):
         #socketio.emit(request.cookies.get("evid")+"roo", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
         #else:
-        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
+        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "loaf", 2: nom})
         cursor.close()
         return make_response(jsonify({0: 200}))
     cursor.execute("SET @row_num = 0;")
