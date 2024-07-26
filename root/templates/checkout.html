@@ -13,6 +13,82 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon/favicon_.ico">
     <title>Fragile</title>
 </head>
+<style>
+    .custom-field {
+  position: relative;
+  font-size: 14px;
+  border-top: 20px solid transparent;
+  margin-bottom: 5px;
+  display: inline-block;
+  --field-padding: 12px;
+}
+
+.custom-field input {
+  border: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: var(--field-padding);
+  border-radius: 3px;
+  width: 250px;
+  outline: none;
+  font-size: 14px;
+}
+
+.custom-field .placeholder {
+  position: absolute;
+  left: var(--field-padding);
+  width: calc(100% - (var(--field-padding) * 2));
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 22px;
+  line-height: 100%;
+  transform: translateY(-50%);
+  color: #aaa;
+  transition: 
+    top 0.3s ease,
+    color 0.3s ease,
+    font-size 0.3s ease;
+}
+
+.custom-field input.dirty + .placeholder,
+.custom-field input:focus + .placeholder,
+.custom-field input:not(:placeholder-shown) + .placeholder {
+  top: -10px;
+  font-size: 10px;
+  color: #222;
+}
+.custom-field.one input {
+  background: none;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s ease;
+}
+
+.custom-field.one input + .placeholder {
+  left: 8px;
+  padding: 0 5px;
+}
+
+.custom-field.one input.dirty,
+.custom-field.one input:not(:placeholder-shown),
+.custom-field.one input:focus {
+  border-color: #222;
+  transition-delay: 0.1s
+}
+
+.custom-field.one input.dirty + .placeholder,
+.custom-field.one input:not(:placeholder-shown) + .placeholder,
+.custom-field.one input:focus + .placeholder {
+  top: 0;
+  font-size: 10px;
+  color: #222;
+  background: #fff;
+  width: auto
+}
+</style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
     <div class="ticker-container">
@@ -80,22 +156,16 @@
     </header><br><br><br><br><br><br><br>
     <div class="section center">
         <div class="col" align="center">
-            <h1 nonece="{{ nonce }}" class="ferrari center" style="background-image: url('/static/img/404.gif');">404</h1>
-            <script>
-                var elem = $(".dis");
-                if(elem.attr("style").search("background-image") > -1){
-                console.log(elem[0].style.backgroundImage)
-                }
-            </script>
-            <!--img src="https://media.giphy.com/media/nrXif9YExO9EI/giphy.gif?cid=790b76118trl1i3udzuxz9ooii2delftggwniyxrkmjawsky&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt=""-->
-            <div class="page">DO NOT PANIC! <i style="font-weight: 500; font-style: normal;">&nbsp; :( Something Just went wrong!<br> Or the Product doesn't seem to exist</i>.</div>
-            <a class="back-home" href="/product"><p>RETURN TO SHOP</p></a>
-            <h3>OR</h3>
-            <h3>Check out Categories</h3>
-            <ul style="display: flex; width: auto; min-width: 25px; justify-content: center; flex-direction: column; align-items: start;" id="categories_list">
-                
-            </ul>
-
+            <label class="custom-field one">
+                <input type="text" placeholder=" "/>
+                <span class="placeholder">Enter Email</span>
+              </label>
+              <label class="custom-field one">
+                <input type="text" placeholder=" "/>
+                <span class="placeholder">Phone Number</span>
+              </label>
+            <input type="text">
+            <a class="back-home" href="/product"><p>Submit Order</p></a>
         </div>
     </div>
 </body>
