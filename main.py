@@ -1022,16 +1022,28 @@ def retProduct(p=None, raf=None):
     if product == [] or o == 0:
         return None
     return product
+
 @app.route("/BadproductTurn/<path:p>")
 def send400(p):
     return render_template('404.html')
 
-@app.route("/productTurn")
-def send400():
-    return render_template('404.html')
-@app.route("/BadproductTurn/<path:>")
-def send400():
-    return render_template('404.html')
+@app.route("/checkOuts/<path:conf>")
+def checkout_Item(conf):
+    if (not validuuid(conf)):
+        b = ""
+        try:
+            b = session[request.cookies.get("evid")+"item"+conf]
+        except:
+            abort(403)
+        return render_template('checkout.html', a="item", b=b)
+    else:
+        abort(404)
+@app.route("/checkOut/")
+def checkout_cart():
+    try:
+        return render_template('checkout.html', a="cart", b=session["yourCart"])
+    except:
+        return redirect(request.referrer or '/product')
 
 @socketio.on("red")
 @before_mid
