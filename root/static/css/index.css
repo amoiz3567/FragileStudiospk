@@ -5,17 +5,9 @@
 @import url('/static/fonts/DIN\ Black.ttf') black;
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&display=swap') bold;
 
-@font-face {
-  font-family: 'secondfont';
-  src: url("{{ url_for('static', filename='fonts/Uomo Expanded.otf') }}") format('opentype');
-}
 i, .cats {
   font-family: 'secondfont', sans-serif;
   font-weight: 1000;
-}
-@font-face {
-font-family: 'MyFont';
-src: url("{{ url_for('static', filename='fonts/DIN Bold.ttf') }}") format('opentype');
 }
 @font-face {
 font-family: 'cool';

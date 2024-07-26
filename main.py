@@ -1152,7 +1152,7 @@ def request_ca_read():
     if (authed_user_admin() == True):
         mycursor.execute("USE products")
         mycursor.execute(f"""SELECT category_id,name, img FROM category""")
-        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall()})
+        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall(), 1=NULL, 2=NULL, 3=NULL})
 
         return make_response(jsonify({0: 200}))
     abort(403)
@@ -1243,7 +1243,7 @@ def request_ca_read(data):
             days = time_difference.days
             weeks = days // 7
             result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
-        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar"})
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar", 3=NULL})
         cursor.close()
         return make_response(jsonify({0: 200}))
     row_id = request.headers.get('Authorization')
@@ -1256,12 +1256,12 @@ def request_ca_read(data):
         cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
         r = cursor.fetchall()
         print(r)
-        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
+        socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "", 3=NULL})
         cursor.close()
         return make_response(jsonify({0: 200}))
     cursor.execute(f"""SELECT price_margins FROM category""")
     r = cursor.fetchall()
-    socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: ""})
+    socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: "", 3=NULL})
     cursor.close()
     del r, exists, res
     #abort(400)
