@@ -370,6 +370,10 @@ def cart(format):
     #category_data = cursor.fetchall()
     print(a)
     if (format['quantity'] != 0):
+        print(a)
+        print(type(a))
+        print(format['quantity'])
+        print(type(format['quantity']))
         format['price'] = int(a)*int(format['quantity'])
     else:
         abort(404)
