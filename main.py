@@ -376,10 +376,11 @@ def cart(format):
     elif (format['ping'] != 1):
         print(format['productId'] in length_data)
         print("Doing it yes doing it literally [!]")
-        if (format['dcon'] == 0 and format['productId'] in length_data):
+        if (format['dcon'] == 0 and format['wuus'] in length_data):
             return {0: "confirm", 1: ""}
         del format['dcon']
         del format['ping']
+        format['wuus'] = format['productId']+format['size']
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
         res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
