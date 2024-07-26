@@ -372,12 +372,12 @@ def cart(format):
     if  format['ping'] == 1 and format['productId'] in length_data:
         print(format['productId'], "thosa  atia s a")
         print(length_data, "thos os noce")
-        return "pong"
+        return ("pong", "")
     elif (format['ping'] != 1):
         print(format['productId'] in length_data)
         print("Doing it yes doing it literally [!]")
         if (format['dcon'] == 0 and format['productId'] in length_data):
-            return "confirm"
+            return ("confirm", "")
         del format['dcon']
         del format['ping']
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
@@ -389,11 +389,16 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        response = Response()
-        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
-        # Manually set headers to simulate setting a cookie
-        headers = dict(response.headers)
-        return "Valid"
+        return ("Valid", str(f"{json.dumps(res)}"))
+
+@app.route('/cart_set_cookie/<path:ds>', methods=['POST'])
+@before_mid
+def set_cookie(ds):
+    response = make_response(jsonify({0: "200"}))
+    response.set_cookie('yourCart', str(ds), secure=True)
+    return response
+    #abort(404)
+
 
 @app.route('/500')
 def err():

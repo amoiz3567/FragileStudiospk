@@ -831,14 +831,35 @@ $(".img_producto_container")
         formation['ping'] = 0;
         //if (getcookie("id") != null) {
           socket.emit("submitcart", formation, function (data) {
-            if (data == "Invalid")
+            if (data[0] == "Invalid")
             summonContext('auth');
-            else if (data == "Valid") {
-              document.getElementById('car').style.background = "#828382";
-              document.getElementById('car').style.color = "white";
-              document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
-              document.getElementById('car').style.width = "90%";
-            } else if (data == "confirm") {
+            else if (data[0] == "Valid") {
+              console.log("done the cart has added!");
+              function thru() {
+                fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1], {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data[0] === "200") {
+                      document.getElementById('car').style.background = "#828382";
+                      document.getElementById('car').style.color = "white";
+                      document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
+                      document.getElementById('car').style.width = "90%";
+                    } else {
+                        window.location.href = "https://"+window.location.hostname+"/500";
+                    }
+                })
+                .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+                thru();
+            } else if (data[0] == "confirm") {
               menu('dialogue', 'dialogue_');
             }
           });
