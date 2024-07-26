@@ -1022,7 +1022,9 @@ def retProduct(p=None, raf=None):
     if product == [] or o == 0:
         return None
     return product
-
+@app.route("/4024152558o8239h")
+def send400():
+    return render_template('404.html')
 @socketio.on("red")
 @before_mid
 def red(data):
@@ -1033,14 +1035,14 @@ def red(data):
         if (i == "?" or i == ";" or i == "\'" or i == "\""):
             print("I quit")
             socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
-            abort(400)
+            return render_template('404.html')
     productId = location
     if len(location) == 0:
         productId = None
     products = retProduct(productId, userId)
     if products == None or products == []:
         socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
-        abort(400)
+        return render_template('404.html')
     ret(userId, products, productId)
     return 200
 #! ONCE IN LINUX SERVER PLZ ADD CACHING TO PREVENT (D)DOS ATTACKS!
