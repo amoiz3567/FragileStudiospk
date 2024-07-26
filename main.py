@@ -390,7 +390,6 @@ def cart(format):
         #    return "Error"
         #finally:'''
         response_ = make_response()
-        response_.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
         return response_
 
 @app.route('/500')
