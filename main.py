@@ -364,7 +364,7 @@ def cart(format):
     a = ""
     if (not validuuid(format['productId'])):
         cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['productId']),))
-        a = cursor.fetchone()
+        a = cursor.fetchone()[0]
     elif (validuuid(format['productId'])):
         abort(404)
     #category_data = cursor.fetchall()
