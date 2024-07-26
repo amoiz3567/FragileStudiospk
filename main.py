@@ -353,7 +353,7 @@ def cart(format):
     #cursor = mydb.cursor(buffered=True)
     #try:
     ## Please get the cookies for the products in cart.
-    category_data = request.cookies.get("11025Cart")
+    category_data = request.cookies.get('yourCart')
     #db_memoized(cursor,f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #category_data = cursor.fetchall()
@@ -385,9 +385,9 @@ def cart(format):
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
-        response = make_response(jsonify({0: "valid"}))
+        response = make_response("Valid")
         response.headers['Content-Type'] = 'text/plain'
-        response.set_cookie("11025Cart", f"{json.dumps(res)}")
+        response.set_cookie('yourCart', str(f"{json.dumps(res)}"), secure=True)
         #'''except mysql.connector.Error as err:
         #    print("Error:", err)
         #    return "Error"
