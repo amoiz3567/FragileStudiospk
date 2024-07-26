@@ -362,10 +362,10 @@ def cart(format):
         category_data = None
     #db_memoized(cursor,f"{selectp}")
     a = ""
-    if (not validuuid(format['id'])):
-        cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['id']),))
+    if (not validuuid(format['product_id'])):
+        cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['product_id']),))
         a = cursor.fetchone()
-    elif (validuuid(format['id'])):
+    elif (validuuid(format['product_id'])):
         abort(404)
     #category_data = cursor.fetchall()
     print(a)
