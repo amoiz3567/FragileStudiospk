@@ -740,7 +740,9 @@ $(".img_producto_container")
               }
       });
       socket.on(getcookie('evid'), function (data) {
-        if (data['goKaraleva'] == '1' && got <= 1) {
+        if (data['goKaraleva'] == '0') {
+          window.location.href = "/404";
+        } else if (data['goKaraleva'] == '1' && got <= 1) {
           got = 1;
           document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
           up(data['ticker']);

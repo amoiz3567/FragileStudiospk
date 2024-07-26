@@ -1032,13 +1032,14 @@ def red(data):
     for i in location: # yes this is way beyond O(n) :(
         if (i == "?" or i == ";" or i == "\'" or i == "\""):
             print("I quit")
-            #socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
+            socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
             abort(400)
     productId = location
     if len(location) == 0:
         productId = None
     products = retProduct(productId, userId)
     if products == None or products == []:
+        socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
         abort(400)
     ret(userId, products, productId)
     return 200
