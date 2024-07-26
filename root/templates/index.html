@@ -870,14 +870,13 @@ var g;
             division.appendChild(secondDivision);
             a.appendChild(division);
             container.append(a);
-            container.innerHTML += `<a id="loading" class="abs">
+            container.innerHTML += `<script>getcolors_("imag${i}", ".pd${i}");</script><a id="loading" class="abs">
                     <div class="container cont center" style=" background-color: rgba(0, 0, 0, 0.075);">
                         <img class="img1" src="/static/img/works.gif">
                         <img class="img2" src="/static/img/works.gif">
                     </div>
                 </a>`;
             ////routPointer();
-            getcolors_(`imag${i}`, `.pd${i}`);
         }
     }
 
@@ -974,15 +973,16 @@ var g;
                 try {
                 for (let v = 0; v < data[0].length; v++) {
                     if (v == 0)
-                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
+                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div> <script>getcolors_("imagi${v}", ".pdi${v}");</script>`;
                     else
-                    document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
-                    getcolors_(`imagi${v}`, `.pdi${v}`);
+                    document.querySelector("#items_").innerHTML += `<div class="pointer imagus pdi${v}" style="max-width: 100%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', '');thru_rid(); window.location.href = '#${data[0][v]['id']}';"><img class="imagus" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div> <script>getcolors_("imagi${v}", ".pdi${v}");</script>`;
                     let images = document.querySelectorAll(".imagus");
-                    lazyload(images);
-                    $("img.imagus").lazyload();
-                    //pointer_();
-                    lazy_load();
+                    setTimeout(() => {
+                        lazyload(images);
+                        $("img.imagus").lazyload();
+                        //pointer_();
+                        lazy_load();
+                    }, 400);
                 }
                 lazy_load();
             } catch (err) {
