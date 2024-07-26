@@ -411,6 +411,7 @@ def cart(format):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
+        cache.set(request.cookies.get("evid")+"cart_", str(f"{json.dumps(res)}"))
         return {0: "Valid", 1: str(f"{json.dumps(res)}")}
 
 @app.route('/cart_set_cookie/<path:ds>', methods=['POST'])
@@ -418,7 +419,7 @@ def cart(format):
 def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-    session['yourCart'] = str(ds)
+    session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
     return response
     #abort(404)
 
@@ -1027,18 +1028,25 @@ def retProduct(p=None, raf=None):
 def send400(p):
     return render_template('404.html')
 
-@app.route("/checkOuts/<path:conf>")
+@app.route('/item/<path:ds>', methods=['POST'])
+@before_mid
+def set_mmm(ds):
+    if request.method == 'POST':
+        response = make_response(jsonify({0: "200"}))
+        response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
+        session['item_rn'] = cache.get(request.cookies.get("evid")+"item_")
+        return response
+    abort(404)
+
+@app.route("/checkout/<path:conf>")
 def checkout_Item(conf):
     if (not validuuid(conf)):
-        b = ""
         try:
-            b = session[request.cookies.get("evid")+"item"+conf]
+            return render_template('checkout.html', a="item", b=session["item_rn"])
         except:
             abort(403)
-        return render_template('checkout.html', a="item", b=b)
-    else:
-        abort(404)
-@app.route("/checkOut/")
+    abort(404)
+@app.route("/checkout/")
 def checkout_cart():
     try:
         return render_template('checkout.html', a="cart", b=session["yourCart"])

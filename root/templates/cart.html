@@ -605,7 +605,7 @@ var g;
                 console.log("cart_");
                 load_(data,loadpc);
                 document.getElementById("cart_opp").innerHTML += `<div style="position: fixed; width: 350px; right: 5%; bottom: 0; z-index: 5000;" class="row">
-              <a class="cta darth abs bh pointer" style="width: 97%; height: 40px; color: white; border: 2px solid rgba(0, 0, 0, 0.569); background-color: black; border: 1px solid white;"><span align="center" class="center">CHECK OUT&nbsp;&nbsp;&nbsp; &#65291;</span></a>
+              <a class="cta darth abs bh pointer" href="/checkout" style="width: 97%; height: 40px; color: white; border: 2px solid rgba(0, 0, 0, 0.569); background-color: black; border: 1px solid white;"><span align="center" class="center">CHECK OUT&nbsp;&nbsp;&nbsp; &#65291;</span></a>
               </div>
               `
             } else if (data[0] == 'saved' && la == 0 && data[1] != '{}') {

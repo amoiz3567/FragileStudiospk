@@ -269,7 +269,7 @@ name    </h1>
               </svg></div></span></a>
             </div>
             <div class="row">
-              <a class="cta darth abs bh pointer" style="width: 97%; height: 40px; color: black; border: 2px solid rgba(0, 0, 0, 0.569); background-color: rgba(128, 128, 128, 0);"><span align="center" class="center">BUY NOW&nbsp;&nbsp;&nbsp; &#65291;</span></a>
+              <a class="cta darth abs bh pointer" onclick="addtocart(event, 'checkout')" style="width: 97%; height: 40px; color: black; border: 2px solid rgba(0, 0, 0, 0.569); background-color: rgba(128, 128, 128, 0);"><span align="center" class="center">BUY NOW&nbsp;&nbsp;&nbsp; &#65291;</span></a>
             </div>
         <br>
         <h1 class="h_font chrome" style="margin-top: 5px;">Description*</h1>
@@ -822,44 +822,77 @@ $(".img_producto_container")
         socket.emit("get_category_read", "alldata_")
         console.log("Retrying...");
       }
-      function submit() {
+      function submit(a="") {
         formation['ping'] = 0;
         //if (getcookie("id") != null) {
+        if (a == "") {
           socket.emit("submitcart", formation, function (data) {
             if (data[0] == "Invalid")
-            console.log("Invalid");
-            //summonContext('auth');
-            else if (data[0] == "Valid") {
-              console.log("done the cart has added!");
-              function thru() {
-                fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1], {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data[0] === "200") {
-                      document.getElementById('car').style.background = "#828382";
-                      document.getElementById('car').style.color = "white";
-                      document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
-                      document.getElementById('car').style.width = "90%";
-                    } else {
-                        window.location.href = "https://"+window.location.hostname+"/500";
-                    }
-                })
-                .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-                thru();
-            } else if (data[0] == "confirm") {
-              menu('dialogue', 'dialogue_');
-            }
-          });
-          console.log("Submiting");
+              console.log("Invalid");
+              //summonContext('auth');
+              else if (data[0] == "Valid") {
+                console.log("done the cart has added!");
+                function thru() {
+                  fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1], {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log(data);
+                      if (data[0] === "200") {
+                        document.getElementById('car').style.background = "#828382";
+                        document.getElementById('car').style.color = "white";
+                        document.getElementById('car').children[0].innerHTML = "ADDED TO CART";
+                        document.getElementById('car').style.width = "90%";
+                      } else {
+                          window.location.href = "https://"+window.location.hostname+"/500";
+                      }
+                  })
+                  .catch(error => {
+                          console.error('Error:', error);
+                      });
+                  }
+                  thru();
+              } else if (data[0] == "confirm") {
+                menu('dialogue', 'dialogue_');
+              }
+            });
+            console.log("Submiting");
+          } else {
+            socket.emit("submitcart", formation, function (data) {
+            if (data[0] == "Invalid")
+              console.log("Invalid");
+              //summonContext('auth');
+              else if (data[0] == "Valid") {
+                function thru() {
+                  fetch("https://"+window.location.hostname+'/item/'+data[1], {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log(data);
+                      if (data[0] === "200") {
+                          window.location.href = "https://"+window.location.hostname+"/checkout/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                      } else {
+                          window.location.href = "https://"+window.location.hostname+"/500";
+                      }
+                  })
+                  .catch(error => {
+                          console.error('Error:', error);
+                      });
+                  }
+                  thru();
+              } else if (data[0] == "confirm") {
+                menu('dialogue', 'dialogue_');
+              }
+            });
+          }
         //} else {
         //  summonContext('auth');
         //}
@@ -917,7 +950,7 @@ $(".img_producto_container")
   }
   });
 
-function addtocart(event) {
+function addtocart(event, a="") {
   if (event.persisted) {
     window.location.reload();
   }
@@ -931,7 +964,7 @@ function addtocart(event) {
     formation["quantity"] = quantity;
     const size = document.getElementById('size').innerHTML.replace(/>/g, '').replace(/</g, '').replace(/&nbsp;/g, '');
     formation["size"] = size;
-    approve();
+    approve(a);
   }
 
 }
