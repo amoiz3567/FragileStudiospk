@@ -97,7 +97,8 @@ selectppid = f'{selectp} WHERE id'
 app = Flask(__name__,static_folder=os.path.join(ROOT, 'static'),
             template_folder=os.path.join(ROOT, 'templates'), root_path=ROOT)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+#app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(days=30)
 cache=Cache(app,config={'CACHE_TYPE': 'simple',
                         "CACHE_DEFAULT_TIMEOUT": 300})
 talisman = Talisman(app, content_security_policy={
@@ -353,7 +354,9 @@ def cart(format):
     #cursor = mydb.cursor(buffered=True)
     #try:
     ## Please get the cookies for the products in cart.
-    category_data = request.cookies.get('yourCart')
+
+    #category_data = request.cookies.get('yourCart')
+    category_data = session['yourCart']
     #db_memoized(cursor,f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #category_data = cursor.fetchall()
@@ -396,7 +399,8 @@ def cart(format):
 @before_mid
 def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
-    response.set_cookie('yourCart', str(ds), secure=True)
+    response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
+    session['yourCart'] = str(ds)
     return response
     #abort(404)
 
@@ -609,7 +613,6 @@ def loaduser(id_):
         print("yeees")
         bruv.headers['Cache-Control'] = f'public, max-age={timedelta(minutes=15)}'
         session.permanent = True
-        app.permanent_session_lifetime = timedelta(days=15)
         session[f"u{id_[:8]}"] = auth_
         session[f"i{id_[:4]}"] = keyn
         bruv.set_cookie('mid2472', '', expires=0)
@@ -709,7 +712,9 @@ def ret(id, products=None, p=None):
         #cursor.execute(query_user, (id_,))
         #crate_result = cursor.fetchone()
         #cursor.fetchall()
-        crate_result = request.cookies.get('yourCart')
+
+        #crate_result = request.cookies.get('yourCart')
+        crate_result = session['yourCart']
         if (crate_result != None and crate_result):
             crate_len = len(json.loads(crate_result).values())
     cursor.close()
@@ -762,7 +767,8 @@ def savedData(d):
         id = request.cookies.get('id')
         #print(a, "this is a")
         if type_ == 'cart':
-            saveds = request.cookies.get('yourCart')
+            #saveds = request.cookies.get('yourCart')
+            saveds = session['yourCart']
             saveid = json.loads(saveds)
             print(saveid)
         else:
