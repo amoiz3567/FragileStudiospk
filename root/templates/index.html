@@ -870,12 +870,13 @@ var g;
             division.appendChild(secondDivision);
             a.appendChild(division);
             container.append(a);
-            container.innerHTML += `<script>getcolors_("imag${i}", ".pd${i}");</script><a id="loading" class="abs">
+            container.innerHTML += `<a id="loading" class="abs">
                     <div class="container cont center" style=" background-color: rgba(0, 0, 0, 0.075);">
                         <img class="img1" src="/static/img/works.gif">
                         <img class="img2" src="/static/img/works.gif">
                     </div>
                 </a>`;
+            container.innerHTML += `<script>getcolors_("imag${i}", ".pd${i}");</script>`;
             ////routPointer();
         }
     }
