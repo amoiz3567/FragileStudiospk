@@ -598,7 +598,7 @@ var g;
                 Pricemargin: '' + localStorage.getItem("margins", "")
             }
         });
-        socket.on("crate"+getcookie('id')+"{{type}}", function(data) {
+        socket.on("crate"+getcookie('evid')+"{{type}}", function(data) {
             console.log(data)
             if (data[0] == 'cart' && la == 0 && data[1] != '{}') {
                 document.getElementById('none_').remove();
