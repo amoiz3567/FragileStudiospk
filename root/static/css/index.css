@@ -223,9 +223,7 @@ fk {
   color: white;
   display: flex;
   margin: 0px;
-  border-left: .5px solid rgba(0, 0, 0, 0.315);
-  border-top: .5px solid rgba(0, 0, 0, 0.315);
-  border-bottom: .5px solid rgba(0, 0, 0, 0.315);
+  border: none;
   display: flex; justify-content: center; align-items: center;
   padding: 0;
   height: 100%;
