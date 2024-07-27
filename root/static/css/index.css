@@ -1490,7 +1490,7 @@ span:nth-child(2) {
   background-color: #000;
   background-position:0%;
   margin-top: 250px;
-  padding: 45px 0;
+  /*padding: 45px 0;*/
   height: auto;
 }
 .container_foot {
