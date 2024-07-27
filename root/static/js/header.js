@@ -11,8 +11,9 @@ document.addEventListener('scroll', (event) => {
             fk.style.display = "block";
             frg.style.margin = "0px";
             //frg.style.marginTop = "-20px";
-            frg.style.marginBottom = "25px";
+            frg.style.marginBottom = "20px";
             frg.style.width = "140px";
+            frg.style.width = "10px";
             //setTimeout(() => header.style.transition ="0s", 50);
         }, 1);
 
