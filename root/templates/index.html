@@ -1089,8 +1089,7 @@ var g;
                         clearInterval(my_interval_variable);
                     }
                 } catch (err) {
-                    try {read__();}
-                    catch (err) {console.log(err);}
+                    console.log(err, "wttf the error in myinter");
                 }
         }
         var getch = setInterval(getch_funct,1500);
@@ -1109,35 +1108,6 @@ var g;
     }, 400);
     });
 
-    </script>
-    <script>
-        function read__() {
-            setTimeout(() => {
-            my_inter();
-            var my_interval_variable = setInterval(my_inter,1500);
-            function my_inter() {
-                if (got != 1) {
-                    redunduncy();
-                    getcat();
-                } else {
-                    clearInterval(my_interval_variable);
-                }
-            }
-            var getch = setInterval(getch_funct,1500);
-            function getch_funct() {
-                if (caw != 1) {
-                    getcat();
-                } else {
-                        clearInterval(getch);
-                    }
-                }
-                var images = document.querySelectorAll(".imagus");
-                lazyload(images);
-                $("img.imagus").lazyload();
-                //pointer_();
-                lazy_load();
-            }, 400);
-        }
     </script>
     <script>
         function averageColor__(imageElement) {
