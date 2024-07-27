@@ -225,18 +225,18 @@ button + button {
 </body>
 </html>
 <script>
-const inputs = document.querySelectorAll('input');
+let timer;
 
-inputs.forEach(el => {
-  el.addEventListener('blur', e => {
-    if(e.target.value) {
-      e.target.classList.add('dirty');
-    } else {
-      e.target.classList.remove('dirty');
-    }
-  })
-})
-</script>
+document.addEventListener('input', e => {
+  const el = e.target;
+  
+  if( el.matches('[data-color]') ) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      document.documentElement.style.setProperty(`--color-${el.dataset.color}`, el.value);
+    }, 100)
+  }
+})</script>
     <script>
     var got = 0;
     function up(v) {
