@@ -373,7 +373,20 @@
             console.log(err);
         }
     }
-        let images = document.querySelectorAll(".imagus");
+    var mtwa = setInterval(my_tw,1500);
+    function my_tw() {
+        try {
+            if (b != 1) {
+                getcat();
+            } else {
+                clearInterval(mtwa);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+        //let images = document.querySelectorAll(".imagus");
         //lazyload(images);
         //$("img.imagus").lazyload();
         //pointer_();
