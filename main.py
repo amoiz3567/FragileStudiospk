@@ -1135,7 +1135,7 @@ def order_req(data, productdata, total, items):
             if (i != "wuus"):
                 body += f"""<b>{i}</b>: {par[i]}<br>"""
     sender = "fragilelogin@gmail.com"
-    recipients = ["amoiz356798@gmail.com"] #fragilestudiospk
+    recipients = ["fragilestudiospk@gmail.com"]
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
