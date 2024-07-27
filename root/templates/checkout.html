@@ -57,7 +57,14 @@ input[type="text"]:valid ~ label {
     font-size: 14px;
     color: #000000;
 }
-
+.card {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 25px 15px;
+}
+.card a {
+    width: 100%;
+}
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
@@ -132,7 +139,7 @@ input[type="text"]:valid ~ label {
             <div class="col">
                 <div class="input-container">
                     <input style="padding-left: 15px;" type="text" id="fancy-input" required>
-                    <label style="margin-left: 10px;" for="fancy-input">Enter Email</label>
+                    <label style="margin-left: 7px;" for="fancy-input">Enter Email</label>
                 </div>
                 <div class="input-container">
                         <label style="position: absolute;">+92</label>
@@ -141,12 +148,12 @@ input[type="text"]:valid ~ label {
                     </div>
                     <div class="input-container">
                         <input style="padding-left: 15px;" type="text" id="fancy-input" required>
-                        <label style="margin-left: 10px;" for="fancy-input">First Name</label>
+                        <label style="margin-left: 7px;" for="fancy-input">First Name</label>
                     </div>
 
                     <div class="input-container">
                         <input style="padding-left: 15px;" type="text" id="fancy-input" required>
-                        <label style="margin-left: 10px;" for="fancy-input">Last Name</label>
+                        <label style="margin-left: 7px;" for="fancy-input">Last Name</label>
                     </div>
                 </div>
                 <br><br>
@@ -156,10 +163,24 @@ input[type="text"]:valid ~ label {
                 <div class="col">
                     <div class="input-container">
                         <input style="padding-left: 15px;" type="text" id="fancy-input" required>
-                        <label style="margin-left: 10px;" for="fancy-input">City</label>
-                    </div>    
-                </div>    
-            <a class="back-home" href="/product"><p>Order Now!</p></a>
+                        <label style="margin-left: 7px;" for="fancy-input">City</label>
+                    </div>
+                    <div class="input-container">
+                        <input style="padding-left: 15px;" type="text" id="fancy-input" required>
+                        <label style="margin-left: 7px;" for="fancy-input">Street Address</label>
+                    </div>
+                    <div class="input-container">
+                        <input style="padding-left: 15px;" type="text" id="fancy-input" required>
+                        <label style="margin-left: 7px;" for="fancy-input">Postal Code</label>
+                    </div>
+                </div>
+            <div class="card col">
+                <label>Items</label>
+                <label>price</label>
+                <label>Delivery</label>
+                <label>Total</label>
+                <a class="back-home" href="/product"><p>Order Now!</p></a>
+            </div>
         </div>
     </div>
 </body>
