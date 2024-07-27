@@ -1072,7 +1072,7 @@ def checkout_cart():
                 crate_len = len(a)
         price = 0
         for i in a:
-            price += i['price']+200
+            price += int(i['price'])+200
         bruv = make_response(render_template('checkout.html', a="cart", total=price, amount=crate_len))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
