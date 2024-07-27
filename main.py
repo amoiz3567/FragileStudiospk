@@ -1074,7 +1074,7 @@ def checkout_cart():
         for i in a:
             i = json.loads(i.replace("\'", "\""))
             price += int(i['price'])
-        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", amount=crate_len, saved="-"+str((crate_len*200)-200)+" PKR"))
+        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", amount=crate_len, saved="- "+str((crate_len*200)-200)+" PKR"))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))

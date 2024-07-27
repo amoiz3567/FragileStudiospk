@@ -200,21 +200,21 @@ input[type="text"]:valid ~ label {
             <h2>Customer Info <br></h2>
             <div class="col">
                 <div class="input-container">
-                    <input style="padding-left: 20px;" type="text" id="fancy-input" required>
-                    <label style="margin-left: 7px;" for="fancy-input">Enter Email</label>
+                    <input style="padding-left: 20px;" onchange="validateEmail(this.value)" type="text" id="fancy-input" required>
+                    <label style="margin-left: 7px;" id="em" for="fancy-input">Enter Email</label>
                 </div>
                 <div class="input-container">
                         <label style="position: absolute;">+92</label>
-                        <input style="padding-left: 45px;" type="text" id="fancy-input" required>
-                        <label style="margin-left: 45px;" for="fancy-input">Phone number</label>
+                        <input style="padding-left: 45px;" onchange="validatePakistaniPhoneNumber(this.value)" type="text" id="fancy-input" required>
+                        <label style="margin-left: 45px;" id="ph" for="fancy-input">Phone number</label>
                     </div>
                     <div class="input-container">
-                        <input style="padding-left: 20px;" type="text" id="fancy-input" required>
+                        <input style="padding-left: 20px;" onchange="format['firstname'] = this.value" type="text" id="fancy-input" required>
                         <label style="margin-left: 7px;" for="fancy-input">First Name</label>
                     </div>
 
                     <div class="input-container">
-                        <input style="padding-left: 20px;" type="text" id="fancy-input" required>
+                        <input style="padding-left: 20px;" onchange="format['lastname'] = this.value" type="text" id="fancy-input" required>
                         <label style="margin-left: 7px;" for="fancy-input">Last Name</label>
                     </div>
                 </div>
@@ -224,16 +224,16 @@ input[type="text"]:valid ~ label {
                 <h2>Shopping Address</h2>
                 <div class="col">
                     <div class="input-container">
-                        <input style="padding-left: 20px;" type="text" id="fancy-input" required>
+                        <input style="padding-left: 20px;"onchange="format['city'] = this.value"  type="text" id="fancy-input" required>
                         <label style="margin-left: 7px;" for="fancy-input">City</label>
                     </div>
                     <div class="input-container">
-                        <input style="padding-left: 20px;" type="text" id="fancy-input" required>
+                        <input style="padding-left: 20px;" onchange="format['street'] = this.value" type="text" id="fancy-input" required>
                         <label style="margin-left: 7px;" for="fancy-input">Street Address</label>
                     </div>
                     <div class="input-container">
-                        <input style="padding-left: 20px;" type="text" id="fancy-input" required>
-                        <label style="margin-left: 7px;" for="fancy-input">Postal Code</label>
+                        <input style="padding-left: 20px;" onchange="validatePakistaniPostalCode(this.value)" type="text" id="fancy-input" required>
+                        <label style="margin-left: 7px;" id="postal" for="fancy-input">Postal Code</label>
                     </div>
                 </div><br><br>
             <div class="card col">
@@ -250,6 +250,60 @@ input[type="text"]:valid ~ label {
     </div>
 </body>
 </html>
+<script>
+    function validatePakistaniPhoneNumber(phoneNumber) {
+    const phoneRegex = /^[3][0-9]{2}-[0-9]{7}$/;
+    if (phoneRegex.test(phoneNumber)) {
+        document.getElementById("ph").innerHTML = "Phone number";
+        document.getElementById("ph").style.color = "black";
+        format['phone'] = phoneNumber;
+    } else {
+        document.getElementById("ph").innerHTML = "Phone number *";
+        document.getElementById("ph").style.color = "red";
+        format['phone'] = "";
+    }
+    //return phoneRegex.test(phoneNumber);
+}
+
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(email)) {
+        document.getElementById("em").innerHTML = "Enter Email";
+        document.getElementById("em").style.color = "black";
+        format['email'] = email;
+    } else {
+        document.getElementById("em").innerHTML = "Enter Email *";
+        document.getElementById("em").style.color = "red";
+        format['email'] = "";
+    }
+        //return emailRegex.test(email);
+}
+
+function validatePakistaniPostalCode(postalCode) {
+    const postalCodeRegex = /^[0-9]{5}$/;
+    if (postalCodeRegex.test(postalCode)) {
+        document.getElementById("postal").innerHTML = "Phone number";
+        document.getElementById("postal").style.color = "black";
+        format['postal'] = phoneNumber;
+    } else {
+        document.getElementById("postal").innerHTML = "Phone number *";
+        document.getElementById("postal").style.color = "red";
+        format['postal'] = "";
+    }
+    //return postalCodeRegex.test(postalCode);
+}
+</script>
+<script>
+    var format = {
+        "email":"",
+        "phone":"",
+        "firstname":"",
+        "lastname":"",
+        "city":"",
+        "street":"",
+        "postal":"",
+    }
+</script>
 <script>
 let timer;
 
