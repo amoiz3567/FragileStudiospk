@@ -195,7 +195,7 @@ input[type="text"]:valid ~ label {
     </header><br><br><br><br><br><br><br>
     <div class="section center">
         <div class="col carrdd" style="display: flex; flex-direction: column; justify-content: center; align-items: start;" align="center">
-            <h1 style="font-size: 50px;">Chechout</h1>
+            <h1 style="font-size: 50px;">Checkout</h1>
             <br>
             <h2>Customer Info <br></h2>
             <div class="col">
@@ -237,12 +237,12 @@ input[type="text"]:valid ~ label {
                     </div>
                 </div><br><br>
             <div class="card col">
-                <div><i>Items</i><i>25</i></div>
-                <div><i>price</i><i>2012</i></div>
+                <div><i>Items</i><i>{{ amount }}</i></div>
+                <div><i>Saving</i><i>-200 PKR</i></div>
                 <div><i>Delivery Charges</i><i>200 PKR</i></div>
                 <div class="divo"></div>
                 <br>
-                <div><i style="font-weight: 600;">Estimated Total </i><i style="font-weight: 600;">25500 PKR</i></div>
+                <div><i style="font-weight: 600;">Estimated Total </i><i style="font-weight: 600;">{{ total }}</i></div>
                 <br>
                 <a class="back-home" href="/product"><p>Order Now</p></a>
             </div>

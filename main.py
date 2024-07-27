@@ -1056,7 +1056,24 @@ def checkout_Item(conf):
 @app.route("/checkout/")
 def checkout_cart():
     try:
-        bruv = make_response(render_template('checkout.html', a="cart", b=session["yourCart"]))
+        try:
+            id_ = request.cookies.get('evid')
+        except:
+            id_ = None
+        a = {}
+        crate_len = 0
+        if (id_ != None and not validuuid(id_)):
+            try:
+                crate_result = session['yourCart']
+            except:
+                crate_result = None
+            if (crate_result != None and crate_result):
+                a = json.loads(crate_result).values()
+                crate_len = len(a)
+        price = 0
+        for i in a:
+            price += i['price']+200
+        bruv = make_response(render_template('checkout.html', a="cart", total=price, amount=crate_len))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
