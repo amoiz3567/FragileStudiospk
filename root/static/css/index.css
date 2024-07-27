@@ -156,7 +156,7 @@ fk {
   position: -webkit-sticky;
   /* Safari */
   position: sticky;
-  top: 0;
+  top: -10px;
 }
 #frg {
   width: 240px;
