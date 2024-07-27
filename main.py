@@ -1114,6 +1114,8 @@ def send_Order(subject, body, recipients, sender="fragilelogin@gmail.com", passw
 @socketio.on("sendOrder_request")
 @before_mid
 def order_req(data, productdata, total, items):
+    with open("../orders.txt", "w") as fp:
+        fp.write()
     subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
     body = "<h1>User Info</h1>"
     body += f"<h3>Order for {items} items, for {total}</h3>"
@@ -1138,10 +1140,14 @@ def order_req(data, productdata, total, items):
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
-        session["ordered"] = session["yourCart"]
-        session.pop("yourCart", None)
-        return {0:200, 1:"done"}
-    return {0:400, 1:"notdone"}
+        return {0:200}
+    return {0:400}
+
+@app.route("/remAse", methods=['POST'])
+def remAse():
+    session["ordered"] = session["yourCart"]
+    session.pop("yourCart", None)
+    return {0: 200}
 
 @socketio.on("red")
 @before_mid

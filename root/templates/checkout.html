@@ -399,7 +399,27 @@ document.addEventListener('input', e => {
         function soub() {
             socket.emit("sendOrder_request", format, "{{ e }}", "{{ total }}", "{{ amount }}", function (data) {
                 if (data[0] == 200) {
-                    menu("correct", "correct_");
+                    function thru() {
+                fetch("https://"+window.location.hostname+'/remAse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data[0] === "200") {
+                        menu("correct", "correct_");
+                    } else {
+                        menu("notcorrect", "notcorrect_");
+                    }
+                })
+                .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+                thru();
                 } else {
                     menu("notcorrect", "notcorrect_");
                 }
