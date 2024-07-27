@@ -244,7 +244,8 @@ input[type="text"]:valid ~ label {
                 <br>
                 <div><i style="font-weight: 600;">Estimated Total </i><i style="font-weight: 600;">{{ total }}</i></div>
                 <br>
-                <a class="back-home" href="/product"><p>Order Now</p></a>
+                <a class="back-home" onclick="submit()"><p>Order Now</p></a>
+                <label id="error_"></label>
             </div>
         </div>
     </div>
@@ -344,14 +345,14 @@ document.addEventListener('input', e => {
             }
         });
         socket.on(getcookie('evid')+"r", function(data) {
-            if (data[2] != "") {
+            /*if (data[2] != "") {
                 for (let v = 0; v< data[0].length;v++) {
                     if (v != 0)
                     document.querySelectorAll("#categories_list").forEach(el => {el.innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`});
                     else
                     document.querySelectorAll("#categories_list").forEach(el => {el.innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`});
                 }
-            }
+            }*/
         });
         socket.on(getcookie('evid'), function(data) {
             if (data['goKaraleva'] == '1') {
@@ -380,6 +381,13 @@ document.addEventListener('input', e => {
         clearInterval(my_interval_variable)
     }
     
+    function submit() {
+        if (JSON.stringify(isEmptyObj4)) {
+            subi();
+            document.getElementById("error_").innerText = "";
+        } else
+        document.getElementById("error_").innerText = "Empty Field Found!";
+    }
     </script>
     <script>
         function TextAbstract(text, length) {
