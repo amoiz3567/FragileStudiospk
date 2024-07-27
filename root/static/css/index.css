@@ -416,7 +416,7 @@ script[nonce~="whatever"] {
   justify-content: center;
   align-items: center;
   width: 110%;
-  background-color: #ffffff;
+  /*background-color: #ffffff;*/
   background-color: #ffffff45;
   border-top: 1px solid black;
   margin: 0;
