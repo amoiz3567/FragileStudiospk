@@ -66,14 +66,20 @@ input[type="text"]:valid ~ label {
     justify-content: center;
     align-items: start;
 }
-.card i i {
+.card div i:nth-child(2) {
     display: flex;
     justify-content: end;
     align-items: end;
     text-wrap: nowrap;
     width: 50%;
 }
-.card i {
+.card div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
+.card div i:nth-child(1) {
     font-weight: 200;
     font-style: normal;
     display: flex;
@@ -209,9 +215,9 @@ input[type="text"]:valid ~ label {
                     </div>
                 </div><br><br>
             <div class="card col">
-                <i>Items <i>25</i></i>
-                <i>price <i>2010</i></i>
-                <i>Delivery Charges <i>200 PKR</i></i>
+                <div><i>Items</i><i>25</i></div>
+                <div><i>price</i><i>2012</i></div>
+                <div><i>Delivery Charges</i><i>200 PKR</i></div>
                 <div class="div"></div>
                 <br>
                 <i>Estimated Total <i>25500$</i></i>
