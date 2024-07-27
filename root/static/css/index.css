@@ -365,6 +365,9 @@ fk {
 #loafy {
   background-color: #ffffff45;
 }
+.loafye {
+  background-color: #ffffff45;
+}
 .one_index {
   display: none;
 }
@@ -414,6 +417,7 @@ script[nonce~="whatever"] {
   align-items: center;
   width: 110%;
   background-color: #ffffff;
+  background-color: #ffffff45;
   border-top: 1px solid black;
   margin: 0;
   text-align: center;
