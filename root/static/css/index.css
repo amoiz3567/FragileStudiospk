@@ -926,6 +926,7 @@ ul {
 }
 
 header img {
+  margin: 0;
   filter: brightness(-150%);
 }
 
