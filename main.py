@@ -1108,16 +1108,30 @@ def send_Order(subject, body, recipients, sender="fragilelogin@gmail.com", passw
 
 @socketio.on("sendOrder_request")
 @before_mid
-def order_req(data, productdata):
+def order_req(data, productdata, total, items):
     subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
-    body = f"""{data} {productdata}"""
+    body = "<h1>User Info</h1>"
+    body += f"<h3>Order for {items} items, for {total}</h3>"
+    for i, v in data:
+        body += f"""
+            <b>{i}</b>: {v}
+        """
+    body += "<br><h1>Order</h1>"
+    b = 0
+    for r in productdata:
+        b += 1
+        body += f"<br>, <h3>{b}:</h3><br>"
+        for i, v in json.loads(r.replace("\'", "\"")):
+            body += f"""<b>{i}</b>: {v}"""
     sender = "fragilelogin@gmail.com"
-    recipients = ["fragilestudiospk@gmail.com"]
+    recipients = ["amoiz356798@gmail.com"] #fragilestudiospk
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
-        return {0:200}
-    return {0:400}
+        session["ordered"] = session["yourCart"]
+        session.pop("yourCart", None)
+        return {0:200, 1:"done"}
+    return {0:400, 1:"notdone"}
 
 @socketio.on("red")
 @before_mid
