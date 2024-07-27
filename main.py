@@ -1112,17 +1112,17 @@ def order_req(data, productdata, total, items):
     subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
     body = "<h1>User Info</h1>"
     body += f"<h3>Order for {items} items, for {total}</h3>"
-    for i, v in data:
+    for i in data.keys():
         body += f"""
-            <b>{i}</b>: {v}
+            <b>{i}</b>: {data[i]}
         """
     body += "<br><h1>Order</h1>"
     b = 0
     for r in productdata:
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
-        for i, v in json.loads(r.replace("\'", "\"")):
-            body += f"""<b>{i}</b>: {v}"""
+        for i in json.loads(r.replace("\'", "\"")).keys():
+            body += f"""<b>{i}</b>: {r[i]}"""
     sender = "fragilelogin@gmail.com"
     recipients = ["amoiz356798@gmail.com"] #fragilestudiospk
     password = "ssnl iemy ycbu flks"
