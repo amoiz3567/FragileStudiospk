@@ -365,10 +365,15 @@ def cart(format):
         category_data = None
     #db_memoized(cursor,f"{selectp}")
     a = ""
+    name = ""
     if (format['ping'] != 1):
         if (not validuuid(format['productId'])):
             cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['productId']),))
             a = cursor.fetchone()[0]
+            query_user = "SELECT name FROM products WHERE id = %s"
+            cursor.execute(query_user)
+            name = cursor.fetchall(query_user, (str(format['productId']),))
+            cursor.close()
         elif (validuuid(format['productId'])):
             abort(404)
         #category_data = cursor.fetchall()
@@ -401,6 +406,7 @@ def cart(format):
         print(format['productId'] in length_data)
         print("Doing it yes doing it literally [!]")
         format['wuus'] = format['productId']+format['size']
+        format['name'] = name
         if (format['dcon'] == 0 and format['wuus'] in length_data):
             return {0: "confirm", 1: ""}
         del format['dcon']
@@ -1114,7 +1120,7 @@ def order_req(data, productdata, total, items):
     body += f"<h3>Order for {items} items, for {total}</h3>"
     for i in data.keys():
         body += f"""
-            <b>{i}</b>: {data[i]}
+            <b>{i}</b>: {data[i]}<br>
         """
     body += "<br><h1>Order</h1>"
     b = 0
@@ -1127,7 +1133,7 @@ def order_req(data, productdata, total, items):
         par = json.loads(r.replace("\'", "\""))
         for i in par.keys():
             if (i != "wuus"):
-                body += f"""<b>{i}</b>: {par[i]}"""
+                body += f"""<b>{i}</b>: {par[i]}<br>"""
     sender = "fragilelogin@gmail.com"
     recipients = ["amoiz356798@gmail.com"] #fragilestudiospk
     password = "ssnl iemy ycbu flks"
