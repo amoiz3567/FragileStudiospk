@@ -346,8 +346,6 @@
         window.getcat = get_cat;
     });
     window.addEventListener('load', function() {
-        setTimeout(() => {
-            
             try {
                 if (got != 1){
                     try {
@@ -359,6 +357,10 @@
                     }
                 }
                 console.log("wTF");
+            } catch(err) {
+                    console.log(err);
+                }
+        try {
         my_inter();
         var my_interval_variable = setInterval(my_inter,1500);
     function my_inter() {
@@ -377,7 +379,6 @@
         } catch (err) {
             console.log(err, "   damn");
         }
-    }, 400);
     });
     </script>
     <script nonce="{{ csp_nonce() }}">
