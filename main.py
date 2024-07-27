@@ -1061,7 +1061,8 @@ def checkout_cart():
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
         return bruv
-    except:
+    except Exception as e:
+        print(e)
         return redirect(request.referrer or '/product')
 
 @socketio.on("red")
