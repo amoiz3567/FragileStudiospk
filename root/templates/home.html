@@ -346,31 +346,38 @@
         window.getcat = get_cat;
     });
     window.addEventListener('load', function() {
-        if (got != 1){
+        setTimeout(() => {
+            
             try {
-                getcat();
-                redunduncy();
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-        console.log("wTF");
+                if (got != 1){
+                    try {
+                        getcat();
+                        redunduncy();
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                }
+                console.log("wTF");
         my_inter();
-    var my_interval_variable = setInterval(my_inter,1500);
+        var my_interval_variable = setInterval(my_inter,1500);
     function my_inter() {
         if (got != 1) {
             redunduncy();
-                getcat();
-            } else {
-                clearInterval(my_interval_variable);
-            }
+            getcat();
+        } else {
+            clearInterval(my_interval_variable);
+        }
         }
         let images = document.querySelectorAll(".imagus");
         //lazyload(images);
         //$("img.imagus").lazyload();
         //pointer_();
         //lazy_load();
+        } catch (err) {
+            console.log(err, "   damn");
+        }
+    }, 400);
     });
     </script>
     <script nonce="{{ csp_nonce() }}">
