@@ -14,138 +14,76 @@
     <title>Fragile</title>
 </head>
 <style>
-:root {
-  --color-light: white;
-  --color-dark: #212121;
-  --color-signal: #fab700;
-  
-  --color-background: var(--color-light);
-  --color-text: var(--color-dark);
-  --color-accent: var(--color-signal);
-  
-  --size-bezel: .5rem;
-  --size-radius: 4px;
-  
-  line-height: 1.4;
-  
-  font-family: 'Inter', sans-serif;
-  font-size: calc(.6rem + .4vw);
-  color: var(--color-text);
-  background: var(--color-background);
-  font-weight: 300;
-  padding: 0 calc(var(--size-bezel) * 3);
-}
-
-h1, h2, h3 {
-  font-weight: 900;
-}
-
-mark {
-  background: var(--color-accent);
-  color: var(--color-text);
-  font-weight: bold;
-  padding: 0 0.2em;
-}
-
-.carrdd {
-  background: var(--color-background);
-  padding: calc(4 * var(--size-bezel));
-  margin-top: calc(4 * var(--size-bezel));
-  border-radius: var(--size-radius);
-  border: 3px solid var(--color-shadow, currentColor);
-  box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);
-  
-  &--inverted {
-    --color-background: var(--color-dark);
-    color: var(--color-light);
-    --color-shadow: var(--color-accent);
-  }
-  
-  &--accent {
-    --color-background: var(--color-signal);
-    --color-accent: var(--color-light);
-    color: var(--color-dark);
-  }
-  
-  *:first-child {
-    margin-top: 0;
-  }
-}.l-design-widht {
-  max-width: 40rem;
-  padding: 1rem;
-}
-
-.input {
+.form__group {
   position: relative;
-  
-  &__label {
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  ~ .form__label {
     position: absolute;
-    left: 0;
     top: 0;
-    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * .5);
-    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * .5);
-    background: pink;
-    white-space: nowrap;
-    transform: translate(0, 0);
-    transform-origin: 0 0;
-    background: var(--color-background);
-    transition: transform 120ms ease-in;
-    font-weight: bold;
-    line-height: 1.2;
-  }
-  &__field {
-    box-sizing: border-box;
     display: block;
-    width: 100%;
-    border: 3px solid currentColor;
-    padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
-    color: currentColor;
-    background: transparent;
-    border-radius: var(--size-radius);
-    
-    &:focus,
-    &:not(:placeholder-shown) {
-      & + .input__label {
-        transform: translate(.25rem, -65%) scale(.8);
-        color: var(--color-accent);
-      }
-    }
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight:700;    
   }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e,#38ef7d);
+  border-image-slice: 1;
 }
-
-
-.button-group {
-  margin-top: calc(var(--size-bezel) * 2.5);
+/* reset input */
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
 }
-
-button {
-  color: currentColor;
-  padding: var(--size-bezel) calc(var(--size-bezel) * 2);
-  background: var(--color-accent);
-  border: none;
-  border-radius: var(--size-radius);
-  font-weight: 900;
-  
-  &[type=reset]{
-    background: var(--color-background);
-    font-weight: 200;
-  } 
+/* demo */
+body {
+  font-family: 'Poppins', sans-serif; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  background-color:#222222;
 }
-
-button + button {
-  margin-left: calc(var(--size-bezel) * 2);
-}
-
-.icon {
-  display: inline-block;
-  width: 1em; height: 1em;
-  margin-right: .5em;
-}
-
-.hidden {
-  display: none;
-}
-
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
@@ -214,11 +152,10 @@ button + button {
     </header><br><br><br><br><br><br><br>
     <div class="section center">
         <div class="col carrdd" align="center">
-            <label class="input">
-                <input class="input__field" type="text" placeholder=" " />
-                <span class="input__label">Some Fancy Label</span>
-            </label>              
-            <input type="text">
+            <div class="form__group field">
+                <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
+                <label for="name" class="form__label">Name</label>
+              </div>
             <a class="back-home" href="/product"><p>Submit Order</p></a>
         </div>
     </div>
