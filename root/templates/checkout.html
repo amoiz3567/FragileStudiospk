@@ -285,7 +285,7 @@ function validatePakistaniPostalCode(postalCode) {
     if (postalCodeRegex.test(postalCode)) {
         document.getElementById("postal").innerHTML = "Phone number";
         document.getElementById("postal").style.color = "black";
-        format['postal'] = phoneNumber;
+        format['postal'] = postalCode;
     } else {
         document.getElementById("postal").innerHTML = "Phone number *";
         document.getElementById("postal").style.color = "red";
