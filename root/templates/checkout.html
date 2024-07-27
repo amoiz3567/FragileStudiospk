@@ -14,199 +14,66 @@
     <title>Fragile</title>
 </head>
 <style>
-*, *::before, *::after {
-  box-sizing: border-box;
+:root {
+  --color-light: white;
+  --color-dark: #212121;
+  --color-signal: #fab700;
+  
+  --color-background: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-accent: var(--color-signal);
+  
+  --size-bezel: .5rem;
+  --size-radius: 4px;
+  
+  line-height: 1.4;
+  
+  font-family: 'Inter', sans-serif;
+  font-size: calc(.6rem + .4vw);
+  color: var(--color-text);
+  background: var(--color-background);
+  font-weight: 300;
+  padding: 0 calc(var(--size-bezel) * 3);
 }
 
-.custom-field {
+.input {
   position: relative;
-  font-size: 14px;
-  border-top: 20px solid transparent;
-  margin-bottom: 5px;
-  display: inline-block;
-  --field-padding: 12px;
+  
+  &__label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * .5);
+    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * .5);
+    background: pink;
+    white-space: nowrap;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    background: var(--color-background);
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+  &__field {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border: 3px solid currentColor;
+    padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+    color: currentColor;
+    background: transparent;
+    border-radius: var(--size-radius);
+    
+    &:focus,
+    &:not(:placeholder-shown) {
+      & + .input__label {
+        transform: translate(.25rem, -65%) scale(.8);
+        color: var(--color-accent);
+      }
+    }
+  }
 }
 
-.custom-field input {
-  border: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: #f2f2f2;
-  padding: var(--field-padding);
-  border-radius: 3px;
-  width: 250px;
-  outline: none;
-  font-size: 14px;
-}
-
-.custom-field .placeholder {
-  position: absolute;
-  left: var(--field-padding);
-  width: calc(100% - (var(--field-padding) * 2));
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  top: 22px;
-  line-height: 100%;
-  transform: translateY(-50%);
-  color: #aaa;
-  transition: 
-    top 0.3s ease,
-    color 0.3s ease,
-    font-size 0.3s ease;
-}
-
-.custom-field input.dirty + .placeholder,
-.custom-field input:focus + .placeholder,
-.custom-field input:not(:placeholder-shown) + .placeholder {
-  top: -10px;
-  font-size: 10px;
-  color: #222;
-}
-
-.custom-field .error-message {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  font-size: 12px;
-  background: #d30909;
-  color: #fff;
-  height: 24px;
-}
-
-.custom-field .error-message:empty {
-  opacity: 0;
-}
-
-/* ONE */
-.custom-field.one input {
-  background: none;
-  border: 2px solid #ddd;
-  transition: border-color 0.3s ease;
-}
-
-.custom-field.one input + .placeholder {
-  left: 8px;
-  top: 4px;
-  padding: 0 5px;
-}
-
-.custom-field.one input.dirty,
-.custom-field.one input:not(:placeholder-shown),
-.custom-field.one input:focus {
-  border-color: #222;
-  transition-delay: 0.1s
-}
-
-.custom-field.one input.dirty + .placeholder,
-.custom-field.one input:not(:placeholder-shown) + .placeholder,
-.custom-field.one input:focus + .placeholder {
-  bottom: 0;
-  font-size: 10px;
-  color: #222;
-  background: #fff;
-  width: 25px;
-}
-
-/* TWO */
-.custom-field.two input {
-  border-radius: 0;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  background:
-    linear-gradient(90deg, #222, #222) center bottom/0 0.15em no-repeat,
-    linear-gradient(90deg, #ccc, #ccc) left bottom/100% 0.15em no-repeat,
-    linear-gradient(90deg, #fafafa, #fafafa) left bottom/100% no-repeat;
-  transition: background-size 0.3s ease;
-}
-
-.custom-field.two input.dirty,
-.custom-field.two input:not(:placeholder-shown),
-.custom-field.two input:focus {
-  background-size: 100% 0.15em, 100% 0.1em, 100%;
-}
-
-/* THREE */
-.custom-field.three {
-  --draw-duration: 0.1s;
-  --draw-color: #222;
-  --draw-line-width: 2px;
-  --draw-easing: linear;
-}
-
-.custom-field.three .border {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: none;
-  display: flex;
-  align-items: center;
-  padding-left: 12px;
-  borde-radius: 3px;
-}
-
-.custom-field.three .border::after, 
-.custom-field.three .border::before {
-  content: "";
-  width: 0;
-  height: 0;
-  display: inline-block;
-  position: absolute;
-  border-radius: 3px;
-}
-
-.custom-field.three .border::before {
-  left: 0;
-  bottom: 0;
-  border-right: 0px solid var(--draw-color);
-  border-bottom: 0px solid var(--draw-color);
-  transition: 
-    border 0s linear calc(var(--draw-duration) * 4),
-    height var(--draw-duration) var(--draw-easing) calc(var(--draw-duration) * 2),
-    width var(--draw-duration) var(--draw-easing) calc(var(--draw-duration) * 3);
-}
-
-.custom-field.three .border::after {
-  right: 0;
-  top: 0;
-  border-left: 0px solid var(--draw-color);
-  border-top: 0px solid var(--draw-color);
-  transition: 
-    border 0s linear calc(var(--draw-duration) * 2),
-    height var(--draw-duration) var(--draw-easing),
-    width var(--draw-duration) var(--draw-easing) var(--draw-duration);
-}
-
-.custom-field.three input:focus ~ .border::before,
-.custom-field.three input:not(:placeholder-shown) ~ .border::before,
-.custom-field.three input.dirty ~ .border::before,
-.custom-field.three input:focus ~ .border::after,
-.custom-field.three input:not(:placeholder-shown) ~ .border::after,
-.custom-field.three input.dirty ~ .border::after {
-  width: 100%;
-  height: 100%;
-  border-width: var(--draw-line-width);
-}
-
-.custom-field.three input:not(:placeholder-shown) ~ .border::before,
-.custom-field.three input.dirty ~ .border::before,
-.custom-field.three input:focus ~ .border::before {
-  transition-delay: 0s, var(--draw-duration), 0s;
-}
-
-.custom-field.three input:not(:placeholder-shown) ~ .border::after,
-.custom-field.three input.dirty ~ .border::after,
-.custom-field.three input:focus ~ .border::after {
-  transition-delay: 
-    calc(var(--draw-duration) * 2), 
-    calc(var(--draw-duration) * 3), 
-    calc(var(--draw-duration) * 2);
-}
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
@@ -280,14 +147,10 @@
         align-items: center;
         font-family: sans-serif;
         font-size: 16px;">
-            <label class="custom-field one">
-                <input type="text" placeholder=" "/>
-                <span class="placeholder">Enter Email</span>
-              </label>
-              <label class="custom-field one">
-                <input type="text" placeholder=" "/>
-                <span class="placeholder">Phone Number</span>
-              </label>
+            <label class="input">
+                <input class="input__field" type="text" placeholder=" " />
+                <span class="input__label">Some Fancy Label</span>
+            </label>              
             <input type="text">
             <a class="back-home" href="/product"><p>Submit Order</p></a>
         </div>
