@@ -388,10 +388,13 @@ document.addEventListener('input', e => {
     
     function submit() {
         if (!(JSON.stringify(format).toString().search("\"\"") > 0)) {
-            subi();
+            console.log("submit");
+            subi(); 
             document.getElementById("error_").innerText = "";
-        } else
-        document.getElementById("error_").innerText = "Empty Field Found!";
+        } else {
+            console.log("not submit");
+            document.getElementById("error_").innerText = "Empty Field Found!";
+        }
     }
     </script>
     <script>
