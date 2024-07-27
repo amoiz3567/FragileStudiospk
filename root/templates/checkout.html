@@ -66,9 +66,10 @@ input[type="text"]:valid ~ label {
 .card i {
     font-weight: 200;
     font-style: normal;
+    width: 80%;
 }
 .card a {
-    width: 100%;
+    width: 80%;
 }
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
@@ -183,7 +184,9 @@ input[type="text"]:valid ~ label {
                 <i>Items</i>
                 <i>price</i>
                 <i>Delivery</i>
-                <i>Total</i>
+                <div class="div"></div>
+                <br>
+                <i>Estimated Total</i>
                 <a class="back-home" href="/product"><p>Order Now!</p></a>
             </div>
         </div>
