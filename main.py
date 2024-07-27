@@ -617,11 +617,11 @@ def loaduser(id_):
     keyn = -1
     print(auth_)
     for o in range(len(KEY)):
-        try:s
+        try:
         	print("ok 1")
-            fernet = Fernet(rkey(KEY, o).encode())
-            print("ok 2")
-            text = fernet.decrypt(auth_).decode()
+        	fernet = Fernet(rkey(KEY, o).encode())
+        	print("ok 2")
+        	text = fernet.decrypt(auth_).decode()
         	print(text)
         	keyn = o
         	print(text[:len(PASSWORD)])
