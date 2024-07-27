@@ -11,7 +11,7 @@ document.addEventListener('scroll', (event) => {
             fk.style.display = "block";
             frg.style.margin = "0px";
             //frg.style.marginTop = "-20px";
-            frg.style.marginBottom = "15px";
+            frg.style.marginBottom = "25px";
             frg.style.width = "140px";
             //setTimeout(() => header.style.transition ="0s", 50);
         }, 1);
@@ -21,6 +21,7 @@ document.addEventListener('scroll', (event) => {
         header.classList.remove("frao");
         fk.style.display = "none";
         header.style.opacity = "1";
+        frg.style.margin = "0";
         frg.style.marginTop = "20px";
         frg.style.width = ""; //240px
     }
