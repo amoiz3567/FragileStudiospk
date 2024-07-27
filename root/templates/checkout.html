@@ -35,7 +35,37 @@
   font-weight: 300;
   padding: 0 calc(var(--size-bezel) * 3);
 }
+.carrdd {
+    background: var(--color-accent);
+  color: var(--color-text);
+  font-weight: bold;
+  padding: 0 0.2em;
+}
 
+.card {
+  background: var(--color-background);
+  padding: calc(4 * var(--size-bezel));
+  margin-top: calc(4 * var(--size-bezel));
+  border-radius: var(--size-radius);
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);
+  
+  &--inverted {
+    --color-background: var(--color-dark);
+    color: var(--color-light);
+    --color-shadow: var(--color-accent);
+  }
+  
+  &--accent {
+    --color-background: var(--color-signal);
+    --color-accent: var(--color-light);
+    color: var(--color-dark);
+  }
+  
+  *:first-child {
+    margin-top: 0;
+  }
+}
 .input {
   position: relative;
   
@@ -141,7 +171,7 @@
         </a>
     </header><br><br><br><br><br><br><br>
     <div class="section center">
-        <div class="col" align="center">
+        <div class="col carrdd" align="center">
             <label class="input">
                 <input class="input__field" type="text" placeholder=" " />
                 <span class="input__label">Some Fancy Label</span>
