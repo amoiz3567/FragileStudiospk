@@ -387,7 +387,7 @@ document.addEventListener('input', e => {
     }
     
     function submit() {
-        if (!("\"\"" in (JSON.stringify(format).toString())) === false) {
+        if (!(JSON.stringify(format).toString().search("\"\"") > 0)) {
             subi();
             document.getElementById("error_").innerText = "";
         } else
