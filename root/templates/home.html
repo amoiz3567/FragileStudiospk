@@ -289,7 +289,7 @@
                 `;*/
                 console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
-                document.getElementById("firstever_wall").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
+                document.getElementById("loafy").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
                 document.getElementById("wallpaper").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
                 document.getElementById("visit_").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
