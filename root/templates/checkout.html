@@ -372,7 +372,7 @@ document.addEventListener('input', e => {
             console.log("Retrying...")
         }
         function soub() {
-            socket.emit("sendOrder_request", format, {{ e }}, "{{ total }}", "{{ amount }}")
+            socket.emit("sendOrder_request", format, {{ e }}, "{{ total }}", "{{ amount }}");
             console.log("Retrying...")
         }
         window.redunduncy = redund;
