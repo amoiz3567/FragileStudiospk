@@ -46,7 +46,7 @@
 
 .form__label {
   position: absolute;
-  top: 0;
+  bottom: 0;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
@@ -56,7 +56,7 @@
 .form__field:focus {
   ~ .form__label {
     position: absolute;
-    top: 0;
+    bottom: 0;
     display: block;
     transition: 0.2s;
     font-size: 1rem;
@@ -72,17 +72,6 @@
 /* reset input */
 .form__field{
   &:required,&:invalid { box-shadow:none; }
-}
-/* demo */
-body {
-  font-family: 'Poppins', sans-serif; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-size: 1.5rem;
-  background-color:#222222;
 }
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
