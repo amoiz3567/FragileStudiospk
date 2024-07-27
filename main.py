@@ -370,9 +370,8 @@ def cart(format):
         if (not validuuid(format['productId'])):
             cursor.execute("SELECT price FROM products WHERE id = %s;", (str(format['productId']),))
             a = cursor.fetchone()[0]
-            query_user = "SELECT name FROM products WHERE id = %s"
-            cursor.execute(query_user)
-            name = cursor.fetchall(query_user, (str(format['productId']),))
+            cursor.execute("SELECT name FROM products WHERE id = %s", (str(format['productId']),))
+            name = cursor.fetchone()[0]
             cursor.close()
         elif (validuuid(format['productId'])):
             abort(404)
