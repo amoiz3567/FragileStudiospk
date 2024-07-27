@@ -35,14 +35,19 @@
   font-weight: 300;
   padding: 0 calc(var(--size-bezel) * 3);
 }
-.carrdd {
-    background: var(--color-accent);
+
+h1, h2, h3 {
+  font-weight: 900;
+}
+
+mark {
+  background: var(--color-accent);
   color: var(--color-text);
   font-weight: bold;
   padding: 0 0.2em;
 }
 
-.card {
+.carrdd {
   background: var(--color-background);
   padding: calc(4 * var(--size-bezel));
   margin-top: calc(4 * var(--size-bezel));
@@ -65,7 +70,11 @@
   *:first-child {
     margin-top: 0;
   }
+}.l-design-widht {
+  max-width: 40rem;
+  padding: 1rem;
 }
+
 .input {
   position: relative;
   
@@ -102,6 +111,39 @@
       }
     }
   }
+}
+
+
+.button-group {
+  margin-top: calc(var(--size-bezel) * 2.5);
+}
+
+button {
+  color: currentColor;
+  padding: var(--size-bezel) calc(var(--size-bezel) * 2);
+  background: var(--color-accent);
+  border: none;
+  border-radius: var(--size-radius);
+  font-weight: 900;
+  
+  &[type=reset]{
+    background: var(--color-background);
+    font-weight: 200;
+  } 
+}
+
+button + button {
+  margin-left: calc(var(--size-bezel) * 2);
+}
+
+.icon {
+  display: inline-block;
+  width: 1em; height: 1em;
+  margin-right: .5em;
+}
+
+.hidden {
+  display: none;
 }
 
 </style>
