@@ -1058,6 +1058,7 @@ var g;
         window.getcat = get_cat;
     });
     window.addEventListener('load', function() {
+        try {
         if (got != 1){
             try {
                 getcat();
@@ -1073,7 +1074,11 @@ var g;
         //pointer_();
         lazy_load();
         console.log("wTF");
-        my_inter();
+    } catch (err) {
+        console.log(err);
+    }
+    try {
+            my_inter();
         var my_interval_variable = setInterval(my_inter,1500);
     function my_inter() {
         if (got != 1) {
@@ -1096,6 +1101,10 @@ var g;
         $("img.imagus").lazyload();
         //pointer_();
         lazy_load();
+    } catch (err) {
+        console.log(err);
+    }
+
     });
 
     </script>

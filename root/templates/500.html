@@ -208,14 +208,18 @@
         }
         window.redunduncy = redund;
     });
+    try {
     var interv = setInterval(inter_func,1000);
     function inter_func() {
         if (got != 1) {
             redunduncy()
             clearInterval(interv)
         }
-    }
-    
+    }    
+} catch (err) {
+            console.log(err);
+        }
+
     </script>
     <script>
         function TextAbstract(text, length) {

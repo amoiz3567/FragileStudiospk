@@ -668,19 +668,24 @@ var g;
     });
         
     window.addEventListener('load', function() {
-        if (got != 1){
-            try {
-                if (la != 1) {
-                    console.log("trying")
-                    ea(1);
+        try {
+            if (got != 1){
+                try {
+                    if (la != 1) {
+                        console.log("trying")
+                        ea(1);
+                    }
+                    if (got != 1)
+                        redundancy()
                 }
-                if (got != 1)
-                    redundancy()
+                catch (err) {
+                    console.log(err);
+                }
             }
-            catch (err) {
-                console.log(err);
-            }
+        } catch (err) {
+            console.log(err);
         }
+        try {
         my_inter();
     var my_interval_variable = setInterval(my_inter,1500);
     function my_inter() {
@@ -696,6 +701,9 @@ var g;
             }
         }
         let images = document.querySelectorAll(".imagus");
+    } catch (err) {
+            console.log(err);
+        }
     });
 
     </script>

@@ -230,20 +230,27 @@
         window.logout_ = logout;
     });
     window.addEventListener('load', function() {
-        if (got != 1)
         try {
-        redundancy()
+            if (got != 1)
+            try {
+            redundancy()
+            }
+            catch (err) {
+                console.log(err)
+            }
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-
-        var interv = setInterval(inter_func,500);
-        function inter_func() {
-            if (got != 1) {
-                redunduncy()
-            } else
-            clearInterval(interv)
+        try {
+            var interv = setInterval(inter_func,500);
+            function inter_func() {
+                if (got != 1) {
+                    redunduncy()
+                } else
+                clearInterval(interv)
+            }
+        } catch (err) {
+            console.log(err);
         }
     });
     

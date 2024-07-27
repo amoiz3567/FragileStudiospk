@@ -429,6 +429,7 @@ document.addEventListener('input', e => {
         window.redunduncy = redund;
         window.subi = soub;
     });
+    try {
     var my_interval_variable = setInterval(my_inter,500);
     function my_inter(){
         if (got != 1) {
@@ -436,6 +437,10 @@ document.addEventListener('input', e => {
         } else
         clearInterval(my_interval_variable)
     }
+    } catch (err) {
+                console.log(err);
+            }
+
     
     function submit() {
         if (!(JSON.stringify(format).toString().search("\"\"") > 0)) {

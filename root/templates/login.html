@@ -368,13 +368,18 @@ SignInButton.addEventListener('click', () => {
         window.signup = signu;
         window.redunduncy = redund;
     });
-    var my_interval_variable = setInterval(my_inter,500);
-    function my_inter(){
-        if (got != 1) {
-            redunduncy()
-            clearInterval(my_interval_variable)
+    try {
+        var my_interval_variable = setInterval(my_inter,500);
+        function my_inter(){
+            if (got != 1) {
+                redunduncy()
+                clearInterval(my_interval_variable)
+            }
         }
+    } catch (err) {
+        console.log(err);
     }
+
     document.getElementById('signin_').addEventListener('click' , function () {
         if (em == true && pe == true)
         login();

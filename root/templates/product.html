@@ -936,18 +936,22 @@ $(".img_producto_container")
   });
   var rets = 0;
   window.addEventListener('load', function() {
-    var inter_ = setInterval(myinter_f,400);
-    function myinter_f() {
-      if (got != 2 && rets < 12) {
-        rets += 1;
-        redunduncy();
-      } else {
-        clearInterval(inter_);
+    try {
+      var inter_ = setInterval(myinter_f,400);
+      function myinter_f() {
+        if (got != 2 && rets < 12) {
+          rets += 1;
+          redunduncy();
+        } else {
+          clearInterval(inter_);
+        }
+        if (rets == 12) {
+          window.location.href = "/500";
+        }
       }
-      if (rets == 12) {
-        window.location.href = "/500";
-      }
-  }
+    } catch (err) {
+        console.log(err);
+    }
   });
 
 function addtocart(event, a="") {
