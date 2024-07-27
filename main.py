@@ -284,6 +284,9 @@ def HomeAL():
     evid = request.cookies.get('evid')
     t1 = threading.Thread(target=ret, args=(evid,))
     t1.start()
+    token = generate_token(uuid.uuid4())
+    session['mid2912'] = token
+    bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
     return bruv
 
 @app.route('/product')
@@ -1042,14 +1045,22 @@ def set_mmm(ds):
 def checkout_Item(conf):
     if (not validuuid(conf)):
         try:
-            return render_template('checkout.html', a="item", b=session["item_rn"])
+            bruv = render_template('checkout.html', a="item", b=session["item_rn"])
+            token = generate_token(uuid.uuid4())
+            session['mid2912'] = token
+            bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+            return bruv
         except:
             abort(403)
     abort(404)
 @app.route("/checkout/")
 def checkout_cart():
     try:
-        return render_template('checkout.html', a="cart", b=session["yourCart"])
+        bruv = render_template('checkout.html', a="cart", b=session["yourCart"])
+        token = generate_token(uuid.uuid4())
+        session['mid2912'] = token
+        bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
+        return bruv
     except:
         return redirect(request.referrer or '/product')
 
