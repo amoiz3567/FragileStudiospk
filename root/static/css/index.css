@@ -601,6 +601,7 @@ script[nonce~="whatever"] {
 }
 .pip {
   font-family: 'medium', sans-serif;
+  font-size: 20px; color: #7a7a7a;
 }
 .Collection {
   justify-content: center;
@@ -925,6 +926,9 @@ ul {
 }
 
 @media (max-width: 768px) {
+  .pip {
+    font-size: 15px; color: #252525;
+  }
   header .one .svg {
     width: 10px;
   }
