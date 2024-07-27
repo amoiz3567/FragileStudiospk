@@ -371,7 +371,12 @@ document.addEventListener('input', e => {
             socket.emit("get_category_read", "alldata_")
             console.log("Retrying...")
         }
+        function soub() {
+            socket.emit("sendOrder_request", format, "{{ e }}")
+            console.log("Retrying...")
+        }
         window.redunduncy = redund;
+        window.subi = soub;
     });
     var my_interval_variable = setInterval(my_inter,500);
     function my_inter(){

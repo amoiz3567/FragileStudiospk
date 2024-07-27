@@ -1074,7 +1074,7 @@ def checkout_cart():
         for i in a:
             i = json.loads(i.replace("\'", "\""))
             price += int(i['price'])
-        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", amount=crate_len, saved="- "+str((crate_len*200)-200)+" PKR"))
+        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", e=a, amount=crate_len, saved="- "+str((crate_len*200)-200)+" PKR"))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
@@ -1082,6 +1082,42 @@ def checkout_cart():
     except Exception as e:
         print(e)
         return redirect(request.referrer or '/product')
+    
+def send_Order(subject, body, recipients, sender="fragilelogin@gmail.com", password="ssnl iemy ycbu flks"):
+    sender_email = sender
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = ', '.join(recipients)
+    message['Subject'] = subject
+    message.attach(MIMEText(body, 'html', 'utf-8'))
+    # Attach images
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
+            server.login(sender_email, password)
+            for i in recipients:
+                print(server.sendmail(sender_email, i, message.as_string()))
+            print(f"Email sent to { ", ".join(recipients)}")
+            return True
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return False
+
+@socketio.on("sendOrder_request")
+@before_mid
+def order_req(data, productdata):
+    subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
+    body = f"""{data} {productdata}"""
+    sender = "fragilelogin@gmail.com"
+    recipients = ["fragilestudiospk@gmail.com"]
+    password = "ssnl iemy ycbu flks"
+    if (send_Order(subject, body, recipients, sender, password) == True):
+        print("sent!")
+        return {0:200}
+    return {0:400}
 
 @socketio.on("red")
 @before_mid
