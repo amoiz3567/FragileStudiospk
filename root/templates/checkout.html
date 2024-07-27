@@ -63,6 +63,11 @@ input[type="text"]:valid ~ label {
     padding: 25px 15px;
     width: 100%;
 }
+.card i i {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
 .card i {
     font-weight: 200;
     font-style: normal;
@@ -71,6 +76,19 @@ input[type="text"]:valid ~ label {
 .card a {
     width: 80%;
 }
+.div {
+  display: flex;
+  padding: 1px 25px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  color: #000000;
+  background: #00000035;
+  border-radius: 50px;
+  margin: auto;
+  transition: 1s;
+}
+
 </style>
 <!--img src="{{ url_for('static', filename='img/noise.png') }}" style="width: 100vw; height: 100vh; position: absolute;" alt=""-->
 <body id="bod">
@@ -181,12 +199,12 @@ input[type="text"]:valid ~ label {
                     </div>
                 </div>
             <div class="card col">
-                <i>Items</i>
-                <i>price</i>
-                <i>Delivery</i>
+                <i>Items <i>25</i></i>
+                <i>price <i>2010</i></i>
+                <i>Delivery Charges <i>200 PKR</i></i>
                 <div class="div"></div>
                 <br>
-                <i>Estimated Total</i>
+                <i>Estimated Total <i>25500$</i></i>
                 <a class="back-home" href="/product"><p>Order Now!</p></a>
             </div>
         </div>
