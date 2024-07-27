@@ -881,13 +881,13 @@ ul {
 
 .fb {
   position: relative;
-  padding: 0em .5em;
+  padding: 0em .4em;
   border: none;
   background-color: transparent;
   cursor: pointer;
   outline: none;
   font-size: 15px;
-  margin: .5em 0em;
+  margin: .4em 0em;
 }
 
 .fb.b {
