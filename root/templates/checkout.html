@@ -245,7 +245,7 @@ input[type="text"]:valid ~ label {
                 <div><i style="font-weight: 600;">Estimated Total </i><i style="font-weight: 600;">{{ total }}</i></div>
                 <br>
                 <a class="back-home" onclick="submit()"><p>Order Now</p></a>
-                <i id="error_"></i>
+                <i id="error_" style="color: red;"></i>
             </div>
         </div>
     </div>
@@ -393,7 +393,7 @@ document.addEventListener('input', e => {
             document.getElementById("error_").innerHTML = "";
         } else {
             console.log("not submit");
-            document.getElementById("error_").innerHTML = "Empty Field Found!";
+            document.getElementById("error_").innerHTML = "&nbsp;&nbsp; Empty Field Found &nbsp;*&nbsp;";
         }
     }
     </script>
