@@ -1118,6 +1118,7 @@ def order_req(data, productdata, total, items):
         """
     body += "<br><h1>Order</h1>"
     b = 0
+    productdata = productdata.replace("dict_values(", "").replace(")", "").replace("&#39;", "\"")
     print(productdata)
     for r in json.loads(productdata):
         b += 1
