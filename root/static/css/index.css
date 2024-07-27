@@ -925,7 +925,7 @@ ul {
 }
 
 @media (max-width: 768px) {
-  header .one a {
+  header .one a svg {
     width: 20px;
   }
   header {
