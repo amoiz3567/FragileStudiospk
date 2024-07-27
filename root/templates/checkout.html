@@ -253,7 +253,7 @@ input[type="text"]:valid ~ label {
 </html>
 <script>
     function validatePakistaniPhoneNumber(phoneNumber) {
-    const phoneRegex = /^[3][0-9]{2}-[0-9]{7}$/;
+    const phoneRegex = /^[3][0-9]{9}$/;
     if (phoneRegex.test(phoneNumber)) {
         document.getElementById("ph").innerHTML = "Phone number";
         document.getElementById("ph").style.color = "black";
