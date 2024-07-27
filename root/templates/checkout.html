@@ -153,6 +153,34 @@ input[type="text"]:valid ~ label {
       </div>
     <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
     </div>
+    <div id="correct_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #ffffff;">
+        <div id="correct" class="center" align="center" style="transition: .3s; position: absolute; height: 400px; width:auto; height: auto; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
+            <br><br>
+            <div class="col">
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: small; font-weight: 200;">Success!</i></h1><br>
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: small; font-weight: 200;">Your Orders are being processed.</i></h1><br>
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: small; font-weight: 200;">In the mean time You Might recieve a confirmation call.</i></h1><br>
+                <div class="row" style="margin: 0; margin-top: 25px; width: 40%; padding: 0;">
+                    <a href="/home" style="margin: auto; padding: 5px 25px; font-size: 19px; text-wrap: nowrap; background: black; color: #ffffff;">Take me Home</a>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100vw; height: 100vh; background-color: rgb(250, 250, 250);"></div>
+    </div>
+    <div id="notcorrect_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #ffffff;">
+        <div id="notcorrect" class="center" align="center" style="transition: .3s; position: absolute; height: 400px; width:auto; height: auto; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
+            <br><br>
+            <div class="col">
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: small; font-weight: 200;">An Error ocurred! :/</i></h1><br>
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: small; font-weight: 200;">Please Try again.</i></h1><br>
+                <div class="row" style="margin: 0; margin-top: 25px; width: 40%; padding: 0;">
+                    <a onclick="op('notcorrect', 'notcorrect_')" style="margin: auto; padding: 5px 25px; font-size: 19px; text-wrap: nowrap; background: black; color: #ffffff;">Try Again</a>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100vw; height: 100vh; background-color: rgb(250, 250, 250);"></div>
+    </div>
+
     <!--div class="man v pizzaria n"></div-->
     <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
         <div id="menu" class="menu">
@@ -372,7 +400,13 @@ document.addEventListener('input', e => {
             console.log("Retrying...")
         }
         function soub() {
-            socket.emit("sendOrder_request", format, "{{ e }}", "{{ total }}", "{{ amount }}")
+            socket.emit("sendOrder_request", format, "{{ e }}", "{{ total }}", "{{ amount }}", function (data) {
+                if (data[0] == 200) {
+                    menu("correct", "correct_");
+                } else {
+                    menu("notcorrect", "notcorrect_");
+                }
+            })
             console.log("Retrying...")
         }
         window.redunduncy = redund;
