@@ -96,7 +96,7 @@
         <div>
         <div style="width: 100vw;">
             <div class="one navigation2 af" style="display: flex;">
-                <div style="width: 100vw; padding: 0;" id="visit_"><img class="imagus" style="width: 100vw; height: auto;" id="wallpaper" alt=""><h1 class="pr" id="loafy" style="justify-content: center; align-items: center; height: 100%;"><a class="cta weffect dialBack" data-replace="GET NOW" style="border: 2px solid #000000; background: white; font-size: 22px; padding: 5px 25px; min-width: 120px;"><span style="color: black; font-size: 15px;">VIEW IN STORE</span></a></h1></div>
+                <div style="width: 100vw; padding: 0;" id="visit_"><img class="imagus" src="/static/img/loading.gif" style="width: 100vw; height: auto;" id="wallpaper" alt=""><h1 class="pr" id="loafy" style="justify-content: center; align-items: center; height: 100%;"><a class="cta weffect dialBack" data-replace="GET NOW" style="border: 2px solid #000000; background: white; font-size: 22px; padding: 5px 25px; min-width: 120px;"><span style="color: black; font-size: 15px;">VIEW IN STORE</span></a></h1></div>
             </div>
         </div>
     </div>
@@ -262,9 +262,9 @@
                 `;*/
                 console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
-                //document.getElementById("loafy").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
-                //document.getElementById("wallpaper").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
-                document.getElementById("visit_").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
+                document.getElementById("loafy").setAttribute("onclick", `${window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()}}`);
+                document.getElementById("wallpaper").setAttribute("onclick", `window.location.href = "${"/products/"+data[0][0]['category_id'].toUpperCase()}"`);
+                document.getElementById("visit_").setAttribute("onclick", "window.location.href = \"/products/"+data[0][0]['category_id'].toUpperCase()+"\"");
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
                 for (let v = 0; v< data[0].length;v++) {
                     if (v != 0) {
