@@ -46,7 +46,7 @@
     </div>
     <div style="width: 100vw; left: 0; top: 0; position: absolute; background-color: #0000; height: 50px;">
     </div-->
-    <div class="ticker-container" style="height: 35px; margin-bottom: 0; font-size: 13px; background-color: #000000;">FREE DELIVERY ON ORDERS ABOVE 4000 PKR 🔥</div>
+    <div class="ticker-container" style="height: 35px; margin-bottom: 0; font-size: 13px; background-color: #000000;">FREE DELIVERY ON ORDERS ABOVE 4000 PKR</div>
     <div id="menu_" class="man contain_menu" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; flex-direction: row; background-color: #0000005d; backdrop-filter: blur(10px);">
         <div id="menu" class="menu">
             <a onclick="op()" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
@@ -263,8 +263,8 @@
                 `;*/
                 console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
-                document.getElementById("loafy").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
-                document.getElementById("wallpaper").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
+                //document.getElementById("loafy").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
+                //document.getElementById("wallpaper").addEventListener("click", () => {window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()});
                 document.getElementById("visit_").setAttribute("href", "/products/"+data[0][0]['category_id'].toUpperCase());
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
                 for (let v = 0; v< data[0].length;v++) {

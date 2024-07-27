@@ -925,6 +925,9 @@ ul {
 }
 
 @media (max-width: 768px) {
+  header .one a {
+    width: 20px;
+  }
   header {
     /*flex-direction: column;
             align-items: flex-start;*/
