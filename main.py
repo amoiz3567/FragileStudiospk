@@ -1121,6 +1121,7 @@ def order_req(data, productdata, total, items):
     for r in productdata:
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
+        print(r)
         for i in json.loads(r.replace("\'", "\"")).keys():
             body += f"""<b>{i}</b>: {r[i]}"""
     sender = "fragilelogin@gmail.com"
