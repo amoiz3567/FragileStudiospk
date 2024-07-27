@@ -1124,8 +1124,10 @@ def order_req(data, productdata, total, items):
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
         print(r)
-        for i in json.loads(r.replace("\'", "\"")).keys():
-            body += f"""<b>{i}</b>: {r[i]}"""
+        par = json.loads(r.replace("\'", "\""))
+        for i in par.keys():
+            if (i != "wuus"):
+                body += f"""<b>{i}</b>: {par[i]}"""
     sender = "fragilelogin@gmail.com"
     recipients = ["amoiz356798@gmail.com"] #fragilestudiospk
     password = "ssnl iemy ycbu flks"
