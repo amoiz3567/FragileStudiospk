@@ -283,11 +283,11 @@ function validateEmail(email) {
 function validatePakistaniPostalCode(postalCode) {
     const postalCodeRegex = /^[0-9]{5}$/;
     if (postalCodeRegex.test(postalCode)) {
-        document.getElementById("postal").innerHTML = "Phone number";
+        document.getElementById("postal").innerHTML = "Postal Code";
         document.getElementById("postal").style.color = "black";
         format['postal'] = postalCode;
     } else {
-        document.getElementById("postal").innerHTML = "Phone number *";
+        document.getElementById("postal").innerHTML = "Postal Code *";
         document.getElementById("postal").style.color = "red";
         format['postal'] = "";
     }
