@@ -1692,7 +1692,7 @@ le>la {
 }
 
 .dropbtn::after {
-  content: "🢓";
+  content: "";
   /* this is your text. You can also use UTF-8 character codes as I do here */
   font-family: 'FontAwesome', sans-serif;
   font-size: 40px;
@@ -1702,6 +1702,11 @@ le>la {
   align-items: center;
   right: 10px;
   position: absolute;
+  margin:0 0.5em;
+  display:inline-block;
+  border: 7px solid transparent;
+  border-top:8px solid rgb(255, 255, 255);
+  border-bottom:0 none;
 }
 
 .dropdown {
