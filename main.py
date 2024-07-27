@@ -1118,7 +1118,7 @@ def order_req(data, productdata, total, items):
         """
     body += "<br><h1>Order</h1>"
     b = 0
-    for r in productdata:
+    for r in json.loads(productdata):
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
         print(r)
