@@ -1045,7 +1045,7 @@ def set_mmm(ds):
 def checkout_Item(conf):
     if (not validuuid(conf)):
         try:
-            bruv = render_template('checkout.html', a="item", b=session["item_rn"])
+            bruv = make_response(render_template('checkout.html', a="item", b=session["item_rn"]))
             token = generate_token(uuid.uuid4())
             session['mid2912'] = token
             bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
@@ -1056,7 +1056,7 @@ def checkout_Item(conf):
 @app.route("/checkout/")
 def checkout_cart():
     try:
-        bruv = render_template('checkout.html', a="cart", b=session["yourCart"])
+        bruv = make_response(render_template('checkout.html', a="cart", b=session["yourCart"]))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
