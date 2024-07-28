@@ -284,6 +284,7 @@
                 document.getElementById("visit_").setAttribute("onclick", "window.location.href = \"/products/"+ide+"\"");
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
                 for (let v = 0; v< data[0].length;v++) {
+                    try {
                     ide = data[0][v].category_id;
                     if (v != 0) {
                     document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
@@ -316,8 +317,15 @@
         </div>
     </div-->`} else
     document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
+} catch (rer) {
+    console.log(rer);
+}
+                try {
                     console.log(ide, v);
-                redund_products.push([ide, v]);
+                    redund_products.push([ide, v]);
+                } catch (errea) {
+                    console.log(errea);
+                }
                 try {
                         get_products(ide, v);
                     } catch (err) {
