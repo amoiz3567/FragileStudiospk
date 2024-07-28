@@ -335,7 +335,7 @@ var g;
             }
             console.log(item);
             a.setAttribute("href", `/product/${item['id']}`);
-            a.setAttribute("id", `/product/${item['id']+item['size']}`);
+            a.setAttribute("id", `${item['id']+item['size']}`);
             a.className = "abs rowed";
             //a.classList.add("rowed");
             division.setAttribute("class", "container cont center");
