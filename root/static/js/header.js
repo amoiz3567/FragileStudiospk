@@ -24,6 +24,6 @@ document.addEventListener('scroll', (event) => {
         header.style.opacity = "1";
         frg.style.margin = "0";
         frg.style.marginTop = "20px";
-        frg.style.width = ""; //240px
+        frg.style.width = "40px"; //240px
     }
 });
