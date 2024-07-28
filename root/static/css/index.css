@@ -442,9 +442,9 @@ script[nonce~="whatever"] {
 }
 .pros::before {
   content: 'PKR';
-  font-weight: 600;
+  font-weight: 500;
   color: black;
-  font-size: 19px;
+  font-size: 15px;
   background-color: transparent;
   margin-right: 10px;
 }
