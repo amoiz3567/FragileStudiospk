@@ -1018,20 +1018,20 @@ function getPixel(data, x, y, width) {
 }
 
 function getcolors_(img_, a) {
-  setTimeout(() => {
-      var rgb;
-      try {
-          rgb = averageColor__(document.getElementById(img_));
-          document.querySelectorAll(a).forEach((e) => {
-              console.log(rgb);
-              e.style.background = rgb;
-              console.log(rgb);
-          });
-      }
-      catch (err) {
-          console.log(err, "the error occurred.");
-      }        
-  }, 600);
+  document.querySelectorAll(a).forEach((e) => {
+      e.addEventListener("load", () => {
+          var rgb;
+          try {
+              rgb = averageColor__(document.getElementById(img_));
+                  console.log(rgb);
+                  e.style.background = rgb;
+                  console.log(rgb);
+          }
+          catch (err) {
+              console.log(err, "the error occurred.");
+          }        
+      });
+  });
 }
 </script>
 
