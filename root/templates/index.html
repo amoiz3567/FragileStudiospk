@@ -1152,7 +1152,7 @@ var g;
     }
 
     function getcolors_(img_, a) {
-        document.getElementsByClassName(a.replace('.', '')).onload(function () {
+        document.querySelector(a).addEventListener('DOMContentLoaded', function () {
             console.log("yesshhhhh abbybbbb thats what I ve been waiting for!");
             var rgb;
             try {
