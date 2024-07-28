@@ -230,6 +230,8 @@
     console.log(loc);
     var a = 0;
     var b = 0;
+    var viva = 0;
+    var _loaf_ = 0;
     const redund_products = [];
     $(document).ready(function() {
         var token = '{{ token }}';
@@ -247,8 +249,9 @@
         });
         socket.on(getcookie('evid')+"r", function(data) {
             console.log(data, "bruh");
-            if (data[1] != "a") {
+            if (data[1] != "a" && viva != _loaf_) {
                 //b = 1;
+                _loaf_ += 1;
                 var jam = "";
                 if (window.innerWidth > 882) {
                     if (data[0].length < 4) {
@@ -333,10 +336,21 @@
             socket.emit("get_category_read", 'alldata_');
             console.log("[1]: Reading...");
         }
-        function get_products(ide, nom) {
-            redund_products.push([ide, nom]);
-            socket.emit("get_products_read", ide, nom);
-            console.log("[2]: Reading...")  ;
+        async function get_products(ide, nom) {
+            var myredund_products = setInterval(redund_products__,500);
+            function redund_products__() {
+                try {
+                    if (_loaf_ != viva) {
+                        viva += 1;
+                        socket.emit("get_products_read", ide, nom);
+                        console.log("[2]: Reading...")  ;
+                    } else {
+                        clearInterval(myredund_products);
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            }
         }
         function redund() {
             const j = [`${getcookie('evid')}`,''];
@@ -383,19 +397,6 @@
                 getcat();
             } else {
                 clearInterval(mtwa);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-    var myredund_products = setInterval(redund_products__,500);
-    function redund_products__() {
-        try {
-            if (redund_products.length != 0) {
-                console.log(redund_products[0], redund_products[0]);
-                getproducts(redund_products[0][0], redund_products[0][1]);
-            } else {
-                clearInterval(myredund_products);
             }
         } catch (err) {
             console.log(err);
