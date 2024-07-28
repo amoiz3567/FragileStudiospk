@@ -697,6 +697,7 @@ script[nonce~="whatever"] {
   display: none;
   animation: float 3s ease-in-out infinite;
   opacity: 0;
+  width: 100%;
 }
 
 .cont:hover .img2 {
