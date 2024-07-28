@@ -963,6 +963,10 @@ header img {
     /* Reduce padding */
 
   }
+  header a:nth-child(1) {
+    margin-left: -15px;
+    gap: 0;
+  }
 
   .ham {
     display: block;
