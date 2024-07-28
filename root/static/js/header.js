@@ -8,7 +8,7 @@ document.addEventListener('scroll', (event) => {
         setTimeout(() => {
             header.classList.add("frao");
             header.style.transform = "translate(0, -6%)";
-            fk.style.display = "block";
+            fk.style.display = "block"; 
             frg.style.margin = "0px";
             frg.style.marginTop = "0px";
             //frg.style.marginBottom = "20px";
