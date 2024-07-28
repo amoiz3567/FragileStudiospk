@@ -246,8 +246,8 @@
         });
         socket.on(getcookie('evid')+"r", function(data) {
             console.log(data, "bruh");
-            if (data[1] != "a" && b == 0) {
-                b = 1;
+            if (data[1] != "a") {
+                //b = 1;
                 for (let v = 0; v < data[0].length; v++) {
                     console.log(v, data);
                     if (data[2] === 0)
@@ -320,7 +320,7 @@
         }
         function get_products(ide, nom) {
             socket.emit("get_products_read", ide, nom)
-            console.log("[2]: Reading...")
+            console.log("[2]: Reading...")  
         }
         function redund() {
             const j = [`${getcookie('evid')}`,''];
