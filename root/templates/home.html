@@ -345,8 +345,12 @@
             console.log("[1]: Reading...");
         }
         function get_products(ide, nom) {
-            socket.emit("get_products_read", ide, nom);
-            console.log("[2]: Reading...")  ;
+            try {
+                socket.emit("get_products_read", ide, nom);
+                console.log("[2]: Reading...")  ;
+            } catch (err) {
+                console.log(err);
+            }
         }
         function redund() {
             const j = [`${getcookie('evid')}`,''];
