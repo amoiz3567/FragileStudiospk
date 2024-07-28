@@ -231,6 +231,7 @@
     var a = 0;
     var b = 0;
     const redund_products = [];
+    var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
         var socket = io("wss://fragilestudiospk.com", {
@@ -351,6 +352,7 @@
             } catch (err) {
                 console.log(err);
             }
+            myredund_products = setInterval(redund_products__,500);
         }
         function redund() {
             const j = [`${getcookie('evid')}`,''];
@@ -402,25 +404,27 @@
             console.log(err);
         }
     }
-    var myredund_products = setInterval(redund_products__,500);
-    function redund_products__() {
-        try {
-            if (redund_products.length != 0) {
-                console.log(redund_products[0], redund_products[0]);
-                getproducts(redund_products[0][0], redund_products[0][1]);
-            } else {
-                clearInterval(myredund_products);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
         //let images = document.querySelectorAll(".imagus");
         //lazyload(images);
         //$("img.imagus").lazyload();
         //pointer_();
         //lazy_load();
     });
+    </script>
+    <script>
+        function redund_products__() {
+            try {
+                if (redund_products.length != 0) {
+                    console.log(redund_products[0], redund_products[0]);
+                    getproducts(redund_products[0][0], redund_products[0][1]);
+                } else {
+                    clearInterval(myredund_products);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
     </script>
     <script>
         function removeElement(arr, value) {

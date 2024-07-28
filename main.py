@@ -29,6 +29,7 @@ import dns.resolver
 from validate_email import validate_email
 from email.mime.image import MIMEImage
 import gevent
+from gevent.ssl import SSLContext, PROTOCOL_TLS
 from gevent import pywsgi
 """
 [!] DEAR maintainer,
@@ -1541,9 +1542,16 @@ channel.basic_consume(queue='order_queue',
 #context.load_cert_chain(certfile='cert/ALDsigning.crt', keyfile='cert/ALDsigning.key')
 #esbf235824nv1x825 TEMPORARY ofc serverkey pass
 if __name__ == '__main__':
-    context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
+    context = SSLContext(PROTOCOL_TLS)
+
+    # Load the certificate and private key
     context.load_cert_chain(certfile='/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem',
                             keyfile='/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem')
+
+    # Optional: Set additional SSL context options if needed
+    context.verify_mode = ssl.CERT_NONE  # Adjust as needed, e.g., ssl.CERT_REQUIRED for client authentication
+    context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1  # Disable older TLS versions if desired
+
     server = pywsgi.WSGIServer(('0.0.0.0', 8000), app, handler_class=pywsgi.WSGIHandler, ssl_context=context)
     server.serve_forever()
 
