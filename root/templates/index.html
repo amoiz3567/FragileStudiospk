@@ -818,7 +818,7 @@ var g;
             var cate = item['category'].toUpperCase().replace(/\./g, '/').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
-            let lock = "";
+            /*let lock = "";
             for (var lor = 0; lor < cate.length; lor++) {
                 if (lor == 3)
                     break;
@@ -838,10 +838,7 @@ var g;
                   //cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/\'/g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
                   //console.log(`${taged[lor]}${cate[lor].replace(/\'/g, '').split('/')[0]}`, "this wttfffff");
                 }
-            }
-            division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
-    <i class="save-container add me bh pointer">…</i>
-    </div>`;
+            }*/
             var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
             console.log(item['saved'], "-------------------------------------------------------------------------");
             if (item['saved'] == 1){

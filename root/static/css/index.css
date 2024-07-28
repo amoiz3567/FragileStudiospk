@@ -702,7 +702,7 @@ script[nonce~="whatever"] {
 .cont:hover .img2 {
   animation: fade-in 0.3s;
   animation: float 3s ease-in-out infinite;
-  width: 80%;
+  width: 100%;
   display: flex;
   opacity: 1;
 }
