@@ -937,7 +937,7 @@ ul {
 }
 
 .ao {
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .fb.b:hover::after {
@@ -1609,7 +1609,7 @@ img {
   cursor: pointer;
   position: absolute;
   top: 50%;
-  width: auto;
+  width: 15px;
   padding: 16px;
   margin-top: -22px;
   color: white;
