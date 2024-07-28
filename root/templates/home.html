@@ -246,8 +246,8 @@
         });
         socket.on(getcookie('evid')+"r", function(data) {
             console.log(data, "bruh");
-            if (data[1] != "a") {
-                //b = 1;
+            if (data[1] != "a" && b == 0) {
+                b = 1;
                 for (let v = 0; v < data[0].length; v++) {
                     console.log(v, data);
                     if (data[2] === 0)

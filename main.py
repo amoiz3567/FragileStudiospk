@@ -1313,6 +1313,8 @@ def request_pr_read(data, nom):
     result = cursor.fetchone()
     res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{data}\')'])
     exists = res == 1
+    print(exists, "the exists has spoken \n\n\n\n\n")
+    print(data is not None and exists == True and not(Invaliduuid12(data)), "the exists has spoken \n\n\n\n\n")
     if (data is not None and exists == True and not(Invaliduuid12(data))):
         #cursor.execute("SELECT id, name, description, price, img, belongs FROM products WHERE belongs=%s", (data,))
         cursor.execute("SET @rownum := 0, @main_category := '';")
