@@ -994,7 +994,8 @@ var g;
                     else
                     document.getElementById("categories_list").innerHTML = `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
             }
-        } else {
+        } else if (vwa != 1) {
+            vwa = 1;
             console.log("nwice the awfawfa wfba uif- ----")
                     var data_ = data[0]
                     for (let i = 0; i< Object.keys(data_).length; i++) {
@@ -1085,7 +1086,7 @@ var g;
         }
         var getch = setInterval(getch_funct,1500);
     function getch_funct() {
-        if (caw != 1) {
+        if (caw != 1 && vwa != 1) {
             getcat();
         } else {
             clearInterval(getch);
