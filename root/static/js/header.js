@@ -7,10 +7,10 @@ document.addEventListener('scroll', (event) => {
         header.style.transition = "0.26s";
         setTimeout(() => {
             header.classList.add("frao");
-            header.style.transform = "translate(0, -2%)";
+            header.style.transform = "translate(0, -6%)";
             fk.style.display = "block";
             frg.style.margin = "0px";
-            frg.style.marginTop = "-15px";
+            frg.style.marginTop = "-10px";
             //frg.style.marginBottom = "20px";
             frg.style.width = "140px";
             //frg.style.width = "10px";
