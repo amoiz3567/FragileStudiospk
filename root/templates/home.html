@@ -326,7 +326,6 @@
             socket.emit("get_category_read", 'alldata_');
             console.log("[1]: Reading...");
         }
-        redund_products = [];
         function get_products(ide, nom) {
             redund_products.push([ide, nom]);
             socket.emit("get_products_read", ide, nom);
