@@ -231,6 +231,7 @@
     var a = 0;
     var b = 0;
     const redund_products = [];
+    var varforit = 0;
     var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
@@ -258,6 +259,7 @@
                 }
                 console.log(redund_products);
                 //redund_products.pop([data[3],data[2]]);
+                redund_products.length = redund_products.length-1;
                 removeElement(redund_products, [data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
@@ -324,6 +326,7 @@
 }
                 try {
                     console.log(ide, v);
+                    varforit += 1;
                     redund_products.push([ide, v]);
                 } catch (errea) {
                     console.log(errea);
@@ -348,7 +351,7 @@
         function get_products(ide, nom) {
             try {
                 socket.emit("get_products_read", ide, nom);
-                console.log("[2]: Reading...")  ;
+                console.log("[2]: Reading...");
             } catch (err) {
                 console.log(err);
             }
@@ -414,7 +417,7 @@
     <script>
         function redund_products__() {
             try {
-                if (redund_products.length != 0) {
+                if (redund_products.length > 0) {
                     console.log(redund_products[0], redund_products[0]);
                     getproducts(redund_products[0][0], redund_products[0][1]);
                 } else {
