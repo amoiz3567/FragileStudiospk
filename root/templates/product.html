@@ -104,8 +104,7 @@
 
   <fk id="fkhead"></fk>
   <header id="header" class="center">
-    <a style="flex:1;" nonce="{{ csp_nonce() }}" onclick="menu()"><img style="width: 50px;"
-        src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
+    <a style="flex:1;" nonce="{{ csp_nonce() }}" onclick="menu()"><img style="width: 44px;" src="{{ url_for('static', filename='img/barsa.png') }}" alt=""></a>
     <div onclick="window.location = '/home';" nonce="{{ csp_nonce() }}" data-clickable="true" class="one logo center" style="flex:1;position: absolute;"><img id="frg"
         style="cursor: pointer; margin-top: 50px;" src="{{ url_for('static', filename='img/frg.png') }}"
         alt=""></div>
