@@ -383,10 +383,10 @@ fk {
     height: auto;
   }
   header {
-    transform: translate(0, 10%);
+    transform: translate(0, 20%);
   }
   .mobile_ {
-    display: none;
+    height: 100px;
   }
   .navigation2 div {
     display: flex;
