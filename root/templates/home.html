@@ -256,7 +256,8 @@
                     }
                 }
                 console.log(redund_products);
-                redund_products.pop([data[3],data[2]]);
+                //redund_products.pop([data[3],data[2]]);
+                removeElement(redund_products, [data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
                     console.log(v, data);
@@ -416,6 +417,14 @@
         //pointer_();
         //lazy_load();
     });
+    </script>
+    <script>
+        function removeElement(arr, value) {
+            let index = arr.indexOf(value);
+            if (index !== -1) {
+                arr.splice(index, 1);
+            }
+        }
     </script>
     <script>
         window.addEventListener('pageshow', function(event) {
