@@ -888,13 +888,13 @@ def red_(data):
     #cursor.execute(f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
-    car = session["yourCart"][0]
+    car = session["yourCart"]
     print(car)
     car_json = json.loads(car)
     print(car_json)
     b = ""
     for v in car_json:
-        print(car_json[v])
+        print(car_json[v], "\n\n\n\n\n")
         if (json.loads(car_json[v].replace("\'", "\""))['productId']) == data['0']:
             b = (f"\"{v}\": \"{car_json[v]}\"")
     print(repair_json(car[0][0].replace(b, '')))
