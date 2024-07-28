@@ -651,9 +651,29 @@ var g;
         }
         function rmc(id) {
             a = socket.emit('rmc', {0:id}, function (data) {
-                if (data == "done")
-                    return true;
-                else
+                if (data[0] == 200) {
+                    function thru() {
+                  fetch("https://"+window.location.hostname+'/item/'+data[1], {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log(data);
+                      if (data[0] === "200") {
+                          window.location.href = "https://"+window.location.hostname+"/checkout/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                      } else {
+                          window.location.href = "https://"+window.location.hostname+"/500";
+                      }
+                  })
+                  .catch(error => {
+                          console.error('Error:', error);
+                      });
+                  }
+                  thru();
+                } else
                     return false;
             });
             console.log("down");
