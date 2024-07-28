@@ -296,7 +296,8 @@ fk {
   left: 0;
   position: absolute;
   bottom: 0;
-  font-weight: 100;
+  font-weight: 600;
+  text-shadow: 0 0 5px white;
   margin-left: 25px;
   font-size: 2.6vh;
   color: black;
