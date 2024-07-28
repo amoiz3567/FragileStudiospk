@@ -952,7 +952,7 @@ def retProduct(p=None, raf=None):
     cursorCategory = ""
     if category_id != None and category_id != "" and not(Invaliduuid12(category_id)):
         print(category_id, " - - - - -- - -")
-        cursorCategory = f" WHERE INSTR(belongs, '{category_id}') > 0"
+        cursorCategory = f" WHERE INSTR(category_also, '{category_id}') > 0"
     if (l_ != "" and cursorCategory != ""):
         l_ = " AND price BETWEEN %s AND %s"
     id = request.cookies.get("id")
@@ -1329,14 +1329,15 @@ def request_pr_read(data, nom):
                 price, 
                 img, 
                 belongs,
-                category, 
+                category_also,
+                category,
                 SUBSTRING_INDEX(category, '.', 1) AS main_category,
                 @rownum := IF(@main_category = SUBSTRING_INDEX(category, '.', 1), @rownum + 1, 1) AS rownum, 
                 @main_category := SUBSTRING_INDEX(category, '.', 1)
             FROM 
                 products
             WHERE 
-                INSTR(belongs, %s) > 0
+                INSTR(category_also, %s) > 0
             ORDER BY 
                 main_category, price
         ) AS subquery
