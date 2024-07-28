@@ -888,7 +888,7 @@ def red_(data):
     #cursor.execute(f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
-    car = session["yourCart"]
+    car = session["yourCart"][0]
     print(car)
     car_json = json.loads(car)
     print(car_json)
