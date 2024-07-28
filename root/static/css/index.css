@@ -693,16 +693,16 @@ script[nonce~="whatever"] {
 }
 
 .cont:hover .img1 {
-  animation: fade-out 0.3s;
+  /*animation: fade-out 0.3s;*/
   display: none;
-  animation: float 3s ease-in-out infinite;
+  /*animation: float 3s ease-in-out infinite;*/
   opacity: 0;
   width: 100%;
 }
 
 .cont:hover .img2 {
-  animation: fade-in 0.3s;
-  animation: float 3s ease-in-out infinite;
+  /*animation: fade-in 0.3s;
+  animation: float 3s ease-in-out infinite;*/
   width: 100%;
   display: flex;
   opacity: 1;
