@@ -838,12 +838,12 @@ var g;
                   //cats += `<p class="cats bh ${taged[lor]}${cate[lor].replace(/\'/g, '').split("/")[0]}" onclick="if(this.style.background != 'black') { add_tag(event, this.innerText, this.classList); } else { delete_(this.classList[2], null, event); }" style="font-weight: 100; position: relative; z-index: 80; text-wrap: nowrap;">${text_cate}</p>`;
                   //console.log(`${taged[lor]}${cate[lor].replace(/\'/g, '').split('/')[0]}`, "this wttfffff");
                 }
-            }*/
+            }
             var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
             console.log(item['saved'], "-------------------------------------------------------------------------");
             if (item['saved'] == 1){
                 save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
-            }
+            }*/
             image.classList.add("img1");
             image.classList.add("imagus");
             image.setAttribute("id", `imag${i}`);
@@ -858,9 +858,8 @@ var g;
             secondDivision.classList.add("detail-container");
             const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');">${save_svg}</i></div>
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
-                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
                     <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
-                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
+                        <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; font-weight: 500; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
             secondDivision.innerHTML = details;
             container.querySelectorAll("#loading").forEach((el) =>{el.remove()})
