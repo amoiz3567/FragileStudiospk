@@ -692,6 +692,7 @@ script[nonce~="whatever"] {
   opacity: 0;
 }
 
+
 .cont:hover .img1 {
   /*animation: fade-out 0.3s;*/
   display: none;
