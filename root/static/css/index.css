@@ -378,6 +378,9 @@ fk {
     flex-direction: row;width: auto;
     height: auto;
   }
+  .mobile_ {
+    display: none;
+  }
   .navigation2 div {
     display: flex;
     flex: none;
