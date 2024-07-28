@@ -1345,7 +1345,7 @@ def request_pr_read(data, nom):
         """
         cursor.execute(query, (data,))
         r = cursor.fetchall()
-        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
+        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 3: data})
         cursor.close()
         return make_response(jsonify({0: 200}))
     cursor.execute("SET @row_num = 0;")

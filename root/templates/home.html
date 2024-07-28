@@ -230,6 +230,7 @@
     console.log(loc);
     var a = 0;
     var b = 0;
+    const redund_products = [];
     $(document).ready(function() {
         var token = '{{ token }}';
         var socket = io("wss://fragilestudiospk.com", {
@@ -248,6 +249,7 @@
             console.log(data, "bruh");
             if (data[1] != "a") {
                 //b = 1;
+                redund_products.pop([data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
                     console.log(v, data);
@@ -318,16 +320,17 @@
 
         // Evidence that user has logged or signed in.
         socket.on(getcookie('id'), function(data) {
-            console.log(data)
+            console.log(data);
         });
         function get_cat() {
-            socket.emit("get_category_read", 'alldata_')
-            console.log("[1]: Reading...")
+            socket.emit("get_category_read", 'alldata_');
+            console.log("[1]: Reading...");
         }
-        var redund_products = 
+        redund_products = [];
         function get_products(ide, nom) {
-            socket.emit("get_products_read", ide, nom)
-            console.log("[2]: Reading...")  
+            redund_products.push([ide, nom]);
+            socket.emit("get_products_read", ide, nom);
+            console.log("[2]: Reading...")  ;
         }
         function redund() {
             const j = [`${getcookie('evid')}`,''];
@@ -336,6 +339,7 @@
         }
         window.redunduncy = redund;
         window.getcat = get_cat;
+        window.getproducts = get_products;
     });
     window.addEventListener('load', function() {
             try {
@@ -378,7 +382,18 @@
             console.log(err);
         }
     }
-
+    var myredund_products = setInterval(redund_products__,500);
+    function redund_products__() {
+        try {
+            if (redund_products.length > 0) {
+                getproducts(redund_products[redund_products.length][0], redund_products[redund_products.length][1]);
+            } else {
+                clearInterval(myredund_products);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
         //let images = document.querySelectorAll(".imagus");
         //lazyload(images);
         //$("img.imagus").lazyload();
