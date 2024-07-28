@@ -266,9 +266,9 @@ function summonContext(event=NaN, id) {
                 res = await menu('dialogue', 'dialogue_');
                 res.addEventListener('click', async function asyncHelloWorld() {
                     const l = await remove(id);
-                    if (l) {
+                    if (l == true) {
                         const el = document.getElementById(`${id}`);
-                        el.innerHTML = "";
+                        el.remove();
                         return
                     }
                 });
