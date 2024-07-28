@@ -372,6 +372,10 @@ fk {
 .one_index {
   display: none;
 }
+.mobile_ {
+  display: block;
+}
+
 @media screen and (max-width: 768px) {
   .navigation2{
     display: flex;
