@@ -248,7 +248,6 @@
             }
         });
         socket.on(getcookie('evid')+"r", function(data) {
-            console.log(data, "bruh");
             if (data[1] != "a") {
                 //b = 1;
                 var jam = "";
@@ -257,14 +256,11 @@
                         jam = "max-width: 37vw; display: flex; justify-content: center; align-items: center;";
                     }
                 }
-                console.log(redund_products);
-                console.log(varforit, "  -  -!damn");
                 //redund_products.pop([data[3],data[2]]);
                 varforit = varforit-1;
                 removeElement(redund_products, [data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
-                    console.log(v, data);
                     if (data[2] === 0)
                     document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v} cont" style=" max-width: 100%; margin:-1px; border: 1px solid #ccc; ${jam}" onclick="window.location.href = '/product/${data[0][v]['id']}';"><img class="imagus img1"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><img class="imagus img2" id="imagi${v}_" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[1]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
                     else
