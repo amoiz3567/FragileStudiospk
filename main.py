@@ -952,7 +952,7 @@ def retProduct(p=None, raf=None):
     cursorCategory = ""
     if category_id != None and category_id != "" and not(Invaliduuid12(category_id)):
         print(category_id, " - - - - -- - -")
-        cursorCategory = f" WHERE belongs='{category_id}'"
+        cursorCategory = f" WHERE INSTR(belongs, '{category_id}') > 0"
     if (l_ != "" and cursorCategory != ""):
         l_ = " AND price BETWEEN %s AND %s"
     id = request.cookies.get("id")
@@ -1336,7 +1336,7 @@ def request_pr_read(data, nom):
             FROM 
                 products
             WHERE 
-                belongs = %s
+                INSTR(belongs, %s) > 0
             ORDER BY 
                 main_category, price
         ) AS subquery
