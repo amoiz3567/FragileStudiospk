@@ -683,7 +683,7 @@ script[nonce~="whatever"] {
   flex-direction: column;
   align-items: flex-start;
   width: 270px;
-  width: 80%;
+  width: 100%;
 }
 
 .img2 {
@@ -1201,6 +1201,9 @@ span:nth-child(2) {
   margin-top: -50px;
 }
 @media screen and (max-width:768px) {
+  header .one .svg {
+    width: 2px;
+  }
   .cont {
     display: contents;
     flex-direction: column;
