@@ -222,7 +222,7 @@ name    </h1>
               </div>
             </div>
           </div>
-          <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome" id="ident"></p>
+          <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome head_" id="ident"></p>
           <div class="row">
           <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
           </h1>
@@ -631,7 +631,7 @@ $(".img_producto_container")
             division.appendChild(imageAh);
             secondDivision.classList.add("detail-container");
             const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');"></i></div>
-                    <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
+                    <h4 style="font-size: 18px;">${item['name']}</h4>
                     <div style="height: 5px; margin-top: 4px; display: flex; justify-content: start; align-items: start;" class="row">
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
