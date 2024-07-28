@@ -947,8 +947,13 @@ header img {
   filter: brightness(-150%);
 }
 
-@media (max-width: 768px) {
-  .pip {
+@media (max-width: 1232px) {
+  .cta {
+    margin: 0 auto;
+  }
+}
+  @media (max-width: 768px) {
+    .pip {
     font-size: 15px; color: #252525;
   }
   header .one .svg {
