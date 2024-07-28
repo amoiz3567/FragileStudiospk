@@ -258,6 +258,7 @@
                     }
                 }
                 console.log(redund_products);
+                console.log(varforit);
                 //redund_products.pop([data[3],data[2]]);
                 varforit = varforit-1;
                 removeElement(redund_products, [data[3],data[2]]);
@@ -418,7 +419,7 @@
     <script>
         function redund_products__() {
             try {
-                if (redund_products.length > 0 || varforit != 0 || varforit <= 0) {
+                if (redund_products.length > 0 || varforit <= 0) {
                     console.log(redund_products[0], redund_products[0]);
                     getproducts(redund_products[0][0], redund_products[0][1]);
                 } else {
