@@ -261,7 +261,7 @@ fk {
 }
 .desc {
   background-color: transparent;
-  padding:5px 25px;
+  padding:2px 10px;
 }
 .desc:hover {
   background-color: rgba(128, 128, 128, 0.228);
@@ -865,7 +865,7 @@ ra {
 
 .column * {
   color: rgb(0, 0, 0);
-  font-weight: 900;
+  font-weight: 600;
   font-style: italic;
   font-stretch: ultra-expanded;
   font-family: 'medium', sans-serif;
@@ -1146,7 +1146,7 @@ span:nth-child(2) {
 .darth {
   background-color: #000000;
   color: white;
-  font-size: 100%;
+  font-size: 75%;
   font-weight: 400;
 }
 
@@ -1218,6 +1218,7 @@ span:nth-child(2) {
   header .one .svg {
     width: 2px;
   }
+  
   .cont {
     display: contents;
     flex-direction: column;
@@ -1250,7 +1251,7 @@ span:nth-child(2) {
   }
   .v {
     margin: 0;
-    width: 90%;
+    width: 100%;
     left:0;
     display: flex;
     justify-content: center;
@@ -1260,7 +1261,7 @@ span:nth-child(2) {
 
 .h_font {
   font-family: system-ui, 'smelyy', sans-serif;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .p_font {
@@ -1317,7 +1318,7 @@ span:nth-child(2) {
   border-radius: 3px;
   background-color: #94949400;
   display: flex;
-  padding: 5px;
+  padding: 11px 0;
   text-decoration: none;
   color: rgb(0, 0, 0);
   margin: 0 -5px;
