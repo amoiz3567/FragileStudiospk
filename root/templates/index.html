@@ -948,6 +948,8 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         const category_ = "{{ category }}";
+        if (category_.includes(" "))
+            category_ = category_.split(" ")[0];
         var socket = io("https://"+window.location.hostname, {
             extraHeaders: {
                 Authorization: '' + category_,
@@ -1001,6 +1003,7 @@ var g;
                     var data_ = data[0]
                     for (let i = 0; i< Object.keys(data_).length; i++) {
                         console.log(data_);
+
                         if (data[1] != "b") {
                             document.getElementById("name_cat").innerText = data_[i]['name'].toUpperCase();
                             document.getElementById("description_cat").innerText = data_[i]['description'];
