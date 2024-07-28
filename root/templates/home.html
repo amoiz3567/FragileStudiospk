@@ -249,7 +249,7 @@
             if (data[1] != "a") {
                 //b = 1;
                 for (let v = 0; v < data[0].length; v++) {
-                    data = data[v];
+                    //data = data[v];
                     console.log(v, data);
                     if (data[2] === 0)
                     document.getElementById("items_").innerHTML += `<div class="pointer imagus" style="max-width: 25%; margin:-1px; border: 1px solid #ccc;" onclick="localStorage.setItem('margins', ''); window.location.href = '/products/${data[0][v]['belongs'].toUpperCase()}#${data[0][v]['id']}';"><img class="imagus" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${data[0][v]['price']}</a></p></h1></div>`;
