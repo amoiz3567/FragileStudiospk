@@ -896,7 +896,7 @@ def red_(data):
     a = 0
     for v in car_json:
         print(car_json[v], "\n\n\n\n\n\n")
-        if (json.loads(car_json[v].replace("\'", "\""))['productId']) == data['0']:
+        if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data['0']:
             b = (f"\"{v}\": \"{car_json[v]}\"")
         a += 1
     print(b, " hehehehehe ", data['0'])
