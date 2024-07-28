@@ -687,13 +687,15 @@ script[nonce~="whatever"] {
 }
 
 .img2 {
-  animation: fade-out 0.3s;
+  /*animation: fade-out 0.3s;*/
+  transition: .1s;
   display: none;
   opacity: 0;
 }
 
 
 .cont:hover .img1 {
+  transition: .1s;
   /*animation: fade-out 0.3s;*/
   display: none;
   /*animation: float 3s ease-in-out infinite;*/
@@ -704,6 +706,7 @@ script[nonce~="whatever"] {
 .cont:hover .img2 {
   /*animation: fade-in 0.3s;
   animation: float 3s ease-in-out infinite;*/
+  transition: .1s;
   width: 100%;
   display: flex;
   opacity: 1;
