@@ -382,6 +382,9 @@ fk {
     flex-direction: row;width: auto;
     height: auto;
   }
+  header {
+    transform: translate(0, 10%);
+  }
   .mobile_ {
     display: none;
   }
