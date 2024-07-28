@@ -267,7 +267,7 @@ function summonContext(event=NaN, id) {
                 res.addEventListener('click', async function asyncHelloWorld() {
                     const l = await remove(id);
                     if (l) {
-                        const el = document.querySelectorAll(`[href="/product/${id}"]`)[0];
+                        const el = document.querySelectorAll(`#${id}`)[0];
                         el.innerHTML = "";
                         return
                     }
@@ -335,6 +335,7 @@ var g;
             }
             console.log(item);
             a.setAttribute("href", `/product/${item['id']}`);
+            a.setAttribute("id", `/product/${item['id']+item['size']}`);
             a.className = "abs rowed";
             //a.classList.add("rowed");
             division.setAttribute("class", "container cont center");
