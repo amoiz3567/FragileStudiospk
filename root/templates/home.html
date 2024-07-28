@@ -250,8 +250,10 @@
             if (data[1] != "a") {
                 //b = 1;
                 var jam = "";
-                if (data[0].length < 4) {
-                    jam = "max-width: 37vw; display: flex; justify-content: center; align-items: center;";
+                if (window.innerWidth > 882) {
+                    if (data[0].length < 4) {
+                        jam = "max-width: 37vw; display: flex; justify-content: center; align-items: center;";
+                    }
                 }
                 redund_products.pop([data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
