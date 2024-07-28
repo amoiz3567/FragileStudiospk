@@ -760,6 +760,7 @@ ra {
 .p {
   width: 28px;
   filter: brightness(-150%);
+  margin-left: -10px;
 }
 
 .s {
