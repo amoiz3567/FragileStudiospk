@@ -18,7 +18,7 @@ document.addEventListener('scroll', (event) => {
         }, 1);
 
     } else if (document.scrollingElement.scrollTop < 368) {
-        header.style.transform = "translate(0, 50%)";
+        header.style.transform = "translate(0, 40%)";
         header.classList.remove("frao");
         fk.style.display = "none";
         header.style.opacity = "1";
