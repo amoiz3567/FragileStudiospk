@@ -948,8 +948,8 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         const category_ = "{{ category }}";
-        if (category_.includes(" "))
-            category_ = category_.split(" ")[0];
+        //if (category_.includes(" "))
+        //    category_ = category_.split(" ")[0];
         var socket = io("https://"+window.location.hostname, {
             extraHeaders: {
                 Authorization: '' + category_,
