@@ -663,7 +663,7 @@ var g;
                   .then(data => {
                       console.log(data);
                       if (data[0] === "200") {
-                          window.location.href = "https://"+window.location.hostname+"/checkout/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                          return true;
                       } else {
                           window.location.href = "https://"+window.location.hostname+"/500";
                       }
@@ -672,7 +672,7 @@ var g;
                           console.error('Error:', error);
                       });
                   }
-                  thru();
+                  return thru();
                 } else
                     return false;
             });
