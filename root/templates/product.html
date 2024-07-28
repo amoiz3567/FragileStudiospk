@@ -590,7 +590,7 @@ $(".img_producto_container")
             a.setAttribute("id", `${item['id']}`);
             a.classList.add("abs");
             division.setAttribute("class", `container cont center pd${i}`);
-            /*
+            
             var cate = item['category'].toUpperCase().replace(/\./g, ' / ').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
@@ -615,9 +615,9 @@ $(".img_producto_container")
                   console.log(`${taged[lor]}${cate[lor].split(/\//)[0].replace(/\//g, '')}`);
                 }
             }
-            division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
-    <i class="save-container add me bh pointer">…</i>
-    </div>`;*/
+            division.innerHTML += `<div class="details" style="display: none;>${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
+    <i class="save-container add me bh pointer"></i>
+    </div>`;
             image.classList.add("img1");
             image.classList.add("imagus");
             image.setAttribute("id", `imag${i}`);
