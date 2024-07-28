@@ -278,8 +278,6 @@
                 `;*/
                 console.log("{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 var ide = data[0][0]['category_id'].toUpperCase();
-                if (ide.includes(" "))
-                    ide = data[0][0]['category_id'].toUpperCase().split(" ")[0];
                 document.getElementById("wallpaper").setAttribute("src", "{{ url_for('static', filename='products/') }}"+data[0][0]['img']);
                 //document.getElementById("loafy").setAttribute("onclick", `window.location.href = "${window.location.href = "/products/"+data[0][0]['category_id'].toUpperCase()}"`);
                 document.getElementById("wallpaper").setAttribute("onclick", `window.location.href = "${"/products/"+ide}"`);
@@ -287,8 +285,6 @@
                 //document.getElementById("name_cat").innerText = data[0]['name'].toUpperCase();
                 for (let v = 0; v< data[0].length;v++) {
                     ide = data[0][v].category_id;
-                    if (ide.includes(" "))
-                        ide = data[0][v].category_id.split(" ")[0];
                     if (v != 0) {
                     document.getElementById("categories_list").innerHTML += `<li onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
                     document.body.innerHTML += `
