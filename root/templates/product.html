@@ -283,7 +283,7 @@ name    </h1>
     <div class="div"></div>
   </div>
   <div class="center">
-    <h1><i style="font-weight: 900;">SIMILAR TO ABOVE (<i id="amount">0</i>)</i></h1>
+    <h1><i style="font-weight: 700;">SIMILAR TO ABOVE (<i id="amount">0</i>)</i></h1>
   </div>
   <div class="center">
     <div style="width: 100vw;">
@@ -590,6 +590,7 @@ $(".img_producto_container")
             a.setAttribute("id", `${item['id']}`);
             a.classList.add("abs");
             division.setAttribute("class", `container cont center pd${i}`);
+            /*
             var cate = item['category'].toUpperCase().replace(/\./g, ' / ').replace(/ /g, '').split(',');
             var cats = "";
             taged = ["gender_", "type_", "color_"];
@@ -616,7 +617,7 @@ $(".img_producto_container")
             }
             division.innerHTML += `<div class="details">${cats}</div><div align="right" style="display: flex; justify-content: flex-end; width: 95%; align-items: start;">
     <i class="save-container add me bh pointer">…</i>
-    </div>`;
+    </div>`;*/
             image.classList.add("img1");
             image.classList.add("imagus");
             image.setAttribute("id", `imag${i}`);
@@ -631,8 +632,7 @@ $(".img_producto_container")
             secondDivision.classList.add("detail-container");
             const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');"></i></div>
                     <h4 style="font-size: 18px;">${TextAbstract(item['name'], 20)}</h4>
-                    <p style="font-weight: 100;">${TextAbstract(item['description'], 36)}</p>
-                    <div style="height: 5px; margin-top: 15px; display: flex; justify-content: start; align-items: start;" class="row">
+                    <div style="height: 5px; margin-top: 4px; display: flex; justify-content: start; align-items: start;" class="row">
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
             secondDivision.innerHTML = details;
