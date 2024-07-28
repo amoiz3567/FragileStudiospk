@@ -652,6 +652,7 @@ var g;
         function rmc(id) {
             a = socket.emit('rmc', {0:id}, function (data) {
                 if (data[0] == 200) {
+                    console.log(data[1]);
                     function thru() {
                   fetch("https://"+window.location.hostname+'/item/'+data[1], {
                       method: 'POST',
