@@ -780,7 +780,7 @@ ra {
 }
 
 .svg {
-  height: auto;
+  height: 25px;
   fill: #000000;
   -webkit-text-fill-color: #000000;
 }
