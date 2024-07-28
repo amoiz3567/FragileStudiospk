@@ -902,6 +902,7 @@ def red_(data):
     #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
     #mydb.commit()
     #cursor.close()
+    cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
     return {0: 200, 1: json.dumps(res)}
     # remove id product from cart!
 
