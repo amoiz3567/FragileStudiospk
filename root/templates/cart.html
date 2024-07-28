@@ -654,7 +654,7 @@ var g;
                 if (data[0] == 200) {
                     console.log(data[1]);
                     function thru() {
-                  fetch("https://"+window.location.hostname+'/item/'+data[1], {
+                  fetch("wss://"+window.location.hostname+'/item/'+data[1], {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json'
