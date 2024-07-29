@@ -314,6 +314,11 @@ var g;
     }
     function loadpc(keys, dObj, count, rep=0) {
         document.getElementById("cart_opp").style.display = "flex";
+        try {
+            document.getElementById('loading_shit').remove();
+        } catch (err) {
+            console.log(err);
+        }
         g = loadpc;
         for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
             let key = keys[i];
@@ -466,6 +471,11 @@ var g;
         }
     }
     function loadp(keys, dObj, count, rep=0) {
+        try {
+            document.getElementById('loading_shit').remove();
+        } catch (err) {
+            console.log(err);
+        }
         g=loadp;
         for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
             let key = keys[i];
