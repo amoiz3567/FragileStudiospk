@@ -169,7 +169,7 @@
     </div>
 </div>
 <br><br><br><br><br>
-<div class="center">
+<div id="loafw" style="display: none;" class="center">
     <div style="width: 100vw; height: 60px; background: #000000; display: flex; justify-content: center; align-items: center;">
     </div>
 </div>
@@ -610,7 +610,7 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
-        var socket = io("https://"+window.location.hostname, {
+        var socket = io("wss://"+window.location.hostname, {
             extraHeaders: {
                 Authorization: '' + token,
                 Type: '' + type,
@@ -620,6 +620,7 @@ var g;
         socket.on("crate"+getcookie('evid')+"{{type}}", function(data) {
             console.log(data)
             if (data[0] == 'cart' && la == 0 && data[1] != '{}') {
+                document.getElementById("loafw").style.display = "flex";
                 try {
                     document.getElementById('none_').remove();
                 } catch (err) {
