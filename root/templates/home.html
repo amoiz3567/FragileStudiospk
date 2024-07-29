@@ -152,6 +152,44 @@
 <div style="width: 250px;"><img class="imagus" src="{{ url_for('static', filename='products/fragile world tour tee (front).png') }}" alt=""><i>MEN Category</i><h1>Shoes and brass&nbsp;<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div-->
 </body>
 </html>
+<script nonce="{{ csp_nonce() }}">
+    var skip = 0;
+        window.addEventListener('resize', function() {
+        var subMenus = document.querySelectorAll('.sub-menu');
+        if (window.innerWidth >= 956) {
+            for (let b = 0; b< subMenus.length; b++) {
+                subMenus[b].style.display = "block";
+                skip = 1;
+            };
+        } else {
+            for (let b = 0; b< subMenus.length; b++) {
+                subMenus[0].style.display = "none";
+                skip = 0;
+            };
+        }
+    });
+    window.addEventListener('load', function() {
+        var subMenus = document.querySelectorAll('.sub-menu');
+        if (window.innerWidth >= 956) {
+            subMenus.forEach(function(subMenu) {
+                subMenu.style.display = "block";
+                skip = 1;
+            });
+        }
+    });
+    function toggleSection(element) {
+        if (skip != 1) {
+            var subMenu = element.nextElementSibling;
+            if (subMenu.style.display === "block") {
+                subMenu.style.display = "none";
+                element.children[0].innerHTML = "+";
+            } else {
+                subMenu.style.display = "block";
+                element.children[0].innerHTML = "-";
+            }
+        }
+    }
+</script>
 <!--script nonce="{{ csp_nonce() }}">
     function slide(num, didnot="scrollSide0", did="slideButtons0") {
         $("."+didnot).scrollLeft((num*505)+$("."+didnot).scrollLeft());
