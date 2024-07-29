@@ -164,7 +164,7 @@
 <div class="center">
     <div style="width: 100vw;">
         <div id="items" class="one navigation" style="display: flex;">
-            <div class="center"><img style="width: 250px" class="imagus" src="{{ url_for('static', filename='img/works.gif') }}" alt=""></div>
+            <div class="center" id="loading_shit"><img style="width: 250px" class="imagus" src="{{ url_for('static', filename='img/works.gif') }}" alt=""></div>
         </div>
     </div>
 </div>
@@ -406,6 +406,11 @@ var g;
     }
     function loadpw(keys, dObj, count, rep=0) {
         console.log("theses area awr")
+        try {
+            document.getElementById('loading_shit').remove();
+        } catch (err) {
+            console.log(err);
+        }
         g = loadp;
         for (let i = Math.floor(count[0]); i < Math.floor(count[count.length-1])+1; i++) {
             let key = keys[i];
