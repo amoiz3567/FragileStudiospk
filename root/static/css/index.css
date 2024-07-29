@@ -1792,7 +1792,7 @@ le>la {
   height: 15px;
   margin-top: 5px;
 }
-a.link {
+.link a {
   color: white;
 }
 .dropdown {
