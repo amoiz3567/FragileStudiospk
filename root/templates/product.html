@@ -804,7 +804,11 @@ $(".img_producto_container")
                     if (v != 0)
                     document.getElementById("categories_list").innerHTML += `<li nonce="{{ csp_nonce() }}" onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}</li>`;
                     else
-                    document.getElementById("categories_list").innerHTML = `<li nonce="{{ csp_nonce() }}" onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i class="tag">NEW</i></li>`;
+                    document.getElementById("categories_list").innerHTML = `<li nonce="{{ csp_nonce() }}" onclick="window.location.href = '/products/${data[0][v].category_id}'" class="fb b b_">${data[0][v].name.replace(/ /g, '&nbsp;')}<i style="    font-size: 9px;
+    font-weight: 200;
+    background: transparent;
+    color: black;
+" class="tag">NEW</i></li>`;
                 }
             }
         });
@@ -958,19 +962,6 @@ $(".img_producto_container")
     } catch (err) {
         console.log(err);
     }
-
-    try {
-      var int_noice = setInterval(func_noice,400);
-      function func_noice() {
-        if (noice != 1) {
-          getcat__();
-        } else {
-          clearInterval(int_noice);
-        }
-      }
-    } catch (err) {
-        console.log(err);
-    }
   });
 
 function addtocart(event, a="") {
@@ -990,6 +981,20 @@ function addtocart(event, a="") {
     approve(a);
   }
 }
+</script>
+<script>
+      try {
+        var int_noice = setInterval(func_noice,400);
+        function func_noice() {
+          if (noice != 1) {
+            getcat__();
+          } else {
+            clearInterval(int_noice);
+          }
+        }
+      } catch (err) {
+          console.log(err);
+      }
 </script>
 <script>
   function averageColor__(imageElement) {
