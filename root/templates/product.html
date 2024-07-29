@@ -782,7 +782,7 @@ $(".img_producto_container")
     window.pid = item['id'];
     window.pprice = Math.round(item['price']);
     window.pquantity = item['quantity'];
-    const QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
+    var QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
     if (QUANTITY_ >= 9999)
     QUANTITY_ = QUANTITY_-9999;
     document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
