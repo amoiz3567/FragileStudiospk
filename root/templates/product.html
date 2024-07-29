@@ -720,7 +720,7 @@ $(".img_producto_container")
     document.querySelectorAll('#ident').forEach(function (el) {el.innerText = `${item['id']}`});
     try {
       for (let c= 0; c< scr.length; c++)
-        scr[c].innerHTML = `<img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; width: 60vw; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/') }}${str[c].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'Error! Unfortunately, the image could not be load.';this.parentNode.appendChild(v);this.style.display = 'none';">`;
+        scr[c].innerHTML = `<img class="dslc-lightbox-image img_producto error" style="display: flex; justify-content: center; align-items: center; cursor:zoom-in;" target="_self" src="{{ url_for('static', filename='products/') }}${str[c].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}" onError="var v = document.createElement('p');v.setAttribute('align', 'center');v.className = 'la error'; v.style.display = 'flex'; v.innerText = 'Error! Unfortunately, the image could not be load.';this.parentNode.appendChild(v);this.style.display = 'none';">`;
       }
     catch (err) {
       console.log(err, "wtffff");

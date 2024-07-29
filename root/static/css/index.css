@@ -1721,7 +1721,7 @@ img {
   background-color: #5f5f5f00;
   -moz-user-select: none;
   user-select: none;
-  width: 670px;
+  width: 60vw;
   height: auto;
 }
 @media screen and (max-width: 488px) {
