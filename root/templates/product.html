@@ -957,19 +957,6 @@ $(".img_producto_container")
     } catch (err) {
         console.log(err);
     }
-
-    try {
-      var inter_func_rec = setInterval(myfunc_rec,400);
-      function myfunc_rec() {
-        if (got2 != 0) {
-          redunduncy_rec();
-        } else {
-          clearInterval(inter_func_rec);
-        }
-      }
-    } catch (err) {
-        console.log(err);
-    }
   });
 
 function addtocart(event, a="") {
@@ -989,6 +976,16 @@ function addtocart(event, a="") {
     approve(a);
   }
 }
+</script>
+<script>
+  var inter_func_rec = setInterval(myfunc_rec,400);
+  function myfunc_rec() {
+    if (got2 == 0) {
+      redunduncy_rec();
+    } else {
+      clearInterval(inter_func_rec);
+    }
+  }
 </script>
 <script>
       try {
