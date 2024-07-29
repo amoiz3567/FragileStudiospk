@@ -891,6 +891,17 @@ ra {
   font-weight: 700;
   margin: 0 5px;
 }
+i.tag {
+  font-size: 9px;
+  font-weight: 200;
+  background: transparent;
+  color: black;
+  font-size: 12px;
+  padding: 4px;
+  font-style: normal;
+  margin: 0 5px;
+}
+
 
 .f {
   position: absolute;
@@ -1743,12 +1754,6 @@ le>la {
 
 .hide {
   display: none;
-}
-.tag i {
-  font-size: 9px;
-  font-weight: 200;
-  background: transparent;
-  color: black;
 }
 .dropbtn::after {
   content: "";
