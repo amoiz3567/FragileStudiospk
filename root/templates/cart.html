@@ -639,8 +639,15 @@ var g;
                     console.log(err);
                 }
                 load_(data,loadp);
-            } else if (data[1] == '{}')
+            } else if (data[1] == '{}') {
                 la = 1;
+                try {
+                    document.getElementById('loading_shit').remove();
+                } catch (err) {
+                    console.log(err);
+                }
+                document.getElementById("items").innerHTML = `<h1 id="none_"><i style="font-weight: 900;">NO PRODUCTS ADDED YET.</i></h1>`;
+            }
         });
         socket.on(getcookie('evid'), function(data) {
             console.log(data)
