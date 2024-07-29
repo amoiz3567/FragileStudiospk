@@ -262,9 +262,9 @@
                 removeElement(redund_products, [data[3],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
-                    if (data[2] === 0)
-                    document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v} cont" style=" max-width: 100%; margin:-1px; border: 1px solid #ccc; ${jam}" onclick="window.location.href = '/product/${data[0][v]['id']}';"><img class="imagus img1" style="padding-bottom: 85px;"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><img class="imagus img2" style="padding-bottom: 85px;" id="imagi${v}_" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[1]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
-                    else
+                    //if (data[2] === 0)
+                    //document.querySelector("#items_").innerHTML = `<div class="pointer imagus pdi${v} cont" style=" max-width: 100%; margin:-1px; border: 1px solid #ccc; ${jam}" onclick="window.location.href = '/product/${data[0][v]['id']}';"><img class="imagus img1" style="padding-bottom: 85px;"  id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><img class="imagus img2" style="padding-bottom: 85px;" id="imagi${v}_" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[1]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
+                    //else
                     document.querySelector("#items_"+data[2]).innerHTML += `<div class="pointer imagus pdi${v} cont" style="max-width: 100%; margin:-1px; border: 1px solid #ccc; ${jam}" onclick="window.location.href = '/product/${data[0][v]['id']}';"><img class="imagus img1" style="padding-bottom: 85px;" id="imagi${v}" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[0]}" alt=""><img class="imagus img2" style="padding-bottom: 85px;" id="imagi${v}_" src="{{ url_for('static', filename='products/') }}${data[0][v]['img'].split("/")[1]}" alt=""><h1 style="display: flex; flex-direction: column; justify-content: start; align-items: start;">${data[0][v]['name']}<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">${Math.round(data[0][v]['price'])}</a></p></h1></div>`;
                 }
                 //slide(0, `scrollSide${data[2]}`, `slideButtons${data[2]}`)
@@ -428,7 +428,6 @@
                 console.log(err);
             }
         }
-
     </script>
     <script>
         function removeElement(arr, value) {
@@ -438,6 +437,69 @@
             }
         }
     </script>
+    <script>
+        function averageColor__(imageElement) {
+            var canvas = document.createElement('canvas'),
+                context = canvas.getContext && canvas.getContext('2d'),
+                imgData, width, height,
+                rgb = { r: 0, g: 0, b: 0 },
+                count = 0;
+      
+            height = canvas.height = imageElement.naturalHeight ||
+                                      imageElement.offsetHeight ||
+                                      imageElement.height;
+            width = canvas.width = imageElement.naturalWidth ||
+                                   imageElement.offsetWidth ||
+                                   imageElement.width;
+      
+            context.drawImage(imageElement, 0, 0);
+            const edges = [];
+            imgData = context.getImageData(0, 0, width, height);
+      
+            // Collect pixels from the edges
+            for (let x = 0; x < width; x++) {
+                edges.push(getPixel(imgData.data, x, 0, width));
+                edges.push(getPixel(imgData.data, x, height - 1, width));
+            }
+            for (let y = 0; y < height; y++) {
+                edges.push(getPixel(imgData.data, 0, y, width));
+                edges.push(getPixel(imgData.data, width - 1, y, width));
+            }
+      
+            // Determine the most frequent color
+            const colorFrequency = {};
+            edges.forEach(color => {
+                const key = color.join(',');
+                colorFrequency[key] = (colorFrequency[key] || 0) + 1;
+            });
+      
+            const mostFrequentColor = Object.keys(colorFrequency).reduce((a, b) => colorFrequency[a] > colorFrequency[b] ? a : b);
+      
+            const [r, g, b] = mostFrequentColor.split(',').map(Number);
+            return `rgb(${r}, ${g}, ${b})`;
+      }
+      function getPixel(data, x, y, width) {
+        const index = (y * width + x) * 4;
+        return [data[index], data[index + 1], data[index + 2]];
+      }
+      
+      function getcolors_(img_, a) {
+        document.getElementById(img_).addEventListener("load", function () {
+              var rgb;
+              try {
+                document.querySelectorAll(a).forEach((e) => {
+                  rgb = averageColor__(document.getElementById(img_));
+                      console.log(rgb);
+                      e.style.background = rgb;
+                      console.log(rgb);
+                    });
+              }
+              catch (err) {
+                  console.log(err, "the error occurred.");
+              }        
+        });
+      }
+      </script>      
     <script>
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) {

@@ -560,6 +560,8 @@ $(".img_producto_container")
     return
   }
     function loadp(keys, dObj, count, rep=0) {
+      var conat = document.getElementById('items');
+      conat.innerHTML = "";
       try {
           for (let i = 0; i < count; i++) {
             console.log(i)
