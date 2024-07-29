@@ -239,6 +239,7 @@
     var b = 0;
     const redund_products = [];
     var varforit = 0;
+    var theit = 0;
     var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
@@ -255,7 +256,7 @@
             }
         });
         socket.on(getcookie('evid')+"r", function(data) {
-            if (data[1] != "a") {
+            if (data[1] != "a" && varforit > 0) {
                 //b = 1;
                 var jam = "";
                 if (window.innerWidth > 882) {
@@ -264,13 +265,13 @@
                     }
                 }
                 console.log(data, " rwrawrh ehehheheheh");
-                //redund_products.pop([data[3],data[2]]);
-                varforit = varforit-1;
+                //redund_products.pop([data[6],data[2]]);
+                theit = varforit-data[2];
                 if (data[2] === 0)
                 document.querySelector("#items_").innerHTML = "";
                 else
                 document.querySelector("#items_"+data[2]).innerHTML = "";
-                removeElement(redund_products, [data[3],data[2]]);
+                removeElement(redund_products, [data[6],data[2]]);
                 for (let v = 0; v < data[0].length; v++) {
                     //data = data[v];
                     if (data[2] === 0)
@@ -333,6 +334,7 @@
 } catch (rer) {
     console.log(rer);
 }
+                redund_products.push([ide, v]);
                 try {
                     console.log(ide, v);
                     //varforit += 1;
@@ -341,11 +343,10 @@
                     console.log(errea);
                 }
                 try {
-                    redund_products.push([ide, v]);
-                        get_products(ide, v);
-                    } catch (err) {
-                        console.log(err);
-                    }
+                    get_products(ide, v);
+                } catch (err) {
+                    console.log(err);
+                }
                 }
             }
         });
@@ -427,9 +428,9 @@
     <script>
         function redund_products__() {
             try {
-                if (varforit > 0) {
+                if (theit > 0) {
                     console.log(redund_products[0], redund_products[0]);
-                    console.log("wtf")
+                    console.log("wtf");
                     getproducts(redund_products[0][0], redund_products[0][1]);
                 } else {
                     clearInterval(myredund_products);
