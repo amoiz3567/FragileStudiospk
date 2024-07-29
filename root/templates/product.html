@@ -202,7 +202,8 @@ name    </h1>
     </div>
     <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome" id="ident"></p>
     <div class="row">
-    <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
+          <i class="h_font price chrome" style="font-size: 18px; text-decoration: line-through; margin-left: 5px; font-weight: 400;" id="discedprice1"></i>
+          <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
     </h1>
     </div>
   </div>
@@ -241,7 +242,8 @@ name    </h1>
           </div>
           <p style="margin: -15px 0 0 5px; color:#b4b4b4;" class="chrome head_" id="ident"></p>
           <div class="row head_">
-          <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
+          <i class="h_font price chrome" style="font-size: 18px; text-decoration: line-through; margin-left: 5px; font-weight: 400;" id="discedprice"></i>
+            <h1 class="h_font price chrome" style="font-size: 22px; margin-left: 5px; font-weight: 400;" id="price">
           </h1>
           </div>
 
@@ -768,6 +770,14 @@ $(".img_producto_container")
     ea("#price").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['price']);
+    });
+    ea("#discedprice2").forEach(function (el) {
+      el.parentNode.style.textWrap = "nowrap";
+      el.innerText = Math.round(item['discount']);
+    });
+    ea("#discedprice").forEach(function (el) {
+      el.parentNode.style.textWrap = "nowrap";
+      el.innerText = Math.round(item['discount']);
     });
     window.pid = item['id'];
     window.pprice = Math.round(item['price']);
