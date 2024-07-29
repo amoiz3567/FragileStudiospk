@@ -442,14 +442,14 @@
         function redund_products__() {
             try {
                 if (theit > 0) {
-                    rots +=1;
+                    rots += 1;
                     if (awd == 0) {
                         awd = varforit;
                     }
-                    console.log(varforit);
+                    console.log(varforit-awd);
                     console.log(redund_products[varforit-awd], redund_products[varforit-awd]);
                     console.log("wtf");
-                    getproducts(redund_products[varforit-1][0], redund_products[varforit-1][1]);
+                    getproducts(redund_products[varforit-awd][0], redund_products[varforit-awd][1]);
                     awd -= 1;
                 } else {
                     clearInterval(myredund_products);
