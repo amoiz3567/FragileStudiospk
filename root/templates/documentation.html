@@ -150,8 +150,8 @@
                 </iframe>
                 <script>
                     var old = 0;
-                    console.log((location.hash.replace(/ /g, '').replace(/%20/, '').replace(/\//, '').toLowerCase()));
-                    document.getElementById("inlineFrameExample").setAttribute("src", "/static/"+(location.hash.replace(/ /g, '').replace(/t%20/, '').replace(/\//, '').toLowerCase()));
+                    var page = ((location.hash.replace(/ /g, '').replace(/#/, '').replace(/%20/, '').replace(/\//, '').toLowerCase()));
+                    document.getElementById("inlineFrameExample").setAttribute("src", "/static/"+page);
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
