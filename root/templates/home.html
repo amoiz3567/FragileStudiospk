@@ -436,14 +436,19 @@
         //lazy_load();
     });
     var rots = 0;
+    var awd = 0;
     </script>
     <script>
         function redund_products__() {
             try {
                 if (theit > 0) {
                     rots +=1;
+                    if (awd == 0) {
+                        awd = varforit;
+                    }
                     console.log(varforit);
-                    console.log(redund_products[varforit-1], redund_products[varforit-1]);
+                    console.log(redund_products[varforit-awd], redund_products[varforit-awd]);
+                    awd -= 1;
                     console.log("wtf");
                     getproducts(redund_products[varforit-1][0], redund_products[varforit-1][1]);
                 } else {
@@ -453,7 +458,7 @@
             } catch (err) {
                 console.log(err);
             }
-            if (rots >= 3) {
+            if (rots >= 6) {
                 clearInterval(myredund_products);
             }
         }
