@@ -902,7 +902,7 @@ i.tag {
   padding: 4px;
   font-style: normal;
   margin: 0 5px;
-  animation: fadea .5s ease-in-out infinite;
+  animation: fadea 1s linear infinite;
 }
 
 
@@ -2171,11 +2171,11 @@ header {
 
 @keyframes fadea {
   0% {
-    color: black;
+    color: rgba(0, 0, 0, 0);
   }
 
   50% {
-    color: transparent;
+    color: rgb(0,0,0,0.5);
   }
 
   100% {
