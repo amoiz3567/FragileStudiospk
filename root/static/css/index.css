@@ -701,7 +701,7 @@ script[nonce~="whatever"] {
   transition: .1s;
   /*animation: fade-out 0.3s;*/
   display: none;
-  /*animation: float 3s ease-in-out infinite;*/
+  /*animation: fadea 3s ease-in-out infinite;*/
   opacity: 0;
   width: 100%;
 }
@@ -900,6 +900,7 @@ i.tag {
   padding: 4px;
   font-style: normal;
   margin: 0 5px;
+  animation: fadea 3s ease-in-out infinite;
 }
 
 
