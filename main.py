@@ -752,7 +752,8 @@ def ret(id, products=None, p=None):
         if (crate_result != None and crate_result):
             crate_len = len(json.loads(crate_result).values())
     cursor.close()
-    res = {"ticker": str(a['value']).replace(":globe:", "🌐"), "goKaraleva": "1", "amount": crate_len}
+    tick = str(a['value']).replace(":globe:", "🌐")
+    res = {"ticker": tick, "goKaraleva": "1", "amount": crate_len}
     res.update({"d": json.dumps(data, cls=DecimalEncoder)})
     socketio.emit(id, res)
     pass
