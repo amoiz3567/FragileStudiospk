@@ -775,7 +775,7 @@ $(".img_producto_container")
     const QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
     document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
     document.getElementById("quantity_many").parentElement.innerText = QUANTITY_ != 0 ? document.getElementById("quantity_many").parentElement.innerText:document.getElementById("quantity_many").parentElement.innerText.replace("Only", '');
-    window.pname = item['name'];
+    window.pname = item['name'];  
     e("description").innerHTML = TextAbstract(item['description'], 128).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     e("desc_2").innerHTML = item['description'].replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     e("d").innerText = item['name']+" - Fragile Studios";
