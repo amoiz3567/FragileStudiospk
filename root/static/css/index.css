@@ -1774,7 +1774,7 @@ le>la {
   border: 7px solid transparent;
   border-top:8px solid rgb(255, 255, 255);
   border-bottom:0 none;
-  background: url('static/img/caret-down.png');
+  background: url(../img/caret-down.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
