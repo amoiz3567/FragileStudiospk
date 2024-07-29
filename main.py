@@ -723,7 +723,7 @@ def ret(id, products=None, p=None):
                     saved_value = i['saved']
             except: saved_value = 0
             try:
-                data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'], "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
+                data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'], "sizechart": i['sizechart'], "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
             except:
                 data.update({"0": ""})
             o+=1
@@ -916,7 +916,7 @@ def product_spec(data):
         mycursor = mydb.cursor(dictionary=True, buffered=True)
         format_strings = ','.join(['%s'] * len(data))
         # SQL query to get products excluding specified IDs
-        query = f"SELECT id, name, description, price, discount, category, img FROM products WHERE id NOT IN ({format_strings})"
+        query = f"SELECT id, name, description, price, discount, sizechart, sizechart, category, img FROM products WHERE id NOT IN ({format_strings})"
         mycursor.execute(query, tuple(data))
         products = mycursor.fetchall()
         print(products, "the above code is shit")
@@ -1325,7 +1325,7 @@ def request_pr_read(data, nom):
         cursor.execute("SET @rownum := 0, @main_category := '';")
 
         query = """
-        SELECT id, name, description, discount, price, img, belongs, category
+        SELECT id, name, description, discount, sizechart, price, img, belongs, category
         FROM (
             SELECT 
                 id, 
@@ -1333,6 +1333,7 @@ def request_pr_read(data, nom):
                 description, 
                 price,
                 discount,
+                sizechart,
                 img, 
                 belongs,
                 category_also,
@@ -1358,12 +1359,12 @@ def request_pr_read(data, nom):
     query = """
 WITH product_positions AS (
     SELECT 
-        id, name, description, price, discount, img, belongs, category,
+        id, name, description, price, discount, sizechart, img, belongs, category,
         ROW_NUMBER() OVER (ORDER BY id) AS row_num,
         COUNT(*) OVER () AS total_rows
     FROM products
 )
-SELECT id, name, description, price, discount, img, belongs, category
+SELECT id, name, description, price, discount, sizechart, img, belongs, category
 FROM product_positions
 WHERE 
     row_num = 1 OR
