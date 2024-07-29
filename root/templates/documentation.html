@@ -120,37 +120,29 @@
                 <a onclick="op()"
                     style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: -20px; font-size: 55px;"><img
                         style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
-                <div class="column fold">
-                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>POLICIES</p>
-                    <div class="sub-menu">
-                        <p onclick="respective(this)" class="cat link">Exchange_Policy</p>
-                        <p onclick="respective(this)" class="cat link">Deliver_Policy</p>
-                        <p onclick="respective(this)" class="cat link">PAYMENT_METHODS</p>
-                        <p onclick="respective(this)" class="cat link">Contact_Us</p>
+                        <div class="column fold">
+                            <p onclick="toggleSection(this)" class="cat"><i>+</i>POLICIES</p>
+                            <div class="sub-menu">
+                                <p onclick="respective(this)" class="cat link">Order Cancellation</p>
+                                <p onclick="respective(this)" class="cat link">Payment Methods</p>
+                                <p onclick="respective(this)" class="cat link">Return Policy</p>
+                                <p onclick="respective(this)" class="cat link">Delivery</p>
+                            </div>
+                        </div>
+                        <div class="column fold">
+                            <p onclick="toggleSection(this)" class="cat"><i>+</i>SOCIALS</p>
+                            <div class="sub-menu">
+                                <p onclick="respective(this)" class="cat link">Instagram</p>
+                                <p onclick="respective(this)" class="cat link">Tiktok</p>
+                            </div>
+                        </div>
+                        <div class="column fold">
+                            <p onclick="toggleSection(this)" class="cat"><i>+</i>ABOUT WEBSITE</p>
+                            <div class="sub-menu">
+                            <p onclick="respective(this)" class="cat link">Contact Us</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="column fold">
-                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>SOCIALS</p>
-                    <div class="sub-menu">
-                        <p onclick="respective(this)" class="cat link">Contact_information</p>
-                    </div>
-                </div>
-                <div class="column fold">
-                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>COMPANY</p>
-                    <div class="sub-menu">
-                        <p onclick="respective(this)" class="cat link">ABOUT_COMPANY</p>
-                        <p onclick="respective(this)" class="cat link">NEWS</p>
-                        <p onclick="respective(this)" class="cat link">CONTACT_US</p>
-                    </div>
-                </div>
-                <div class="column fold">
-                    <p onclick="toggleSection(this)" class="cat center"><i>+</i>ABOUT_WEBSITE</p>
-                    <div class="sub-menu">
-                        <p onclick="respective(this)" class="cat link">CONTACT</p>
-                        <p onclick="respective(this)" class="cat link">REPORT_BUG</p>
-                    </div>
-                </div>
-            </div>
             <div class="center" style="width: 100%;height: 100%; align-items: end;">
                 <iframe style="width: 100%; border: none; outline: none; height: 100vh;" id="inlineFrameExample"
                     title="Inline Frame Example"
