@@ -832,7 +832,8 @@ var g;
             secondDivision.classList.add("detail-container");
             const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div>
                     <h4 style="font-size: 18px;">${item['name']}</h4>
-                    <div style="height: 5px; margin-top: 4px; display: flex; justify-content: start; align-items: start;" class="row">
+                    <div style="height: 5px; margin-top: 4px; display: flex; justify-content: start; align-items: start; flex-direction: row; gap: 15px;" class="row">
+                        <i class="h_font price" style="font-size: 18px; text-decoration: line-through; margin-left: 5px; color: black; font-weight: 400; font-style: normal; margin: auto 0; padding-right: 10px;" id="discedprice">${Math.round(item['discount'])}</i>
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; font-weight: 500; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
             secondDivision.innerHTML = details;
