@@ -783,6 +783,8 @@ $(".img_producto_container")
     window.pprice = Math.round(item['price']);
     window.pquantity = item['quantity'];
     const QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
+    if (QUANTITY_ >= 9999)
+    QUANTITY_ = QUANTITY_-9999;
     document.getElementById("quantity_many").innerText = QUANTITY_ != 0 ? QUANTITY_:"None";
     document.getElementById("quantity_many").parentElement.innerText = QUANTITY_ != 0 ? document.getElementById("quantity_many").parentElement.innerText:document.getElementById("quantity_many").parentElement.innerText.replace("Only", '');
     window.pname = item['name'];  
@@ -864,9 +866,13 @@ $(".img_producto_container")
             if (intent['id'] == loc.substring(loc.lastIndexOf('/') + 1)) {
               //console.log(intent, " the xl shit")
               //document.getElementById("jude").innerHTML = `${intent.xl != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.xl};ric(global_num_length);">&nbsp;XL&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;XL&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
-              document.getElementById("jude").innerHTML = `${intent.l != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.l};ric(global_num_length);">&nbsp;L&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;L&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
-              document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
-              document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+            if (intent.m >= 9999) {
+              document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;FREE SIZE&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;FREE SIZE&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+              } else {
+                document.getElementById("jude").innerHTML = `${intent.l != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.l};ric(global_num_length);">&nbsp;L&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;L&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+                document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+                document.getElementById("jude").innerHTML += `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+              }
               create_dp();
               document.querySelector(".dropbtn").innerHTML = `${intent.xl != 0 ? `&nbsp;XL&nbsp;`:intent.l != 0 ? `&nbsp;L&nbsp;`:intent.m != 0 ? `&nbsp;M&nbsp;`:intent.s != 0 ? `&nbsp;XL&nbsp;`:"SOLD OUT"}`;
               global_num_length = intent.xl != 0 ? intent.xl:intent.l != 0 ? intent.l:intent.m != 0 ? intent.m:intent.s != 0 ? intent.s:0;
