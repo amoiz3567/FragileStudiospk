@@ -1019,7 +1019,7 @@ function getcolors_(img_, a) {
   document.getElementById(img_).addEventListener("load", function () {
         var rgb;
         try {
-          document.querySelectorAll(a).forEach(() => {
+          document.querySelectorAll(a).forEach((e) => {
             rgb = averageColor__(document.getElementById(img_));
                 console.log(rgb);
                 e.style.background = rgb;
