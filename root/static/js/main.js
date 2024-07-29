@@ -205,8 +205,9 @@ function cartR() {
     menu('cart', 'cart_', 'flex');
 }
 
-function respective(th) {
+function respective(th, n=0) {
     window.location.href = `/doc#${th.innerText}`;
+    if (n == 1)
     window.location.reload();
 }
 

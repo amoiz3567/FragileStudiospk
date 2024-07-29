@@ -155,9 +155,7 @@
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
-                        if (a == `<center><h1>404 Not Found</h1></center>
-<hr><center>nginx/1.18.0 (Ubuntu)</center>
-`) {
+                        if (a.search(`404 Not Found`)) {
                             $('#inlineFrameExample').css("display", "none")
                             document.getElementById("starting").style.display = "flex";
                         }
@@ -240,7 +238,7 @@
             element.children[0].innerHTML = "+";
         } else {
             subMenu.style.display = "block";
-            element.children[0].innerHTML = "-";
+            element.children[0].innerHTML = "-";*/
 
 </script>
 <script>
@@ -259,71 +257,5 @@
 
 </script>
 <script>
-    const css_ = `<style>
-        /*
-@font-face {
-    font-family: 'secondfont';
-    src: url("{{ url_for('static', filename='/static/fonts/Uomo.otf') }}") format('opentype');
-}
-
-body {
-    font-family: 'secondfont', sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-  }
-  .container {
-      width: 80%;
-      margin: auto;
-      overflow: hidden;
-      padding: 2em;
-      background: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-  }
-  h1, h2, h3, h4 {
-      color: #333;
-      margin-top: 1em;
-  }
-  p {
-      margin: 1em 0;
-  }
-  a {
-      color: #db7734;
-      text-decoration: none;
-  }
-  a:hover {
-      text-decoration: underline;
-  } 
-  ul {
-      list-style: none;
-      padding: 0;
-  }
-  ul li {
-      background: #f4f4f4;
-      margin: 0.5em 0;
-      padding: 0.5em;
-      border-left: 4px solid #db7734;
-  }
-  pre {
-      background: #ffffff;
-      color: #000000;
-      padding: 1em;
-      overflow: auto;
-      border-radius: 4px;
-  }
-  code {
-      font-family: "Courier New", Courier, monospace;
-      font-weight: 600;
-      background: rgb(225, 225, 225);
-      padding: 0.2em 0.4em;
-      border-radius: 4px;
-      color: #000000;
-  }
-  .badge img {
-      margin-right: 10px;
-  }*/
-</style>`;
+    const css_ = ``;
 </script>
