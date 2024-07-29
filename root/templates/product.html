@@ -774,10 +774,12 @@ $(".img_producto_container")
     ea("#discedprice").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['discount']);
+      el.style.fontStyle = "normal";
     });
     ea("#discedprice1").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['discount']);
+      el.style.fontStyle = "normal";
     });
     window.pid = item['id'];
     window.pprice = Math.round(item['price']);
