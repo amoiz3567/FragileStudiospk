@@ -869,9 +869,10 @@ var g;
         window.loadobj = dObj;
         console.log(type_view,"What are those 2")
         var type_view = localStorage.getItem("type", "ROW");
-        if (type_view === "ROW")
+        if (type_view === "ROW") {
+            console.log(a[0]);
             loadp(keys, dObj, a[0][0]);
-        else if (type_view === 'SIMPLIFIED') {
+        } else if (type_view === 'SIMPLIFIED') {
             document.getElementById("items").style.flexDirection = "column"
             loadpc(keys, dObj, a[0][0]);
         }
