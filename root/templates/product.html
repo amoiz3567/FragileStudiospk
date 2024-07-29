@@ -776,12 +776,14 @@ $(".img_producto_container")
       el.innerText = Math.round(item['discount']);
       el.style.fontStyle = "normal";
       el.style.margin = "auto 0";
+      el.style.paddingRight = "10px";
     });
     ea("#discedprice1").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['discount']);
       el.style.fontStyle = "normal";
       el.style.margin = "auto 0";
+      el.style.paddingRight = "10px";
     });
     window.pid = item['id'];
     window.pprice = Math.round(item['price']);
