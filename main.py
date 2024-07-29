@@ -904,7 +904,7 @@ def red_(data):
     #mydb.commit()
     #cursor.close()
     cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
-    return {0: 200, 1: json.dumps(res)}
+    return {0: 200, 1: b}
     # remove id product from cart!
 
 @before_mid
