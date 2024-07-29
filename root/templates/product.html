@@ -910,11 +910,7 @@ $(".img_producto_container")
       window.redunduncy = redund;
       window.approve = submit;
       window.getcat__ = get_cat;
-      if (got != 2 && rets < 12) {
-        rets += 1;
-        redunduncy()
-      } if (rets == 12)
-        window.location.href = "/500";
+      redunduncy();
       let retrive_information = setInterval(nint, 600)
       function nint() {
         if (got == 2) {
@@ -951,7 +947,7 @@ $(".img_producto_container")
         } else {
           clearInterval(inter_);
         }
-        if (rets == 12) {
+        if (rets == 16) {
           window.location.href = "/500";
         }
       }
