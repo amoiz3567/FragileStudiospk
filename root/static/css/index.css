@@ -92,6 +92,7 @@ br {
 @media screen and (max-width:562px) {
   .center_mobile {
     display: flex;
+    justify-content: start;
     align-items: center;
   }
   .searchbtn {
