@@ -311,7 +311,82 @@ name    </h1>
       <div class="center" style="margin: 40px;">
         <h3 id="noexist" class="va center error">None Found :/</h3>
     </div>
+    <div class="footer" style="margin-top: 90px;">
+      <div class="row center_mobile fixskew">
+          <div class="container_foot">
+              <div class="column fold">
+                  <p onclick="toggleSection(this)" class="cat"><i>+</i>POLICIES</p>
+                  <div class="sub-menu">
+                      <p onclick="respective(this)" class="cat link">Order Cancellation</p>
+                      <p onclick="respective(this)" class="cat link">Payment Methods</p>
+                      <p onclick="respective(this)" class="cat link">Return Policy</p>
+                      <p onclick="respective(this)" class="cat link">Delivery</p>
+                  </div>
+              </div>
+              <div class="column fold">
+                  <p onclick="toggleSection(this)" class="cat"><i>+</i>SOCIALS</p>
+                  <div class="sub-menu">
+                      <p onclick="window.location.href = 'www.instagram.com/fragile__studios';" class="cat link">Instagram</p>
+                      <p onclick="respective(this)" class="cat link">Tiktok</p>
+                  </div>
+              </div>
+              <div class="column fold">
+                  <p onclick="toggleSection(this)" class="cat"><i>+</i>ABOUT WEBSITE</p>
+                  <div class="sub-menu">
+                  <p onclick="respective(this)" class="cat link">Contact Us</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div onclick="window.location.href = '/doc/location';" class="row center fixskew"><h1 class="pointer center" style="color: #dbdbdb8d;"><img style="filter:invert(.5); width: 25px; padding: 12px;" src="/static/img/loc2.png">Pakistan</h1>
+          <h1 onclick="window.location.href = '/doc/rights';" class="pointer center" style="font-weight: 400; color: #dbdbdb8d;"><img style="filter:invert(.5); width: 25px; padding: 12px;" src="/static/img/cop.png"> Rights Reserved</h1>
+      </div>
+      <div onclick="window.location.href = '/doc/location';" class="center fixskew lasthing">
+          <div class="row center">
+              <h1 class="pointer center" style="font-weight: 400; padding: 0; margin: 5px; color: #dbdbdb8d; margin-top: -5px;">Terms Of Policy</h1>
+          </div>
+      </div>
+  </div>
+
 </body>
+<script nonce="{{ csp_nonce() }}">
+  var skip = 0;
+      window.addEventListener('resize', function() {
+      var subMenus = document.querySelectorAll('.sub-menu');
+      if (window.innerWidth >= 956) {
+          for (let b = 0; b< subMenus.length; b++) {
+              subMenus[b].style.display = "block";
+              skip = 1;
+          };
+      } else {
+          for (let b = 0; b< subMenus.length; b++) {
+              subMenus[0].style.display = "none";
+              skip = 0;
+          };
+      }
+  });
+  window.addEventListener('load', function() {
+      var subMenus = document.querySelectorAll('.sub-menu');
+      if (window.innerWidth >= 956) {
+          subMenus.forEach(function(subMenu) {
+              subMenu.style.display = "block";
+              skip = 1;
+          });
+      }
+  });
+  function toggleSection(element) {
+      if (skip != 1) {
+          var subMenu = element.nextElementSibling;
+          if (subMenu.style.display === "block") {
+              subMenu.style.display = "none";
+              element.children[0].innerHTML = "+";
+          } else {
+              subMenu.style.display = "block";
+              element.children[0].innerHTML = "-";
+          }
+      }
+  }
+</script>
 
 </html>
 <script nonce="{{ csp_nonce() }}">
