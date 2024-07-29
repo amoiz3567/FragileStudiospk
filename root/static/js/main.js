@@ -207,6 +207,7 @@ function cartR() {
 
 function respective(th) {
     window.location.href = `/doc#${th.innerText}`;
+    window.location.reload();
 }
 
 
