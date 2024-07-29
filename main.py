@@ -915,7 +915,7 @@ def product_spec(data):
         mycursor = mydb.cursor(dictionary=True, buffered=True)
         format_strings = ','.join(['%s'] * len(data))
         # SQL query to get products excluding specified IDs
-        query = f"SELECT id, name, description, price, category, img FROM products WHERE id NOT IN ({format_strings})"
+        query = f"SELECT id, name, description, price, discount, category, img FROM products WHERE id NOT IN ({format_strings})"
         mycursor.execute(query, tuple(data))
         products = mycursor.fetchall()
         print(products, "the above code is shit")
