@@ -164,7 +164,7 @@
 <div class="center">
     <div style="width: 100vw;">
         <div id="items" class="one navigation" style="display: flex;">
-            <h1 id="none_"><i style="font-weight: 900;">NO PRODUCTS ADDED YET.</i></h1>
+            <div class="center"><img style="width: 40vw" class="imagus" src="{{ url_for('static', filename='img/works.gif') }}" alt=""><i style="opacity: 0; pointer-events: none;" class="for">MEN Category</i><h1 style="opacity: 0; pointer-events: none;" class="pr">MEN's bra collection<p class="ao o center pros"><a style="font-weight: 400; font-size: 20px; background: #ffff00a4;">999.9</a></p></h1></div>
         </div>
     </div>
 </div>
@@ -579,6 +579,8 @@ var g;
         const dObj = JSON.parse(d);
         var keys = Object.keys(dObj);
         var count = keys.length;
+        if (count == 0)
+        document.getElementById("items").innerHTML = `<h1 id="none_"><i style="font-weight: 900;">NO PRODUCTS ADDED YET.</i></h1>`;
         addinge++;
         var a = segments_(keys.length, 12);
         window.segments = a;
