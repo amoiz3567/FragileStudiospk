@@ -2247,7 +2247,7 @@ header {
   font-family: 'cool';
   src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") format('opentype');
 }
-ul{margin:0; padding:0; list-style-position: circle; font-size:16px; font-family: 'cool', sans-serif; font-weight: 100; }
+ul{margin:0; padding:0; list-style-position: disc inside; font-size:16px; font-family: 'cool', sans-serif; font-weight: 100; }
 ul li{list-style-type: disc inside; border-bottom:1px dotted transparent; font-family: 'cool', sans-serif; font-weight: 100; height:30px; margin-left:10px;}
 @media (max-width: 1232px) {
   .cta {
