@@ -15,6 +15,8 @@ src: url("{{ url_for('static', filename='fonts/coolvetica rg it.otf') }}") forma
 }
 * {
 font-family: 'MyFont', sans-serif;
+-webkit-tap-highlight-color: transparent;
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
