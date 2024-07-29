@@ -384,6 +384,9 @@ fk {
     flex-direction: row;width: auto;
     height: auto;
   }
+  .img_producto {
+    width: 100vw;
+  }
   header {
     transform: translate(0, 20%);
   }
