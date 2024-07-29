@@ -151,7 +151,7 @@
                 <script>
                     var old = 0;
                     var page = ((location.hash.replace(/ /g, '').replace(/#/, '').replace(/%20/, '').replace(/\//, '').toLowerCase()));
-                    document.getElementById("inlineFrameExample").setAttribute("src", "/static/"+page);
+                    document.getElementById("inlineFrameExample").setAttribute("src", "/static/"+page+".html");
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
