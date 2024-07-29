@@ -1080,8 +1080,6 @@ header img {
   transform: skewX(-25deg);
   -webkit-transform: skewX(-25deg);
   -ms-transform: skewX(-25deg);
-  /*margin-left: 125px;*/
-  
   margin-left: 62%;
   margin-top: 10%;
 }
