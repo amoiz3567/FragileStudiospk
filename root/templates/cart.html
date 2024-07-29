@@ -253,6 +253,7 @@ window.addEventListener("resize", function () {
     adjust_();
 });
 var down = 0;
+var loafi = [];
 function summonContext(event=NaN, id) {
     event.preventDefault();
     const context = document.getElementById('context_container');
@@ -266,6 +267,7 @@ function summonContext(event=NaN, id) {
                 res = await menu('dialogue', 'dialogue_');
                 res.addEventListener('click', async function asyncHelloWorld() {
                     loafi.push(id);
+                    myredund_products = setInterval(redund_products__,500);
                     const l = await remove(id);
                     if (l == true) {
                         const el = document.getElementById(`${id}`);
@@ -604,6 +606,7 @@ var g;
         console.log(a)
         func(keys, dObj, a[0][0]);
     }
+    var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
@@ -676,7 +679,6 @@ var g;
         function savef(p) {
             socket.emit("save", p);
         }
-        var loafi = [];
         function rmc(id) {
             a = socket.emit('rmc', {0:id}, function (data) {
                 if (data[0] == 200) {
@@ -758,10 +760,16 @@ var g;
         <script>
             function redund_products__() {
                 try {
-                    if (varforit > 0) {
+                    if (loafi.length > 0) {
                         console.log(loafi[0]);
-                        console.log("wtf going again")
-                        remove(loafi[0]);
+                        console.log("wtf going again");
+                        var l = remove(loafi[0]);
+                        if (l == true) {
+                            const el = document.getElementById(`${id}`);
+                            el.remove();
+                            clearInterval(myredund_products);
+                            return;
+                        }
                     } else {
                         clearInterval(myredund_products);
                         return;
