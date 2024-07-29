@@ -731,6 +731,7 @@ $(".img_producto_container")
   const loc = window.location.href;
   var exclude = [];
   var noice = 0;
+  var got2 = 0;
   $(document).ready(function () {
     try{
       var token = '{{ token }}';
@@ -788,7 +789,8 @@ $(".img_producto_container")
                 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
               }
             }, 0);*/
-          } else if (got == 2) {
+          } else if (got == 2 && got2 == 0) {
+            got2 = 1;
             console.log(data, 'wth mannnnn');
             var data_ = JSON.parse(data);
             var keys = Object.keys(data_);
@@ -950,6 +952,19 @@ $(".img_producto_container")
         }
         if (rets == 16) {
           window.location.href = "/500";
+        }
+      }
+    } catch (err) {
+        console.log(err);
+    }
+
+    try {
+      var inter_func_rec = setInterval(myfunc_rec,400);
+      function myfunc_rec() {
+        if (got2 != 0) {
+          redunduncy_rec();
+        } else {
+          clearInterval(inter_func_rec);
         }
       }
     } catch (err) {
