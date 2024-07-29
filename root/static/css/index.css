@@ -883,9 +883,10 @@ ra {
 .column * {
   color: rgb(0, 0, 0);
   font-weight: 600;
+  padding: 1px;
   /*font-style: italic;
   font-stretch: ultra-expanded;
-  font-family: 'medium', sans-serif;
+  font-family: 'medium', sans-serif;*/
 }
 
 .column .fb.b {
@@ -1539,7 +1540,7 @@ span:nth-child(2) {
 }
 
 .fixskew {
-  gap: 25px;
+  gap: 0px;
 }
 .sub-menu {
   display: block;
@@ -1770,26 +1771,26 @@ le>la {
 }
 .dropbtn::after {
   content: "";
-  /* this is your text. You can also use UTF-8 character codes as I do here */
   font-family: 'FontAwesome', sans-serif;
   font-size: 40px;
   top: 35%;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: -15px;
+  right: -10px;
   position: absolute;
-  margin:0 0.5em;
-  display:inline-block;
+  margin: 0 0.5em;
+  display: inline-block;
   border: 7px solid transparent;
-  border-top:8px solid rgb(255, 255, 255);
-  border-bottom:0 none;
+  /* border-top: none; */
+  border-bottom: 0 none;
   background: url(../img/caret-down.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 15px;
   height: 15px;
+  margin-top: 5px;
 }
 
 .dropdown {
