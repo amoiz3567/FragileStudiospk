@@ -155,7 +155,7 @@
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
-                        if (a.search(`404 Not Found`)) {
+                        if (a.includes(`404 Not Found`)) {
                             $('#inlineFrameExample').css("display", "none")
                             document.getElementById("starting").style.display = "flex";
                         }
