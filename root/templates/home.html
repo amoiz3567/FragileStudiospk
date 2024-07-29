@@ -240,6 +240,7 @@
     const redund_products = [];
     var varforit = 0;
     var theit = 1;
+    var cawd = 0;
     var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
@@ -320,7 +321,7 @@
     </div><br><br><br><br><br>
     <div style="width: 100vw;">
         <div id="items_${v}" class="one navigation2 af one_index" style="display: flex;">
-            <div class="center"><img style="width: 300px" class="imagus" src="{{ url_for('static', filename='img/works.gif') }}" alt=""></div>
+            <div class="center"><img style="width: 150px" class="imagus" src="{{ url_for('static', filename='img/works.gif') }}" alt=""></div>
         </div>
     </div>
 
@@ -350,6 +351,10 @@
                 } catch (err) {
                     console.log(err);
                 }
+                }
+                if (cawd == 0) {
+                    cawd = 1;
+                    myredund_products = setInterval(redund_products__,500);
                 }
             }
         });
