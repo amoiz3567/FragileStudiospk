@@ -1792,9 +1792,6 @@ le>la {
   height: 15px;
   margin-top: 5px;
 }
-.link a {
-  color: white;
-}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -2256,4 +2253,7 @@ ul li{list-style-type: circle; border-bottom:1px dotted transparent; font-family
   .cta {
     margin: 0;
   }
+}
+.link a {
+  color: white;
 }
