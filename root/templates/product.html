@@ -771,13 +771,13 @@ $(".img_producto_container")
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['price']);
     });
-    ea("#discedprice2").forEach(function (el) {
+    ea("#discedprice").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
       el.innerText = Math.round(item['discount']);
     });
-    ea("#discedprice").forEach(function (el) {
+    ea("#discedprice1").forEach(function (el) {
       el.parentNode.style.textWrap = "nowrap";
-      el.innerText = Math.round(item['discount1']);
+      el.innerText = Math.round(item['discount']);
     });
     window.pid = item['id'];
     window.pprice = Math.round(item['price']);
