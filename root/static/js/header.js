@@ -23,7 +23,7 @@ document.addEventListener('scroll', (event) => {
         fk.style.display = "none";
         header.style.opacity = "1";
         frg.style.margin = "0";
-        frg.style.marginBottom = "15px";
+        //frg.style.marginBottom = "15px";
         frg.style.marginTop = "20px";
         frg.style.width = ""; //240px
     }
