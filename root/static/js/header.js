@@ -10,7 +10,7 @@ document.addEventListener('scroll', (event) => {
             header.style.transform = "translate(0, -6%)";
             fk.style.display = "block"; 
             frg.style.margin = "0px";
-            frg.style.marginTop = "0px";
+            frg.style.marginTop = "";
             //frg.style.marginBottom = "20px";
             frg.style.width = "140px";
             //frg.style.width = "10px";
@@ -23,7 +23,6 @@ document.addEventListener('scroll', (event) => {
         fk.style.display = "none";
         header.style.opacity = "1";
         frg.style.margin = "0";
-        frg.style.marginBottom = "0px";
         frg.style.marginTop = "20px";
         frg.style.width = ""; //240px
     }
