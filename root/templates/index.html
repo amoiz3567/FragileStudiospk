@@ -1152,21 +1152,20 @@ var g;
     }
 
     function getcolors_(img_, a) {
-        document.querySelector(a).addEventListener('DOMContentLoaded', function () {
-            console.log("yesshhhhh abbybbbb thats what I ve been waiting for!");
-            var rgb;
-            try {
-                rgb = averageColor__(document.getElementById(img_));
-                document.querySelectorAll(a).forEach((e) => {
-                    console.log(rgb);
-                    e.style.background = rgb;
-                    console.log(rgb);
-                });
-            }
-            catch (err) {
-                console.log(err, "the error occurred.");
-            }        
-        });
+        document.getElementById(img_).addEventListener("load", function () {
+        var rgb;
+        try {
+          document.querySelectorAll(a).forEach(() => {
+            rgb = averageColor__(document.getElementById(img_));
+                console.log(rgb);
+                e.style.background = rgb;
+                console.log(rgb);
+              });
+        }
+        catch (err) {
+            console.log(err, "the error occurred.");
+        }        
+  });
     }
     </script>
     <script nonce="{{ csp_nonce() }}">
