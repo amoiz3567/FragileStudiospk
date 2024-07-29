@@ -463,11 +463,11 @@ script[nonce~="whatever"] {
 
 .weffect::before,
 .weffect::after {
- content: 'fff';
+ content: '';
   position: absolute;
   width: 100%;
   left: 0;
-
+  
 }
 .weffect::before {
   background-color: #000000;
@@ -1759,6 +1759,10 @@ le>la {
   margin:0 0.5em;
   display:inline-block;
   border: 7px solid transparent;
+  background: url('/static/img/caret-down.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-top:8px solid rgb(255, 255, 255);
   border-bottom:0 none;
 }
