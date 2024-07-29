@@ -265,6 +265,7 @@ function summonContext(event=NaN, id) {
                 v = "rmc";
                 res = await menu('dialogue', 'dialogue_');
                 res.addEventListener('click', async function asyncHelloWorld() {
+                    loafi.push(id);
                     const l = await remove(id);
                     if (l == true) {
                         const el = document.getElementById(`${id}`);
@@ -650,6 +651,7 @@ var g;
         function savef(p) {
             socket.emit("save", p);
         }
+        var loafi = [];
         function rmc(id) {
             a = socket.emit('rmc', {0:id}, function (data) {
                 if (data[0] == 200) {
@@ -665,9 +667,10 @@ var g;
                   .then(data => {
                       console.log(data);
                       if (data[0] === "200") {
+                            removeElement(loafi, id);
                           return true;
                       } else {
-                          window.location.href = "https://"+window.location.hostname+"/500";
+                          return false;
                       }
                   })
                   .catch(error => {
@@ -679,6 +682,7 @@ var g;
                     return false;
             });
             console.log("down");
+
             return a;
         }
         window.remove = rmc;
@@ -725,6 +729,31 @@ var g;
         }
     });
 
+    </script>
+        <script>
+            function redund_products__() {
+                try {
+                    if (varforit > 0) {
+                        console.log(loafi[0]);
+                        console.log("wtf going again")
+                        remove(loafi[0]);
+                    } else {
+                        clearInterval(myredund_products);
+                        return;
+                    }
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+    
+        </script>    
+    <script>
+        function removeElement(arr, value) {
+            let index = arr.indexOf(value);
+            if (index !== -1) {
+                arr.splice(index, 1);
+            }
+        }
     </script>
     <script>
         function TextAbstract(text, length) {
