@@ -900,7 +900,7 @@ i.tag {
   padding: 4px;
   font-style: normal;
   margin: 0 5px;
-  animation: fadea 3s ease-in-out infinite;
+  animation: fadea .5s ease-in-out infinite;
 }
 
 
