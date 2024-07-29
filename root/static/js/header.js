@@ -20,6 +20,9 @@ document.addEventListener('scroll', (event) => {
         }, 1);
 
     } else if (document.scrollingElement.scrollTop < 368) {
+        if (window.innerWidth <= 475)
+            header.style.transform = "translate(0, 20%)";
+        else
         header.style.transform = "translate(0, 40%)";
         header.classList.remove("frao");
         fk.style.display = "none";
