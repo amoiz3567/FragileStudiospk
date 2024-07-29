@@ -1744,7 +1744,12 @@ le>la {
 .hide {
   display: none;
 }
-
+.tag i {
+  font-size: 9px;
+  font-weight: 200;
+  background: transparent;
+  color: black;
+}
 .dropbtn::after {
   content: "";
   /* this is your text. You can also use UTF-8 character codes as I do here */
