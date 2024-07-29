@@ -723,7 +723,7 @@ def ret(id, products=None, p=None):
                     saved_value = i['saved']
             except: saved_value = 0
             try:
-                data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'],, "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
+                data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'], "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
             except:
                 data.update({"0": ""})
             o+=1
