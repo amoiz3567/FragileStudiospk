@@ -146,11 +146,11 @@
             <div class="center" style="width: 100%;height: 100%; align-items: end;">
                 <iframe style="width: 100%; border: none; outline: none; height: 100vh;" id="inlineFrameExample"
                     title="Inline Frame Example"
-                    src="/static/contactus.html"
                     class="awr">
                 </iframe>
                 <script>
                     var old = 0;
+                    document.getElementById("inlineFrameExample").setAttribute("src", "/static/"+location.hash.replace(/ /g, '').toLowerCase());
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
