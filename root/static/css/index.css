@@ -2171,15 +2171,15 @@ header {
 
 @keyframes fadea {
   0% {
-    color: rgba(0, 0, 0, 0);
+    color: black;
   }
-
+  
   50% {
     color: rgb(0,0,0,0.5);
   }
-
+  
   100% {
-    color: black;
+    color: rgba(0, 0, 0, 0);
   }
 }
 
