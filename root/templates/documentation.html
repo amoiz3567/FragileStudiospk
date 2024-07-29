@@ -155,8 +155,8 @@
                     $('#inlineFrameExample').on("load", function() {
                         var a = $('#inlineFrameExample').contents().find("body")[0].innerHTML;
                         console.log(a);
-                        if (a == `<h1>Not Found</h1>
-<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+                        if (a == `<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.18.0 (Ubuntu)</center>
 `) {
                             $('#inlineFrameExample').css("display", "none")
                             document.getElementById("starting").style.display = "flex";
