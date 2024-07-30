@@ -737,7 +737,7 @@ def align(products, data, o):
             except:
                 data.update({"0": ""})
             o+=1
-    return data, o
+    return data
     
 def tickercache(cursor):
     cursor.execute("USE products")
