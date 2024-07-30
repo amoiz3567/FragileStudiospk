@@ -699,6 +699,7 @@ var g;
             tulip = "1";
             a = socket.emit('rmc', {0:id}, tulip, function (data) {
                 if (data[0] == 200) {
+                    sessioned = data[2];
                     console.log(data[1]);
                     function thru() {
                   fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+"/"+tulip, {
@@ -712,7 +713,6 @@ var g;
                       console.log(data);
                       if (data[0] === "200") {
                             removeElement(loafi, id);
-                            sessioned = data[2];
                           return true;
                       } else {
                           return false;

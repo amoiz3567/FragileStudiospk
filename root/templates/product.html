@@ -1042,6 +1042,7 @@ $(".img_producto_container")
               console.log("Invalid");
               //summonContext('auth');
               else if (data[0] == "Valid") {
+                sessioned = data[1];
                 console.log("done the cart has added!");
                 function thru() {
                   fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+"/"+tulip, {
@@ -1060,7 +1061,6 @@ $(".img_producto_container")
                         document.getElementById('car').style.width = "90%";
                         console.log(data[1]);
                         menu("previewcart", "previewcart_");
-                        sessioned = data[2];
                         //document.getElementById("previewcart").getElementById("image")
                       } else {
                           window.location.href = "https://"+window.location.hostname+"/500";
