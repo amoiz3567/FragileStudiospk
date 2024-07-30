@@ -613,6 +613,8 @@ var g;
     }
     var myredund_products;
     var sessioned = "";
+    var data_To_gib;
+    var tulip = "0";
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
@@ -694,12 +696,6 @@ var g;
             socket.emit("save", p);
         }
         function rmc(id) {
-            var tulip = "0";
-            var data_To_gib = {0:id};
-            if (sessioned != "") {
-                tulip = "1";
-                data_To_gib = sessioned;
-            }
             a = socket.emit('rmc', data_To_gib, tulip, function (data) {
                 if (data[0] == 200) {
                     var loaf_kar = data[2];
@@ -785,6 +781,12 @@ var g;
                     if (loafi.length > 0) {
                         console.log(loafi[0]);
                         console.log("wtf going again");
+                        tulip = "0";
+                        data_To_gib = {0:id};
+                        if (sessioned != "") {
+                            tulip = "1";
+                            data_To_gib = sessioned;
+                        }
                         var l = remove(loafi[0]);
                         if (l == true) {
                             const el = document.getElementById(`${id}`);
