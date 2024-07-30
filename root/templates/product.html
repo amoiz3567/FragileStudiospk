@@ -1032,9 +1032,12 @@ $(".img_producto_container")
         //if (getcookie("id") != null) {
         if (a == "") {
           var tulip = "0";
-          if (sessioned != "")
-          tulip = "1";
-          socket.emit("submitcart", formation, tulip, function (data) {
+          var data_To_gib = formation;
+          if (sessioned != "") {
+            tulip = "1";
+            data_To_gib = sessioned;
+          }
+          socket.emit("submitcart", data_To_gib, tulip, function (data) {
             if (data[0] == "Invalid")
               console.log("Invalid");
               //summonContext('auth');
