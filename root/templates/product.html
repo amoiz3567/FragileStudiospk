@@ -950,12 +950,12 @@ $(".img_producto_container")
               //console.log(intent, " the xl shit")
               //document.getElementById("jude").innerHTML = `${intent.xl != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.xl};ric(global_num_length);">&nbsp;XL&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;XL&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
             if (intent.m >= 9999) {
-              var QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
-              QUANTITY_ = QUANTITY_-9999;
-              document.getElementById("jude").innerHTML = `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${QUANTITY_};ric(global_num_length);">&nbsp;FREE SIZE&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;FREE SIZE&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
+              //var QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
+              //QUANTITY_ = QUANTITY_-9999;
+              document.getElementById("jude").innerHTML = `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;FREE SIZE&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;FREE SIZE&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
                 create_dp();
                 document.querySelector(".dropbtn").innerHTML = "FREE SIZE";
-                global_num_length = QUANTITY_;
+                global_num_length = intent.s;
               } else {
                 document.getElementById("jude").innerHTML = `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
                 document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
