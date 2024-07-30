@@ -918,7 +918,6 @@ def red_(data__, f="0"):
         if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data:
             b = (f"\"{v}\": \"{car_json[v]}\"")
     print(b, " hehehehehe ", data)
-    if (b == "")
     print(repair_json(car.replace(b, '')))
     res = json.loads(repair_json(car.replace(b, '')))
     #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
