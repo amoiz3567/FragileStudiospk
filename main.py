@@ -962,14 +962,8 @@ def product_spec(data):
         #return make_response(jsonify({"error": str(err)}), 500)
 
 @lru_cache(maxsize=128)
-def retProduct(p=None, raf=None):
+def retProduct(p=None, raf=None, category_id="", v=""):
     mycursor = mydb.cursor(dictionary=True)
-    try:
-        v = request.headers.get("Pricemargin")
-        category_id = request.headers.get("Authorization")
-    except:
-        v = ""
-        category_id = ""
     mycursor.execute("USE products")
     l_ = ""
     params = ()
@@ -1231,7 +1225,13 @@ def red(data):
     productId = location
     if len(location) == 0:
         productId = None
-    products = retProduct(productId, userId)
+    try:
+        v = request.headers.get("Pricemargin")
+        category_id = request.headers.get("Authorization")
+    except:
+        v = ""
+        category_id = ""
+    products = retProduct(productId, userId, category_id, v)
     if products == None or products == []:
         socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
         return render_template('404.html')
@@ -1444,7 +1444,7 @@ def request_pr_read(data, nom):
     #print(data is not None and exists == True and not(Invaliduuid12(data)), "the exists has spoken \n\n\n\n\n")
     if (data is not None and exists == True and not(Invaliduuid12(data))):
         #cursor.execute("SELECT id, name, description, price, img, belongs FROM products WHERE belongs=%s", (data,))
-        r = cachebelongings(cursor, data, pm)
+        r = cachebelongings(cursor, data)
         socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 6: data})
         cursor.close()
         return make_response(jsonify({0: 200}))
@@ -1511,7 +1511,6 @@ def request_ca_read(data):
     pm = request.headers.get('Pricemargin')
     exists = cachedoes(cursor, row_id)
     if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
-        pm = request.headers.get('Pricemargin')
         r = cachestuff2(cursor, row_id, pm)
         #print(r)
         socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
