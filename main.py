@@ -265,6 +265,11 @@ def generate_token(evid):
     token = jwt.encode(payload, app.secret_key, algorithm='HS256')
     session['token'] = token
     return token
+def generate_token_2(evid):
+    payload = {'csrf': str(evid)}
+    token = jwt.encode(payload, app.secret_key, algorithm='HS256')
+    session['token'] = token
+    return token
 @app.before_request
 def remove_debris():
     session["token"] = None
@@ -424,7 +429,7 @@ def cart(format, f="0"):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
-        token = generate_token(str(json.dumps(res)))
+        token = generate_token_2(str(json.dumps(res)))
         cache.set(request.cookies.get("evid")+"cart_", str(f"{json.dumps(res)}"))
         return {0: "Valid", 1: str(token)}
 
@@ -917,7 +922,7 @@ def red_(data__, f="0"):
     #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
     #mydb.commit()
     #cursor.close()
-    token = generate_token(str(json.dumps(res)))
+    token = generate_token_2(str(json.dumps(res)))
     cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
     return {0: 200, 1: b, 2:str(token)}
     # remove id product from cart!
