@@ -1488,7 +1488,7 @@ def cache(func):
     return wrapper
 
 @cache
-def cachestuff2(cursor, row_id):
+def cachestuff2(cursor, row_id, pm):
     cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
     return cursor.fetchall()
 
@@ -1511,7 +1511,7 @@ def request_ca_read(data):
     pm = request.headers.get('Pricemargin')
     exists = cachedoes(cursor, row_id)
     if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
-        r = cachestuff2(cursor, row_id)
+        r = cachestuff2(cursor, row_id, pm)
         #print(r)
         socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
         cursor.close()
