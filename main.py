@@ -888,6 +888,7 @@ def save(productid):
 @socketio.on("rmc")
 @before_mid
 def red_(data__, f="0"):
+    data = data__
     try:
         print("removing "+str(data__['0']))
         data = data__[0]
@@ -899,7 +900,7 @@ def red_(data__, f="0"):
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
     if (f == "1"):
-        data = jwt.decode(data__, app.secret_key, algorithms=['HS256'])[0]['csrf']
+        data = jwt.decode(data__, app.secret_key, algorithms=['HS256'])[0]['csrf']  
         print(data, "\n\n\n the decoded data\n")
     car = session["yourCart"]
     print(car)
