@@ -705,7 +705,7 @@ var g;
                     sessioned = data[2];
                     console.log(data[1]);
                     function thru() {
-                  fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+"/"+tulip, {
+                  fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+""+tulip, {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json'
