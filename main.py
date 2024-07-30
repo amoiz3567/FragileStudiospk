@@ -425,7 +425,7 @@ def cart(format, f="0"):
         #    return "Error"
         #finally:'''
         cache.set(request.cookies.get("evid")+"cart_", str(f"{json.dumps(res)}"))
-        return {0: "Valid", 1: str(f"{json.dumps(res)}")}
+        return {0: "Valid", 1: jwt.encode({'data': {"dd":json.dumps(res)}, 'exp': datetime.utcnow() + timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256")}
 
 @app.route('/cart_set_cookie/<path:ds>/<path:t>', methods=['POST'])
 @before_mid
@@ -434,6 +434,7 @@ def set_cookie(ds, t):
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
     if (t == "1"):
         session['yourCart'] = jwt.decode(ds, "SfnAI4sUeg#9pGfTC6x@", algorithms=["HS256"])
+        print(session['yourCart'], "\n\nhehehe\n\n\n")
     else:
         session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
     return response
@@ -915,7 +916,7 @@ def red_(data, f="0"):
     #mydb.commit()
     #cursor.close()
     cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
-    return {0: 200, 1: b, 2:jwt.encode({'data': {"dd":json.dumps(res)}, 'exp': datetime.utcnow() + timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256")}
+    return {0: 200, 1: b, 2:str(jwt.encode({'data': {"dd":json.dumps(res)}, 'exp': datetime.utcnow() + timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256"))}
     # remove id product from cart!
 
 @before_mid
