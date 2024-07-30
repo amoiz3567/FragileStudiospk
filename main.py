@@ -901,7 +901,7 @@ def red_(data__, f="0", g=""):
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
     if (f == "1"):
-        car = jwt.decode(g, app.secret_key, algorithms=['HS256'])['csrf']
+        car = jwt.decode(g.encode(), app.secret_key, algorithms=['HS256'])['csrf']
         print(car, "\n\n\n the decoded data\n")
     else:
         car = session["yourCart"]
