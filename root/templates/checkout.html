@@ -40,21 +40,6 @@ input[type="text"] {
     border-radius: 5px;
 }
 
-@media screen and (max-width:562px) {
-    input[type="text"] {
-    color: black;
-    width: 250px;
-    padding: 10px 10px 10px 5px;
-    display: block;
-    border: none;
-    border: 2px solid #9e9e9e;
-    background: transparent;
-    outline: none;
-    font-size: 16px;
-    margin: 5px;
-    border-radius: 5px;
-}
-}
 
 input[type="text"]:focus {
     border: 2px solid #000000;
@@ -133,6 +118,26 @@ input[type="text"]:valid ~ label {
   transition: 1s;
   margin-top: 18px;
 }
+@media screen and (max-width:562px) {
+    input[type="text"] {
+        color: black;
+        width: 250px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        border: none;
+        border: 2px solid #9e9e9e;
+        background: transparent;
+        outline: none;
+        font-size: 16px;
+        margin: 5px;
+        border-radius: 5px;
+    }
+    .card {
+        width: 250px;
+        
+    }
+}
+
 .div {
   display: flex;
   padding: 1px 105;
