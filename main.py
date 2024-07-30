@@ -393,7 +393,7 @@ def cart(format, f="0"):
     try:
         print(category_data)
         car_json = json.loads(category_data)
-        l = len(car_json)
+        l = car_json.keys()[len(car_json)]
         data = str(category_data)
         length_data = data[1:len(data)-1]
         r = ","
@@ -416,7 +416,7 @@ def cart(format, f="0"):
         del format['dcon']
         del format['ping']
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
-        res = json.loads(repair_json("["+length_data+f"{r} \"{format}\""+"]"))
+        res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
@@ -755,7 +755,7 @@ def ret(id, products=None, p=None):
         except:
             crate_result = None
         if (crate_result != None and crate_result):
-            crate_len = len(json.loads(crate_result))
+            crate_len = len(json.loads(crate_result).values())
     cursor.close()
     tick = str(a['value']).replace(":globe:", "🌐")
     res = {"ticker": tick, "goKaraleva": "1", "amount": crate_len}
