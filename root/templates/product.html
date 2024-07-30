@@ -80,7 +80,7 @@
         <a nonce="{{ csp_nonce() }}" onclick="op('sizegraph', 'sizegraph_');" style="padding: 20px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
         <br><br>
         <div class="col">
-            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; cursor: pointer; margin: 25px;"><i>Size Chart</i></h1><br>
+            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Size Chart</i></h1><br>
             <img src="" style="width: 100%;" id="size_chart" alt="">
         </div>
     </div>
@@ -261,7 +261,7 @@ name    </h1>
 
           <div class="div center" style="background-color: #67676745;"></div>
         <p class="h_font chrome" style="display: none; margin: 0px;">
-          <div style="display: none;">
+          <div style="display: none;">`
             <div class="g avia chrome">CLOTHES FOR <b style="font-size: 16px; margin: -1px 4px;">&</b> CATEGORY</div>
             <div class="row">
               <div id="gender" class="row"></div>
@@ -274,14 +274,14 @@ name    </h1>
           </div>
         </p>
         <p class="h_font chrome">
-        <div class="g avia chrome" style="margin: 0; font-size: 13px; font-weight: 450; text-decoration: underline;" onclick="menu('sizegraph', 'sizegraph_')">Size Chart</div>
+        <div class="g avia chrome" style="margin: 0; font-size: 13px; font-weight: 450; text-decoration: underline; cursor: pointer;" onclick="menu('sizegraph_', 'sizegraph_')">Size Chart</div>
         <div class="g avia chrome" style="margin: 0; font-size: 13px; font-weight: 350;">COLOR<b style="margin: 0px 4px;">/</b>S</div>
           <div id="color" class="row"></div>
         </p>
 
         <div class="row">
-        <!--div class="col counter" style="position: relative; user-select: none; display: block;"></div-->
-        <a class="quantity al" id="nums"><a id="up">+</a><span align="center" id="quantity" class="center">0</span><a id="down">-</a></a>
+        <div class="col counter" style="position: relative; user-select: none; display: block;"><a id="up">+</a><a id="down">-</a></div>
+        <a class="quantity al" id="nums"><span align="center" id="quantity" class="center">0</span></a>
         <!--div class="tooltip" id="context_container" style="width: auto; height: auto; position: absolute; display: none; flex-direction: column; gap: 0px; top: 0; left: 0; z-index: 1200; margin: 25px; border-radius: 1px; overflow: hidden; border: 1px solid black; background: white; border-radius: 2px; padding: 0; margin-left:37%; margin-top: 230px; border: none; padding-bottom: 15px; background-color: #c7c7c7;">
           <p class="butts"  style="background-color: rgba(255, 0, 0, 0); color: rgb(0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 25px 0 0 0; color: balck; font-size: 18px;">For performing this action</p>
           <a class="butts" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/auth';"  style="background-color: rgba(255, 0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 0px 0 25px 0px; text-decoration: underline; color: #000000; font-size: 19px;">sign in / up</a>
