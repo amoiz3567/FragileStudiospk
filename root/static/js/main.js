@@ -121,13 +121,13 @@ function ric(a) {
     document.getElementById('up').addEventListener('click', function () {
         if (num != a) {
         document.getElementById("quantity").textContent = ++num;
-        localStorage.setItem("counter", document.getElementById("nums").textContent);
+        localStorage.setItem("counter", document.getElementById("quantity").textContent);
         }
     });
     document.getElementById('down').addEventListener('click', function () {
         if (num != 1) {
         document.getElementById("quantity").textContent = --num;
-        localStorage.setItem("counter", document.getElementById("nums").textContent);
+        localStorage.setItem("counter", document.getElementById("quantity").textContent);
         }
     });
 }
