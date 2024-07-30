@@ -378,6 +378,28 @@ name    </h1>
   </div>
 
 </body>
+<script>
+  function ric(a) {
+    let num = localStorage.getItem("counter", '1');
+    document.getElementById("quantity").textContent = num;
+    if (num < 1 || num > a) {
+        num = 1;
+        document.getElementById("quantity").textContent = num;
+    }
+    document.getElementById('up').addEventListener('click', function () {
+        if (num != a) {
+        document.getElementById("quantity").textContent = ++num;
+        localStorage.setItem("counter", document.getElementById("quantity").textContent);
+        }
+    });
+    document.getElementById('down').addEventListener('click', function () {
+        if (num != 1) {
+        document.getElementById("quantity").textContent = --num;
+        localStorage.setItem("counter", document.getElementById("quantity").textContent);
+        }
+    });
+}
+</script>
 <script nonce="{{ csp_nonce() }}">
   var skip = 0;
       window.addEventListener('resize', function() {  
