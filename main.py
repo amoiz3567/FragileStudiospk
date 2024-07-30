@@ -283,7 +283,6 @@ def apply_token(response):
     return response
 
 @app.route('/home')
-@lru_cache(maxsize=5)
 def HomeAL():
     #data = get_location()
     #print(data)
@@ -299,7 +298,6 @@ def HomeAL():
     return bruv
 
 @app.route('/product')
-@lru_cache(maxsize=5)
 def LandingBL():
     products = retProduct()
     evid = request.cookies.get('evid')
@@ -315,7 +313,6 @@ def LandingBL():
     bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
     return bruv
 @app.route('/products/<path:category>')
-@lru_cache(maxsize=128)
 def LandingBL_2_category(category):
     products = retProduct()
     evid = request.cookies.get('evid')
