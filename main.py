@@ -1085,6 +1085,7 @@ def checkout_Item(conf):
                     crate_result = session['ordered']
                 except:
                     crate_result = None
+                print(crate_result, "heyyyyyy")
                 if (crate_result != None and crate_result):
                     a = json.loads(crate_result).values()
                     crate_len = len(a)
