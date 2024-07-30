@@ -1489,7 +1489,7 @@ def request_ca_read(data):
         cursor.close()
         return make_response(jsonify({0: 200}))
     row_id = request.headers.get('Authorization')
-    exists = cachedoes(cursor, data)
+    exists = cachedoes(cursor, row_id)
     if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
         r = cachestuff2(cursor, row_id)
         #print(r)
