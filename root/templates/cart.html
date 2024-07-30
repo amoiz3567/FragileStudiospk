@@ -264,6 +264,7 @@ function summonContext(event=NaN, id) {
     const context = document.getElementById('context_container');
     context.style.display = 'flex';
     down = 1;
+    var sessioned = "";
     document.querySelectorAll('.butts').forEach(function (el) {
         el.addEventListener('mousedown', async function () {
             var v = "";
@@ -694,10 +695,13 @@ var g;
         }
         function rmc(id) {
             a = socket.emit('rmc', {0:id}, function (data) {
+                var tulip = "0";
+                if (sessioned != "")
+                tulip = "1";
                 if (data[0] == 200) {
                     console.log(data[1]);
                     function thru() {
-                  fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1], {
+                  fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+"/"+tulip, {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json'
@@ -708,6 +712,7 @@ var g;
                       console.log(data);
                       if (data[0] === "200") {
                             removeElement(loafi, id);
+                            sessioned = data[2];
                           return true;
                       } else {
                           return false;
