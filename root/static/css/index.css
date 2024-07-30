@@ -2250,3 +2250,6 @@ ul li{list-style-type: disc inside; border-bottom:1px dotted transparent; font-f
     margin: 0;
   }
 }
+span {
+  user-select: none;
+}
