@@ -702,7 +702,7 @@ var g;
             }
             a = socket.emit('rmc', data_To_gib, tulip, function (data) {
                 if (data[0] == 200) {
-                    sessioned = data[2];
+                    var loaf_kar = data[2];
                     console.log(data[1]);
                     function thru() {
                   fetch("https://"+window.location.hostname+'/cart_set_cookie/awd', {
@@ -715,6 +715,7 @@ var g;
                   .then(data => {
                       console.log(data);
                       if (data[0] === "200") {
+                        sessioned = loaf_kar;
                             removeElement(loafi, id);
                           return true;
                       } else {
