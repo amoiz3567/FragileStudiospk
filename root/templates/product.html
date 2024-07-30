@@ -96,29 +96,10 @@
         <div class="col">
             <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Added to Your Cart</i></h1><br>
             <img src="" id="image_image" class="center" style="width: 300px;" alt="">
-            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;" id="name_name"></i></h1><br>
-            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;" id="price_price"></i></h1><br>
-            <a class="quantity al" id="nums" style="display: flex; margin: 0; flex-direction: row;"><span style="width: 36%;
-              height: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              position: absolute;
-              top: 0;
-              left: 5px; user-select: none;
-              z-index: 25;
-              font-size: 26px;
-              font-weight: 400;" id="up_up">+</span><span align="center" id="quantity_quantity" style="padding: 0  15px; margin: 0; z-index: -1;" class="center">0</span><span style="width: 36%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: end;
-        position: absolute;
-        top: 0;
-        right: 5px; user-select: none;
-        font-size: 40px;
-        z-index: 25;
-        font-weight: 100;" id="down_down">-</span></a>
+            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;">name: <i id="desc_2" align="left" style="font-style: normal;" id="name_name"></i></h1><br>
+            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;">price: <i id="desc_2" align="left" style="font-style: normal;" id="price_price"></i></h1><br>
+            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;">size: <i id="desc_2" align="left" style="font-style: normal;" id="price_price"></i></h1><br>
+            <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;">quantity: <i id="desc_2" align="left" style="font-style: normal;" id="price_price"></i></h1><br>
                 <a href="/cart" class="center" style="background-color: black;padding: 15px 0; font-size: 21px; margin: auto 5px; color: white;">View Cart</a>
                 <a onclick="window.location.reload()" class="center" style="background-color: white; outline: 2px solid black; padding: 15px 0; font-size: 21px; margin: auto 5px; color: black;">ok</a>
 
@@ -561,6 +542,7 @@ var formation = {
   "color": '',
   "size": '',
   "price": '',
+  "name": '',
   "dcon": 0,
   "ping": 0
 }
@@ -867,6 +849,7 @@ $(".img_producto_container")
       el.style.paddingRight = "10px";
     });
     window.pid = item['id'];
+    formation.name = item['name'];
     window.pprice = Math.round(item['price']);
     window.pquantity = item['quantity'];
     var QUANTITY_ = (Math.floor(item['xl'])+Math.floor(item['l'])+Math.floor(item['m'])+Math.floor(item['s']));
