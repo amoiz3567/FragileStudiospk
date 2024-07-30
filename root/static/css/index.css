@@ -2253,11 +2253,3 @@ header {
 span {
   user-select: none;
 }
-.input-container input {
-  width: 100%;
-}
-@media screen and (max-width:562px) {
-  .input-container input {
-    width: 250px;
-  }
-}
