@@ -1079,7 +1079,7 @@ $(".img_producto_container")
             console.log("Submiting");
           } else {
                 function thru() {
-                  fetch("https://"+window.location.hostname+'/item/'+formation, {
+                  fetch("https://"+window.location.hostname+'/item/'+formation.toString(), {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json'

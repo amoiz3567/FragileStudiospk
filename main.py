@@ -1066,7 +1066,7 @@ def set_mmm(ds):
     if request.method == 'POST':
         response = make_response(jsonify({0: "200"}))
         response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-        session['ordered'] = "{"+f"\"0\": {ds}"+"}"
+        session['ordered'] = "{"+f"\"0\": \"{ds}\""+"}"
         return response
     abort(404)
 
