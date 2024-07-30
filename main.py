@@ -725,19 +725,27 @@ class DecimalEncoder(json.JSONEncoder):
 
 @lru_cache(maxsize=128)
 def align(products, data, o):
-    if products != None and products[0] != "NNNNNNNNN":
-        for i in products:
-            saved_value = 0
-            try:
-                if (i['saved'] != None):
-                    saved_value = i['saved']
-            except: saved_value = 0
-            try:
-                data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'], "sizechart": i['sizechart'], "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
-            except:
-                data.update({"0": ""})
-            o+=1
-    return data
+    try:
+        if products != None and products[0] != "NNNNNNNNN":
+            for i in products:
+                saved_value = 0
+                try:
+                    if (i['saved'] != None):
+                        saved_value = i['saved']
+                except: saved_value = 0
+                try:
+                    data.update({f"{o}": {"id": i['id'], "name": i['name'], "description": i['description'], "price": i['price'], "discount": i['discount'], "sizechart": i['sizechart'], "quantity": i['quantity'], "category": i['category'], "img": i['img'], "xl": i['xl'], "l": i['l'], "m": i['m'], "s": i['s'], "saved": saved_value},})
+                except:
+                    data.update({"0": ""})
+                o+=1
+        return data
+    except TypeError as e:
+        print(f"TypeError in align function: {e}")
+        raise
+    except KeyError as e:
+        print(f"KeyError in align function: Missing key {e}")
+        raise
+
     
 def tickercache(cursor):
     cursor.execute("USE products")
