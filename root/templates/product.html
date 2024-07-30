@@ -93,10 +93,32 @@
         <a nonce="{{ csp_nonce() }}" onclick="window.location.reload()" style="padding: 20px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
         <br><br>
         <div class="col">
-            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Your Cart</i></h1><br>
-            <img src="" id="image_image" class="center" style="width: 250px;" alt="">
+            <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i>Added to Your Cart</i></h1><br>
+            <img src="" id="image_image" class="center" style="width: 300px;" alt="">
             <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;" id="name_name"></i></h1><br>
             <h1 class="des_nodot" style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px; text-align: start;"><i id="desc_2" align="left" style="font-style: normal;" id="price_price"></i></h1><br>
+            <a class="quantity al" id="nums" style="display: flex; flex-direction: row;"><span style="width: 36%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              top: 0;
+              left: 5px; user-select: none;
+              z-index: 25;
+              font-size: 26px;
+              font-weight: 400;" id="up">+</span><span align="center" id="quantity" style="padding: 0  15px; margin: 0;" class="center">0</span><span style="width: 36%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        position: absolute;
+        top: 0;
+        right: 5px; user-select: none;
+        font-size: 40px;
+        z-index: 25;
+        font-weight: 100;" id="down">-</span></a>
+    
         </div>
     </div>
     <div nonce="{{ csp_nonce() }}" onclick="window.location.reload()" style="width: 100vw; height: 100vh; background-color: #5a5a5a86;"></div>
@@ -872,6 +894,8 @@ $(".img_producto_container")
     }
     document.getElementById("size_chart").setAttribute("src", `{{ url_for('static', filename='products/') }}${item['sizechart']}`);
     document.getElementById("image_image").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
+    document.getElementById("name_name").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
+    document.getElementById("price_price").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
     ////routPointer();
     document.querySelectorAll('.chrome').forEach(element => {
       element.classList.remove("chrome");
