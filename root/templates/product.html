@@ -805,6 +805,7 @@ $(".img_producto_container")
             const details = `<div class="meta">${item['name']}</div><div class="meta">${item['description']}</div><div align="right" class="save-container"><i class="ao o bh pointer save-control" id="save" style="font-size: 15px; margin: 0; margin-top: 25px; padding: 0;" onclick="nestedButtonClick(event, this, '${item['id']}');"></i></div>
                     <h4 style="font-size: 18px;">${item['name']}</h4>
                     <div style="height: 5px; margin-top: 4px; display: flex; justify-content: start; align-items: start;" class="row">
+                        <i class="h_fonts" style="font-size: 14px; text-decoration: line-through; margin-left: 5px; color: black; font-weight: 400; font-style: normal; margin: auto 0; padding-right: 10px;" id="discedprice">PKR ${Math.round(item['discount'])}</i>
                         <i class="ao o center" style="font-size: 15px; display: flex; flex-direction: row;">PKR<i class='add' style="position: relative; margin: 0 25px; padding: 0; background: yellow;/*background: red; color: white; font-weight: 900;*/ border: 0; border-radius: 3px;"> ${Math.round(item['price'])}</i></i>&nbsp;&nbsp;<s class="o"></s>
                     </div>`;
             secondDivision.innerHTML = details;
@@ -1072,18 +1073,13 @@ $(".img_producto_container")
                   }
                   thru();
               } else if (data[0] == "confirm") {
-                menu('dialogue', 'dialogue_');
+                  menu('dialogue', 'dialogue_');
               }
             });
             console.log("Submiting");
           } else {
-            socket.emit("submitcart", formation, function (data) {
-            if (data[0] == "Invalid")
-              console.log("Invalid");
-              //summonContext('auth');
-              else if (data[0] == "Valid") {
                 function thru() {
-                  fetch("https://"+window.location.hostname+'/item/'+data[1], {
+                  fetch("https://"+window.location.hostname+'/item/'+formation, {
                       method: 'POST',
                       headers: {
                           'Content-Type': 'application/json'
@@ -1103,10 +1099,6 @@ $(".img_producto_container")
                       });
                   }
                   thru();
-              } else if (data[0] == "confirm") {
-                menu('dialogue', 'dialogue_');
-              }
-            });
           }
         //} else {
         //  summonContext('auth');

@@ -1066,7 +1066,7 @@ def set_mmm(ds):
     if request.method == 'POST':
         response = make_response(jsonify({0: "200"}))
         response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-        session['item_rn'] = cache.get(request.cookies.get("evid")+"item_")
+        session['ordered'] = "{"+f"\"0\": {ds}"+"}"
         return response
     abort(404)
 
@@ -1074,7 +1074,31 @@ def set_mmm(ds):
 def checkout_Item(conf):
     if (not validuuid(conf)):
         try:
-            bruv = make_response(render_template('checkout.html', a="item", b=session["item_rn"]))
+            try:
+                id_ = request.cookies.get('evid')
+            except:
+                id_ = None
+            a = {}
+            crate_len = 0
+            if (id_ != None and not validuuid(id_)):
+                try:
+                    crate_result = session['ordered']
+                except:
+                    crate_result = None
+                if (crate_result != None and crate_result):
+                    a = json.loads(crate_result).values()
+                    crate_len = len(a)
+                else:
+                    abort(403)
+            price = 0
+            amounte= 0
+            for i in a:
+                i = json.loads(i.replace("\'", "\""))
+                amounte += int(i['quantity'])
+                price += int(i['price'])
+
+            session["ordered"]
+            bruv = make_response(render_template('checkout.html', a="item",total=str(price+200)+" PKR", e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
             token = generate_token(uuid.uuid4())
             session['mid2912'] = token
             bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
@@ -1099,11 +1123,15 @@ def checkout_cart():
             if (crate_result != None and crate_result):
                 a = json.loads(crate_result).values()
                 crate_len = len(a)
+            else:
+                abort(403)
         price = 0
+        amounte = 0
         for i in a:
             i = json.loads(i.replace("\'", "\""))
+            amounte += int(i['quantity'])
             price += int(i['price'])
-        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", e=a, amount=crate_len, saved="- "+str((crate_len*200)-200)+" PKR"))
+        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
