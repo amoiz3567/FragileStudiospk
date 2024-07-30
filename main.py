@@ -908,7 +908,7 @@ def red_(data):
     #mydb.commit()
     #cursor.close()
     cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
-    return {0: 200, 1: b, 2:jwt.encode({'data': json.dumps(res), 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256")}
+    return {0: 200, 1: b, 2:jwt.encode({'data': json.dumps(res), 'exp': datetime.utcnow() + datetime.timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256")}
     # remove id product from cart!
 
 @before_mid
