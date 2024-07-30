@@ -433,9 +433,9 @@ def cart(format, f="0"):
         cache.set(request.cookies.get("evid")+"cart_", str(f"{json.dumps(res)}"))
         return {0: "Valid", 1: str(token)}
 
-@app.route('/cart_set_cookie/<path:ds>/<path:t>', methods=['POST'])
+@app.route('/cart_set_cookie/<path:ds>', methods=['POST'])
 @before_mid
-def set_cookie(ds, t):
+def set_cookie(ds):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
     session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
