@@ -892,7 +892,7 @@ def save(productid):
 
 @socketio.on("rmc")
 @before_mid
-def red_(data__, f="0"):
+def red_(data__, f="0", g=""):
     data = data__
     try:
         print("removing "+str(data__['0']))

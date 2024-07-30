@@ -696,7 +696,7 @@ var g;
             socket.emit("save", p);
         }
         function rmc(id) {
-            a = socket.emit('rmc', data_To_gib, tulip, function (data) {
+            a = socket.emit('rmc', {0:id}, tulip, sessioned, function (data) {
                 if (data[0] == 200) {
                     var loaf_kar = data[2];
                     console.log(data[1]);
@@ -782,10 +782,8 @@ var g;
                         console.log(loafi[0]);
                         console.log("wtf going again");
                         tulip = "0";
-                        data_To_gib = {0:loafi[0]};
                         if (sessioned != "") {
                             tulip = "1";
-                            data_To_gib = sessioned;
                         }
                         var l = remove(loafi[0]);
                         if (l == true) {
