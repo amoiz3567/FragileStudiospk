@@ -1173,12 +1173,13 @@ def send_Order(subject, body, recipients, sender="fragilelogin@gmail.com", passw
 @socketio.on("sendOrder_request")
 @before_mid
 def order_req(data, productdata, total, items):
-    with open("../orders.txt", "w") as fp:
-        fp.write()
     subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
     body = "<h1>User Info</h1>"
     body += f"<h3>Order for {items} items, for {total}</h3>"
+    usemail = ""
     for i in data.keys():
+        if (i == "email"):
+            usemail = data[i]
         body += f"""
             <b>{i}</b>: {data[i]}<br>
         """
@@ -1194,8 +1195,10 @@ def order_req(data, productdata, total, items):
         for i in par.keys():
             if (i != "wuus"):
                 body += f"""<b>{i}</b>: {par[i]}<br>"""
+    with open("../orders.txt", "a") as fp:
+        fp.write(body)
     sender = "fragilelogin@gmail.com"
-    recipients = ["fragilestudiospk@gmail.com"]
+    recipients = [usemail, "fragilestudiospk@gmail.com"]
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
