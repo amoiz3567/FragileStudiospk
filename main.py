@@ -354,8 +354,8 @@ def cart(format, f="0"):
     ##    return "Invalid"
     #####
     if (f == "1"):
-        data = jwt.decode(data, "SfnAI4sUeg#9pGfTC6x@", algorithms=["HS256"])
-        print(data, "\n\n\n the decoded data\n")
+        format = jwt.decode(format, app.secret_key, algorithms=['HS256'])['csrf']
+        print(format, "\n\n\n the decoded data\n")
 
     print("adding "+str(format['productId']))
     #id = req.cookies.get('id')
@@ -433,11 +433,7 @@ def cart(format, f="0"):
 def set_cookie(ds, t):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-    if (t == "1"):
-        session['yourCart'] = jwt.decode(ds, app.secret_key, algorithms=['HS256'])['csrf']
-        print(jwt.decode(ds, app.secret_key, algorithms=['HS256'])['csrf'], "\n\nhehehe\n\n\n")
-    else:
-        session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
+    session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
     return response
     #abort(404)
 
@@ -899,7 +895,7 @@ def red_(data, f="0"):
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
     if (f == "1"):
-        data = jwt.decode(data, "SfnAI4sUeg#9pGfTC6x@", algorithms=["HS256"])
+        data = jwt.decode(format, app.secret_key, algorithms=['HS256'])['csrf']
         print(data, "\n\n\n the decoded data\n")
     car = session["yourCart"]
     print(car)
