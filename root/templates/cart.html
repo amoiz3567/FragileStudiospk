@@ -694,10 +694,10 @@ var g;
             socket.emit("save", p);
         }
         function rmc(id) {
-            a = socket.emit('rmc', {0:id}, function (data) {
-                var tulip = "0";
-                if (sessioned != "")
-                tulip = "1";
+            var tulip = "0";
+            if (sessioned != "")
+            tulip = "1";
+            a = socket.emit('rmc', {0:id}, tulip, function (data) {
                 if (data[0] == 200) {
                     console.log(data[1]);
                     function thru() {
