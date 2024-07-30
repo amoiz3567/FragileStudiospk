@@ -755,7 +755,7 @@ def ret(id, products=None, p=None):
         except:
             crate_result = None
         if (crate_result != None and crate_result):
-            crate_len = len(json.loads(crate_result).values())
+            crate_len = len(json.loads(crate_result))
     cursor.close()
     tick = str(a['value']).replace(":globe:", "🌐")
     res = {"ticker": tick, "goKaraleva": "1", "amount": crate_len}
