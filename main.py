@@ -31,6 +31,8 @@ from email.mime.image import MIMEImage
 import gevent
 from gevent.ssl import SSLContext, PROTOCOL_TLS
 from gevent import pywsgi
+from functools import lru_cache
+
 """
 [!] DEAR maintainer,
      The Truth is that this Code Sucks,
@@ -720,11 +722,9 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(o, Decimal):
             return str(o)
         return super().default(o)
-    
-def ret(id, products=None, p=None):
-    ''' -- all the data home, the user is gonna recieve (*) NOT!'''
-    data = {}
-    o = 0
+
+@lru_cache(maxsize=128)
+def align(products, data, o):
     if products != None and products[0] != "NNNNNNNNN":
         for i in products:
             saved_value = 0
@@ -737,11 +737,21 @@ def ret(id, products=None, p=None):
             except:
                 data.update({"0": ""})
             o+=1
-    socketio.on('red')
-    cursor = mydb.cursor(dictionary=True, buffered=True)
+    return data, o
+    
+def tickercache(cursor):
     cursor.execute("USE products")
     cursor.execute("SELECT value FROM ticker")
-    a =cursor.fetchone()
+    return cursor.fetchone()
+
+def ret(id, products=None, p=None):
+    ''' -- all the data home, the user is gonna recieve (*) NOT!'''
+    data = {}
+    o = 0
+    data, o = align(products, data, o)
+    socketio.on('red')
+    cursor = mydb.cursor(dictionary=True, buffered=True)
+    a = tickercache(cursor)
     #cursor.fetchall()
     try:
         id_ = request.cookies.get('evid')
@@ -956,6 +966,7 @@ def product_spec(data):
         print("error: "+str(err))
         #return make_response(jsonify({"error": str(err)}), 500)
 
+@lru_cache(maxsize=128)
 def retProduct(p=None, raf=None):
     mycursor = mydb.cursor(dictionary=True)
     try:
