@@ -188,9 +188,9 @@ input[type="text"]:valid ~ label {
         <div id="notcorrect" class="center" align="center" style="transition: .3s; position: absolute; height: 400px; width:auto; height: auto; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
             <br><br>
             <div class="col">
-                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: 16px; font-weight: 200;">An Error ocurred! :/ <br>Please Try again.</i></h1><br>
+                <h1 style="font-size: 25px; color: rgb(0, 0, 0); margin-bottom: 25px; margin: 25px;"><i style="font-size: 26px; font-weight: 200;">An Error ocurred! :/ <br>Please Try again.</i></h1><br>
                 <div class="row" style="margin: 0; margin-top: 25px; width: 40%; padding: 0;">
-                    <a onclick="op('notcorrect', 'notcorrect_')" style="margin: auto; padding: 5px 25px; font-size: 19px; text-wrap: nowrap; background: black; color: #ffffff;">Try Again</a>
+                    <a onclick="op('notcorrect', 'notcorrect_')" style="margin: auto; padding: 5px 25px; font-size: 15px; text-wrap: nowrap; background: black; color: #ffffff;">Try Again</a>
                 </div>
             </div>
         </div>
@@ -490,6 +490,7 @@ document.addEventListener('input', e => {
         function soub() {
             socket.emit("sendOrder_request", format, "{{ e }}", "{{ total }}", "{{ amount }}", function (data) {
                 if (data[0] == 200) {
+                    menu("correct", "correct_");
                     function thru() {
                 fetch("https://"+window.location.hostname+'/remAse', {
                     method: 'POST',
@@ -500,7 +501,7 @@ document.addEventListener('input', e => {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    if (data[0] === "200") {
+                    if (data[0] == 200) {
                         menu("correct", "correct_");
                     } else {
                         menu("notcorrect", "notcorrect_");
