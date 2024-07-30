@@ -1089,8 +1089,6 @@ def checkout_Item(conf):
                 if (crate_result != None and crate_result):
                     a = json.loads(crate_result).values()
                     crate_len = len(a)
-                else:
-                    abort(403)
             price = 0
             amounte= 0
             for i in a:
