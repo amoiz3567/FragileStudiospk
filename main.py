@@ -1173,7 +1173,7 @@ def send_Order(subject, body, recipients, sender="fragilelogin@gmail.com", passw
 @socketio.on("sendOrder_request")
 @before_mid
 def order_req(data, productdata, total, items):
-    subject = f"You have an Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
+    subject = f"Order! | From ({data['firstname']} {data['lastname']}) (Fragile Studios)"
     body = "<h1>User Info</h1>"
     body += f"<h3>Order for {items} items, for {total}</h3>"
     usemail = ""
