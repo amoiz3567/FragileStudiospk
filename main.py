@@ -424,8 +424,9 @@ def cart(format, f="0"):
         #    print("Error:", err)
         #    return "Error"
         #finally:'''
+        token = generate_token(str(json.dumps(res)))
         cache.set(request.cookies.get("evid")+"cart_", str(f"{json.dumps(res)}"))
-        return {0: "Valid", 1: jwt.encode({'data': {"dd":json.dumps(res)}, 'exp': datetime.utcnow() + timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256")}
+        return {0: "Valid", 1: str(token)}
 
 @app.route('/cart_set_cookie/<path:ds>/<path:t>', methods=['POST'])
 @before_mid
@@ -433,8 +434,8 @@ def set_cookie(ds, t):
     response = make_response(jsonify({0: "200"}))
     response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
     if (t == "1"):
-        session['yourCart'] = jwt.decode(ds, "SfnAI4sUeg#9pGfTC6x@", algorithms=["HS256"])
-        print(session['yourCart'], "\n\nhehehe\n\n\n")
+        session['yourCart'] = jwt.decode(ds, app.secret_key, algorithms=['HS256'])['csrf']
+        print(jwt.decode(ds, app.secret_key, algorithms=['HS256'])['csrf'], "\n\nhehehe\n\n\n")
     else:
         session['yourCart'] = cache.get(request.cookies.get("evid")+"cart_")
     return response
@@ -915,8 +916,9 @@ def red_(data, f="0"):
     #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
     #mydb.commit()
     #cursor.close()
+    token = generate_token(str(json.dumps(res)))
     cache.set(request.cookies.get("evid")+"cart_", json.dumps(res))
-    return {0: 200, 1: b, 2:str(jwt.encode({'data': {"dd":json.dumps(res)}, 'exp': datetime.utcnow() + timedelta(hours=1)}, "SfnAI4sUeg#9pGfTC6x@", algorithm="HS256"))}
+    return {0: 200, 1: b, 2:str(token)}
     # remove id product from cart!
 
 @before_mid
