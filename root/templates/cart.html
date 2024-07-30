@@ -264,7 +264,6 @@ function summonContext(event=NaN, id) {
     const context = document.getElementById('context_container');
     context.style.display = 'flex';
     down = 1;
-    var sessioned = "";
     document.querySelectorAll('.butts').forEach(function (el) {
         el.addEventListener('mousedown', async function () {
             var v = "";
@@ -613,6 +612,7 @@ var g;
         func(keys, dObj, a[0][0]);
     }
     var myredund_products;
+    var sessioned = "";
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
