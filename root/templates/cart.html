@@ -695,12 +695,12 @@ var g;
         }
         function rmc(id) {
             var tulip = "0";
-            var data_To_gib = id;
+            var data_To_gib = {0:id};
             if (sessioned != "") {
                 tulip = "1";
                 data_To_gib = sessioned;
             }
-            a = socket.emit('rmc', {0:data_To_gib}, tulip, function (data) {
+            a = socket.emit('rmc', data_To_gib, tulip, function (data) {
                 if (data[0] == 200) {
                     sessioned = data[2];
                     console.log(data[1]);

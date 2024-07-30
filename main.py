@@ -887,16 +887,19 @@ def save(productid):
 
 @socketio.on("rmc")
 @before_mid
-def red_(data, f="0"):
-    print("removing "+str(data['0']))
+def red_(data__, f="0"):
+    try:
+        print("removing "+str(data__['0']))
+        data = data__[0]
+    except:
+        pass
     id = req.cookies.get('id')
     #cursor = mydb.cursor(buffered=True)
     #cursor.execute(f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
     if (f == "1"):
-        print(data[0])
-        data = jwt.decode(data[0], app.secret_key, algorithms=['HS256'])[0]['csrf']
+        data = jwt.decode(data__, app.secret_key, algorithms=['HS256'])[0]['csrf']
         print(data, "\n\n\n the decoded data\n")
     car = session["yourCart"]
     print(car)
@@ -905,9 +908,9 @@ def red_(data, f="0"):
     b = ""
     for v in car_json:
         print(car_json[v], "\n\n\n\n\n\n")
-        if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data['0']:
+        if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data:
             b = (f"\"{car_json[v]}\"")
-    print(b, " hehehehehe ", data['0'])
+    print(b, " hehehehehe ", data)
     print(repair_json(car.replace(b, '')))
     res = json.loads(repair_json(car.replace(b, '')))
     #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
