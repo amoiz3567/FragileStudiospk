@@ -695,8 +695,11 @@ var g;
         }
         function rmc(id) {
             var tulip = "0";
-            if (sessioned != "")
-            tulip = "1";
+            var data_To_gib = formation;
+            if (sessioned != "") {
+                tulip = "1";
+                data_To_gib = sessioned;
+            }
             a = socket.emit('rmc', {0:id}, tulip, function (data) {
                 if (data[0] == 200) {
                     sessioned = data[2];
