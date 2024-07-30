@@ -390,6 +390,7 @@ def cart(format, f="0"):
             format['price'] = int(a)*int(format['quantity'])
         else:
             abort(404)
+    car_json = json.loads(category_data)
     print(int(car_json.keys()[-1])+1)
     try:
         print(category_data)
