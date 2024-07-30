@@ -1096,10 +1096,11 @@ def checkout_Item(conf):
             for i in a:
                 i = json.loads(i.replace("\'", "\""))
                 amounte += int(i['quantity'])
-                price += int(i['price'])
-
-            session["ordered"]
-            bruv = make_response(render_template('checkout.html', a="item",total=str(price+200)+" PKR", e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
+                price += int(i['price'])*int(i['quantity'])
+            isthat = "200 PKR"
+            if (price >= 3999):
+                isthat = "0 PKR"
+            bruv = make_response(render_template('checkout.html', a="item",total=str(price+200)+" PKR", charges_=isthat, e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
             token = generate_token(uuid.uuid4())
             session['mid2912'] = token
             bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
@@ -1132,8 +1133,12 @@ def checkout_cart():
         for i in a:
             i = json.loads(i.replace("\'", "\""))
             amounte += int(i['quantity'])
-            price += int(i['price'])
-        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
+            price += int(i['price'])*int(i['quantity'])
+        isthat = "200 PKR"
+        if (price >= 3999):
+            isthat = "0 PKR"
+
+        bruv = make_response(render_template('checkout.html', a="cart", total=str(price+200)+" PKR", charges_=isthat, e=a, amount=amounte, saved="- "+str((crate_len*200)-200)+" PKR"))
         token = generate_token(uuid.uuid4())
         session['mid2912'] = token
         bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
