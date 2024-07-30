@@ -1487,7 +1487,7 @@ def cache(func):
             return result
     return wrapper
 
-@cache
+#@cache
 def cachestuff2(cursor, row_id, pm):
     cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
     return cursor.fetchall()
@@ -1503,7 +1503,7 @@ def request_ca_read(data):
     cursor = mydb.cursor(dictionary=True, buffered=True)
     cursor.execute("USE products")
     if (data == "alldata_"):
-        r = bulkcache(cursor)
+        r = bulkcache(cursor)   
         socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar"})
         cursor.close()
         return make_response(jsonify({0: 200}))
