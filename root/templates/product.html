@@ -1031,16 +1031,16 @@ $(".img_producto_container")
         formation['ping'] = 0;
         //if (getcookie("id") != null) {
         if (a == "") {
-          socket.emit("submitcart", formation, function (data) {
+          var tulip = "0";
+          if (sessioned != "")
+          tulip = "1";
+          socket.emit("submitcart", formation, tulip, function (data) {
             if (data[0] == "Invalid")
               console.log("Invalid");
               //summonContext('auth');
               else if (data[0] == "Valid") {
                 console.log("done the cart has added!");
                 function thru() {
-                  var tulip = "0";
-                  if (sessioned != "")
-                  tulip = "1";
                   fetch("https://"+window.location.hostname+'/cart_set_cookie/'+data[1]+"/"+tulip, {
                       method: 'POST',
                       headers: {

@@ -348,11 +348,15 @@ def before_event(f):
 
 @socketio.on("submitcart")  # Now the add to cart is gonna send it to the original signed in  id after results.
 @before_mid
-def cart(format):
+def cart(format, f="0"):
     ##id = request.cookies.get('id')
     ##if(id == None or validuuid(id)):
     ##    return "Invalid"
     #####
+    if (f == "1"):
+        data = jwt.decode(data, "SfnAI4sUeg#9pGfTC6x@", algorithms=["HS256"])
+        print(data, "\n\n\n the decoded data\n")
+
     print("adding "+str(format['productId']))
     #id = req.cookies.get('id')
     cursor = mydb.cursor(buffered=True)
