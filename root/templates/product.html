@@ -313,7 +313,7 @@ name    </h1>
           <a class="butts" nonce="{{ csp_nonce() }}" onclick="window.location.href = '/auth';"  style="background-color: rgba(255, 0, 0, 0); padding:4px 35px; font-weight: 100; width: auto; margin: 0px 0 25px 0px; text-decoration: underline; color: #000000; font-size: 19px;">sign in / up</a>
         </div-->
 
-        <a class="cta darth abs bh pointer" id="car" onclick="this.innerHTML = `<img style='width: 150px' class='imagus' src='{{ url_for('static', filename='img/works.gif') }}'>`;" style="width: 100%; margin: 5px 0;" nonce="{{ csp_nonce() }}" onclick="addtocart(event);"><span align="center" class="center">ADD TO CART&nbsp;&nbsp;&nbsp;<div style="width: 12%;"><svg class="svg s"
+        <a class="cta darth abs bh pointer" id="car" style="width: 100%; margin: 5px 0;" nonce="{{ csp_nonce() }}" onclick="addtocart(event);"><span align="center" id="knowme" class="center">ADD TO CART&nbsp;&nbsp;&nbsp;<div style="width: 12%;"><svg class="svg s"
                 style="fill: white; width: 190px;" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%"
                 viewBox="5.7 0 105.5 126.1" preserveAspectRatio="xMinYMax meet" data-hook="svg-icon-1">
                 <path
@@ -987,6 +987,9 @@ $(".img_producto_container")
             searchFilter("black", "white", "block");
           }
       });
+      socket.addEventListener("error", (e) => {
+        document.getElementById("knowme").innerHTML = `Try Adding Again`;
+      });
       socket.on(getcookie('evid')+"r", function(data) {
             if (data[2] != "" && noice == 0) {
               noice = 1;
@@ -1014,6 +1017,7 @@ $(".img_producto_container")
         console.log("Retrying...");
       }
       function submit(a="") {
+        document.getElementById("knowme").innerHTML = `<img style='width: 150px' class='imagus' src='{{ url_for('static', filename='img/works.gif') }}'>`
         formation['ping'] = 0;
         //if (getcookie("id") != null) {
         if (a == "") {
