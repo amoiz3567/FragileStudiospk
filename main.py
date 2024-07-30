@@ -893,10 +893,10 @@ def save(productid):
 @socketio.on("rmc")
 @before_mid
 def red_(data__, f="0"):
-    data = data__
+    data = data__[0]
     try:
         print("removing "+str(data__['0']))
-        data = data__[0]
+        data = data__['0']
     except:
         pass
     id = req.cookies.get('id')
