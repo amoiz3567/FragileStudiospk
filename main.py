@@ -393,7 +393,7 @@ def cart(format, f="0"):
     try:
         print(category_data)
         car_json = json.loads(category_data)
-        l = car_json.keys()[len(car_json)]
+        l = int(car_json.keys()[len(car_json)])
         data = str(category_data)
         length_data = data[1:len(data)-1]
         r = ","
