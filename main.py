@@ -1359,37 +1359,26 @@ def request_pr(data):
         return make_response(jsonify({0: 200}))
     abort(403)
 
+@lru_cache(maxsize=128)
+def cachecategories():
+    mycursor.execute("USE products")
+    mycursor.execute(f"""SELECT category_id,name, img FROM category""")
+    mycursor.fetchall()
+
 # LIGHT REQUEST FOR CATEGORIES
 #@memoized_admin
 @before_event
 @socketio.on("request_category_read")
 def request_ca_read():
     if (authed_user_admin() == True):
-        mycursor.execute("USE products")
-        mycursor.execute(f"""SELECT category_id,name, img FROM category""")
-        socketio.emit(request.cookies.get("evid")+"r", {0: mycursor.fetchall()})
-
+        socketio.emit(request.cookies.get("evid")+"r", {0: cachecategories()})
         return make_response(jsonify({0: 200}))
     abort(403)
 
-# LIGHT RESPONSE OF PRODUCTS
-@before_event
-@socketio.on("get_products_read")
-def request_pr_read(data, nom):
-    cursor = mydb.cursor(dictionary=True, buffered=True)
-    cursor.execute("USE products")
-    query = "SELECT EXISTS(SELECT 1 FROM category WHERE category_id = %s)"
-    cursor.execute(query, (data,))
-    result = cursor.fetchone()
-    res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{data}\')'])
-    exists = res == 1
-    print(exists, "the exists has spoken \n\n\n\n\n")
-    print(data is not None and exists == True and not(Invaliduuid12(data)), "the exists has spoken \n\n\n\n\n")
-    if (data is not None and exists == True and not(Invaliduuid12(data))):
-        #cursor.execute("SELECT id, name, description, price, img, belongs FROM products WHERE belongs=%s", (data,))
-        cursor.execute("SET @rownum := 0, @main_category := '';")
-
-        query = """
+@lru_cache(maxsize=128)
+def cachebelongings(cursor, belongs):
+    cursor.execute("SET @rownum := 0, @main_category := '';")
+    query = """
         SELECT id, name, description, discount, sizechart, price, img, belongs, category
         FROM (
             SELECT 
@@ -1415,11 +1404,20 @@ def request_pr_read(data, nom):
         ) AS subquery
         WHERE rownum <= 4;
         """
-        cursor.execute(query, (data,))
-        r = cursor.fetchall()
-        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 6: data})
-        cursor.close()
-        return make_response(jsonify({0: 200}))
+    cursor.execute(query, (belongs,))
+    return cursor.fetchall()
+
+@lru_cache(maxsize=128)
+def cachedoes(cursor, data):
+    cursor.execute("USE products")
+    query = "SELECT EXISTS(SELECT 1 FROM category WHERE category_id = %s)"
+    cursor.execute(query, (data,))
+    result = cursor.fetchone()
+    res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{data}\')'])
+    return res == 1
+
+@lru_cache(maxsize=128)
+def cachestuff(cursor):
     cursor.execute("SET @row_num = 0;")
     query = """
 WITH product_positions AS (
@@ -1439,11 +1437,51 @@ WHERE
 ORDER BY row_num;
     """
     cursor.execute(query)
-    r = cursor.fetchall()
-    print(json.loads(json.dumps(r, cls=DecimalEncoder)), '-----------------------------------------')
+    return cursor.fetchall()
+
+# LIGHT RESPONSE OF PRODUCTS
+@before_event
+@socketio.on("get_products_read")
+def request_pr_read(data, nom):
+    cursor = mydb.cursor(dictionary=True, buffered=True)
+    exists = cachedoes(cursor, data)
+    #print(exists, "the exists has spoken \n\n\n\n\n")
+    #print(data is not None and exists == True and not(Invaliduuid12(data)), "the exists has spoken \n\n\n\n\n")
+    if (data is not None and exists == True and not(Invaliduuid12(data))):
+        #cursor.execute("SELECT id, name, description, price, img, belongs FROM products WHERE belongs=%s", (data,))
+        r = cachebelongings(cursor, data)
+        socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom, 6: data})
+        cursor.close()
+        return make_response(jsonify({0: 200}))
+    r = cachestuff(cursor)
+    #print(json.loads(json.dumps(r, cls=DecimalEncoder)), '-----------------------------------------')
     socketio.emit(request.cookies.get("evid")+"r", {0: json.loads(json.dumps(r, cls=DecimalEncoder)), 1: "b", 3: "", 2: nom})
     cursor.close()
     #abort(400)
+
+@lru_cache(maxsize=128)
+def bulkcache(cursor):
+    cursor.execute(f"""SELECT category_id, price_margins, name, description, created_at, img FROM category""")
+    r = cursor.fetchall()
+    '''for result in r:
+        #a = result['created_at'].strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+        time_difference = now - result['created_at']
+        minutes = time_difference.seconds // 60
+        hours = time_difference.seconds // 3600
+        days = time_difference.days
+        weeks = days // 7
+        result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
+        '''
+    return r
+
+@lru_cache(maxsize=128)
+def cachestuff2(cursor, row_id):
+    cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
+    return cursor.fetchall()
+def cachemargins(cursor):
+    cursor.execute(f"""SELECT price_margins FROM category""")
+    return cursor.fetchall()
 
 # BULK RESPONSE FOR CATEGORIES
 @before_event
@@ -1452,35 +1490,19 @@ def request_ca_read(data):
     cursor = mydb.cursor(dictionary=True, buffered=True)
     cursor.execute("USE products")
     if (data == "alldata_"):
-        cursor.execute(f"""SELECT category_id, price_margins, name, description, created_at, img FROM category""")
-        r = cursor.fetchall()
-        for result in r:
-            #a = result['created_at'].strftime('%Y-%m-%d %H:%M:%S')
-            now = datetime.now()
-            time_difference = now - result['created_at']
-            minutes = time_difference.seconds // 60
-            hours = time_difference.seconds // 3600
-            days = time_difference.days
-            weeks = days // 7
-            result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
+        r = bulkcache(cursor)
         socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: "all_sidebar"})
         cursor.close()
         return make_response(jsonify({0: 200}))
     row_id = request.headers.get('Authorization')
-    query = "SELECT EXISTS(SELECT 1 FROM category WHERE category_id = %s)"
-    cursor.execute(query, (row_id,))
-    result = cursor.fetchone()
-    res = int(result[f'EXISTS(SELECT 1 FROM category WHERE category_id = \'{row_id}\')'])
-    exists = res == 1
+    exists = cachedoes(cursor, data)
     if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
-        cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
-        r = cursor.fetchall()
-        print(r)
+        r = cachestuff2(cursor, row_id)
+        #print(r)
         socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "a", 2: ""})
         cursor.close()
         return make_response(jsonify({0: 200}))
-    cursor.execute(f"""SELECT price_margins FROM category""")
-    r = cursor.fetchall()
+    r = cachemargins(cursor)
     socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: ""})
     cursor.close()
     del r, exists, res
