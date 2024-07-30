@@ -893,20 +893,16 @@ def save(productid):
 @socketio.on("rmc")
 @before_mid
 def red_(data__, f="0", g=""):
-    data = data__
-    try:
-        print("removing "+str(data__['0']))
-        data = data__['0']
-    except:
-        pass
+    print("removing "+str(data__['0']))
+    data = data__['0']
     id = req.cookies.get('id')
     #cursor = mydb.cursor(buffered=True)
     #cursor.execute(f"{selectp}")
     #cursor.execute("SELECT cart FROM users WHERE user_id = %s;", (str(id),))
     #car = cursor.fetchall()
     if (f == "1"):
-        data = jwt.decode(data__, app.secret_key, algorithms=['HS256'])['csrf']
-        print(data, "\n\n\n the decoded data\n")
+        car = jwt.decode(g, app.secret_key, algorithms=['HS256'])['csrf']
+        print(car, "\n\n\n the decoded data\n")
     else:
         car = session["yourCart"]
     print(car)
