@@ -915,7 +915,7 @@ def red_(data__, f="0"):
     for v in car_json:
         print(car_json[v], "\n\n\n\n\n\n")
         if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data:
-            b = (f"\"{car_json[v]}\"")
+            b = (f"\"{v}\": \"{car_json[v]}\"")
     print(b, " hehehehehe ", data)
     print(repair_json(car.replace(b, '')))
     res = json.loads(repair_json(car.replace(b, '')))
