@@ -1089,6 +1089,8 @@ def checkout_Item(conf):
                 if (crate_result != None and crate_result):
                     a = json.loads(crate_result).values()
                     crate_len = len(a)
+                else:
+                    abort(403)
             price = 0
             amounte= 0
             for i in a:
@@ -1102,7 +1104,8 @@ def checkout_Item(conf):
             session['mid2912'] = token
             bruv.set_cookie('mid2472', token, secure=True, httponly=True, max_age=timedelta(hours=1))
             return bruv
-        except:
+        except Exception as e:
+            print(e)
             abort(403)
     abort(404)
 @app.route("/checkout/")
