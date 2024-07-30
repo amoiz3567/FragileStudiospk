@@ -416,7 +416,7 @@ def cart(format, f="0"):
         del format['dcon']
         del format['ping']
         print("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}")
-        res = json.loads(repair_json("{"+length_data+f"{r} \"{l}\": \"{format}\""+"}"))
+        res = json.loads(repair_json("["+length_data+f"{r} \"{format}\""+"]"))
         #cursor.execute("UPDATE users SET cart = %s WHERE user_id = %s;", (json.dumps(res), id))
         #mydb.commit()
         #cursor.close()
@@ -905,7 +905,7 @@ def red_(data, f="0"):
     for v in car_json:
         print(car_json[v], "\n\n\n\n\n\n")
         if (json.loads(car_json[v].replace("\'", "\""))['wuus']) == data['0']:
-            b = (f"\"{v}\": \"{car_json[v]}\"")
+            b = (f"\"{car_json[v]}\"")
     print(b, " hehehehehe ", data['0'])
     print(repair_json(car.replace(b, '')))
     res = json.loads(repair_json(car.replace(b, '')))
