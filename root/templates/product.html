@@ -107,7 +107,7 @@
               left: 5px; user-select: none;
               z-index: 25;
               font-size: 26px;
-              font-weight: 400;" id="up">+</span><span align="center" id="quantity" style="padding: 0  15px; margin: 0;" class="center">0</span><span style="width: 36%;
+              font-weight: 400;" id="up">+</span><span align="center" id="quantity_quantity" style="padding: 0  15px; margin: 0;" class="center">0</span><span style="width: 36%;
         height: 100%;
         display: flex;
         justify-content: center;
@@ -877,7 +877,7 @@ $(".img_producto_container")
     a.innerHTML = '';
     var save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 32 32"><path d="M 7 5 L 7 28 L 8.59375 26.8125 L 16 21.25 L 23.40625 26.8125 L 25 28 L 25 5 Z M 9 7 L 23 7 L 23 24 L 16.59375 19.1875 L 16 18.75 L 15.40625 19.1875 L 9 24 Z"></path></svg>`;
     console.log(item['saved'])
-    if (item['saved'] == 1){
+    if (item['saved'] == 1) {
         save_svg = `<svg style="width: 25px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 30 30"><path d="M23,27l-8-7l-8,7V5c0-1.105,0.895-2,2-2h12c1.105,0,2,0.895,2,2V27z"></path></svg>`;
     }
     document.querySelectorAll("#save_container_svg").forEach(el => {
