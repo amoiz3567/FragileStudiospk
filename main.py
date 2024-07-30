@@ -748,7 +748,7 @@ def ret(id, products=None, p=None):
     ''' -- all the data home, the user is gonna recieve (*) NOT!'''
     data = {}
     o = 0
-    data, o = align(products, data, o)
+    data = align(products, data, o)
     socketio.on('red')
     cursor = mydb.cursor(dictionary=True, buffered=True)
     a = tickercache(cursor)
@@ -1463,7 +1463,7 @@ def request_pr_read(data, nom):
 def bulkcache(cursor):
     cursor.execute(f"""SELECT category_id, price_margins, name, description, created_at, img FROM category""")
     r = cursor.fetchall()
-    '''for result in r:
+    for result in r:
         #a = result['created_at'].strftime('%Y-%m-%d %H:%M:%S')
         now = datetime.now()
         time_difference = now - result['created_at']
@@ -1472,7 +1472,6 @@ def bulkcache(cursor):
         days = time_difference.days
         weeks = days // 7
         result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
-        '''
     return r
 
 @lru_cache(maxsize=128)
