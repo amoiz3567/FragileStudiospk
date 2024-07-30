@@ -1468,11 +1468,30 @@ def bulkcache(cursor):
         weeks = days // 7
         result['created_at'] = [f"{minutes}.minutes", f"{hours}.hour(s)", f"{days}.day(s)", f"{weeks}.week/s"]
     return r
+import functools
 
-@lru_cache(maxsize=128)
+def cache(func):
+    cache_dict = {}
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        # Create a key based on the function arguments
+        key = (args, tuple(kwargs.items()))
+        if key in cache_dict:
+            #print(f"Returning cached result for {func.__name__} with args {args} and kwargs {kwargs}")
+            return cache_dict[key]
+        else:
+            result = func(*args, **kwargs)
+            cache_dict[key] = result
+            #print(f"Caching result for {func.__name__} with args {args} and kwargs {kwargs}")
+            return result
+    return wrapper
+
+@cache
 def cachestuff2(cursor, row_id):
     cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
     return cursor.fetchall()
+
 def cachemargins(cursor):
     cursor.execute(f"""SELECT price_margins FROM category""")
     return cursor.fetchall()
@@ -1489,6 +1508,7 @@ def request_ca_read(data):
         cursor.close()
         return make_response(jsonify({0: 200}))
     row_id = request.headers.get('Authorization')
+    pm = request.headers.get('Pricemargin')
     exists = cachedoes(cursor, row_id)
     if (row_id is not None and exists == True and not(Invaliduuid12(row_id))):
         r = cachestuff2(cursor, row_id)
