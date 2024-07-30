@@ -894,8 +894,8 @@ $(".img_producto_container")
     }
     document.getElementById("size_chart").setAttribute("src", `{{ url_for('static', filename='products/') }}${item['sizechart']}`);
     document.getElementById("image_image").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
-    document.getElementById("name_name").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
-    document.getElementById("price_price").setAttribute("src", `{{ url_for('static', filename='products/') }}${str[0].replace(/_/g, "%20").replace(/,/g, '').replace(/ /g, "%20")}`);
+    document.getElementById("name_name").innerText = item['name'];
+    document.getElementById("price_price").innerText = "PKR "+Math.round(item['price']);
     ////routPointer();
     document.querySelectorAll('.chrome').forEach(element => {
       element.classList.remove("chrome");
