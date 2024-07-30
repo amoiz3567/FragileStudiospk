@@ -391,11 +391,11 @@ def cart(format, f="0"):
         else:
             abort(404)
     car_json = json.loads(category_data)
-    print(int(car_json.keys()[-1])+1)
+    print(int(list(car_json.keys())[-1])+1)
     try:
         print(category_data)
         car_json = json.loads(category_data)
-        l = int(car_json.keys()[-1])+1
+        l = int(list(car_json.keys())[-1])+1
         data = str(category_data)
         length_data = data[1:len(data)-1]
         r = ","
