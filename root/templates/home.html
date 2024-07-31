@@ -504,7 +504,7 @@
                 console.log('error Reconnecting...');
                 socket.connect();
             }*/
-            const j = [`${getcookie('evid')}`,''];
+            /*const j = [`${getcookie('evid')}`,''];
             function thrured() {
                   fetch("https://"+window.location.hostname+'/redund/'+j.toString(), {
                       method: 'POST',
@@ -527,7 +527,8 @@
                 socket.emit("red", `${j}`)
                 console.log("redund")
             }
-        }
+        }*/
+        socket.emit("red", `${j}`)
         window.redunduncy = redund;
         window.getcat = get_cat;
         window.getproducts = get_products;
