@@ -1203,9 +1203,9 @@ def order_req(data, productdata, total, items):
                 try:
                     query.append(["SELECT "+par['size'].lower()+" FROM products WHERE id=%s", "UPDATE products SET "+par['size'].lower()+" = %s WHERE id = %s"])
                     idea.append([par["productId"], par['quantity']], par['size'].lower())
-                    print(query)
-                except:
-                    print("weird word to think about but ERROR")
+                    print(query, idea)
+                except Exception as e:
+                    print("weird word to think about but ERROR ", e)
             if (i != "wuus"):
                 body += f"""<b>{i}</b>: {par[i]}<br>"""
     with open("../orders.txt", "a") as fp:
