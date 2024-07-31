@@ -1200,7 +1200,7 @@ def order_req(data, productdata, total, items):
         for i in par.keys():
             if (str(i) == "productId"):
                 try:
-                    query.append(f"UPDATE products SET {par['size'].lower()} = {par['size'].lower()} - {par['quantity']} WHERE id = '{par["productId"]}'")
+                    query.append(f"UPDATE products SET {par['size'].lower()} - {par['quantity']} WHERE id = '{par["productId"]}'")
                     print(query)
                 except:
                     print("weird word to think about but ERROR")
