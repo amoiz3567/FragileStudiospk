@@ -1219,7 +1219,7 @@ def order_req(data, productdata, total, items):
         print("got here")
         try:
             for id in idea:
-                cursor.execute(i[0], (id[1], id[0],))
+                cursor.execute(i[0], (id[0],))
                 result = cursor.fetchone()[id[2]]
                 print(result, "\n\n\n the result")
                 for i in query:
