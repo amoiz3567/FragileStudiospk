@@ -283,6 +283,13 @@
     var theit = 1;
     var cawd = 0;
     var myredund_products;
+    function loaf_d(data) {
+        if (data['goKaraleva'] == '1' && got != 1) {
+        document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+        got = 1;
+        up(data['ticker']);
+    }
+    }
     if (data['goKaraleva'] == '1' && got != 1) {
         document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
         got = 1;
