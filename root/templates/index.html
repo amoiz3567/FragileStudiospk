@@ -935,7 +935,7 @@ var g;
             reconnectionDelay: 1000, // Delay between reconnections (in milliseconds)
             reconnectionDelayMax: 5000, // Maximum delay between reconnections
             transports: ['websocket'], // Prefer WebSocket
-            upgrade: false // Disable transport upgrade
+            upgrade: true // Disable transport upgrade
         });
 
         socket.on(getcookie('evid'), function(data) {
