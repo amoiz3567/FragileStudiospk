@@ -1227,8 +1227,9 @@ def order_req(data, productdata, total, items):
                 new = result - id[1]
                 cursor.execute("UPDATE products SET "+id[2]+" = %s WHERE id = %s", (new,id[0]))
         except Exception as e:
-            print("\n\n",e, "\n\n")
+            print("\n\n" ,e , "\n\n")
         mydb.commit()
+        retProduct.cache_clear()
         cursor.close()
         return {0:200}
     return {0:400}
