@@ -1191,6 +1191,7 @@ def order_req(data, productdata, total, items):
     productdata = productdata.replace("dict_values(", "").replace(")", "").replace("&#39;", "\'").replace("&#34;", "\"")
     print(productdata)
     cursor = mydb.cursor(dictionary=True)
+    cursor.execute("USE products;")
     for r in json.loads(productdata):
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
@@ -1201,8 +1202,16 @@ def order_req(data, productdata, total, items):
         for i in par.keys():
             if (str(i) == "productId"):
                 try:
-                    query.append(["SELECT "+par['size'].lower()+" FROM products WHERE id=%s", "UPDATE products SET "+par['size'].lower()+" = %s WHERE id = %s"])
-                    idea.append([par["productId"], par['quantity']], par['size'].lower())
+                    #cursor.execute("SELECT "+par['size'].lower()+" FROM products WHERE id=%s")
+                    if (par['size'].lower() == 'xl'):
+                        cursor.execute("UPDATE products SET xl = xl - %s WHERE id = %s", (par['quantity'], par["productId"]))
+                    elif (par['size'].lower() == 'l'):
+                        cursor.execute("UPDATE products SET l = l - %s WHERE id = %s", (par['quantity'], par["productId"]))
+                    elif (par['size'].lower() == 'm'):
+                        cursor.execute("UPDATE products SET m = m - %s WHERE id = %s", (par['quantity'], par["productId"]))
+                    elif (par['size'].lower() == 's'):
+                        cursor.execute("UPDATE products SET s = s - %s WHERE id = %s", (par['quantity'], par["productId"]))
+                    #idea.append([par["productId"], par['quantity']], par['size'].lower())
                     print(query)
                 except:
                     print("weird word to think about but ERROR")
@@ -1216,15 +1225,16 @@ def order_req(data, productdata, total, items):
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
         cursor.execute("USE products;")
-        for id in idea:
+        '''for id in idea:
             cursor.execute(i[0], (id[1], id[0],))
             result = cursor.fetchone()[id[2]]
             for i in query:
                 new = result - id[1]
-                cursor.execute(i[1], (new,id[0]))
-        #mydb.commit()
+                cursor.execute(i[1], (new,id[0]))'''
+        mydb.commit()
         cursor.close()
         return {0:200}
+    cursor.close()
     return {0:400}
 
 @app.route("/remAse", methods=['POST'])
