@@ -1217,11 +1217,11 @@ def order_req(data, productdata, total, items):
         print("sent!")
         cursor.execute("USE products;")
         for id in idea:
-            cursor.execute("SELECT xl FROM products WHERE id = %s", (id[0],))
+            cursor.execute(i[0], (id[1], id[0],))
             result = cursor.fetchone()[id[2]]
             for i in query:
                 new = result - id[1]
-                cursor.execute(i, (new,id[0]))
+                cursor.execute(i[1], (new,id[0]))
         mydb.commit()
         cursor.close()
         return {0:200}
