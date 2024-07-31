@@ -1215,6 +1215,7 @@ def order_req(data, productdata, total, items):
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
+        cursor.execute("USE products;")
         for id in idea:
             cursor.execute("SELECT xl FROM products WHERE id = %s", (id[0],))
             result = cursor.fetchone()[id[2]]
