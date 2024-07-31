@@ -285,7 +285,7 @@
     var myredund_products;
     $(document).ready(function() {
         var token = '{{ token }}';
-        var socket = io("wss://fragilestudiospk.com", {
+        var socket = io("wss://"+window.location.hostname+":443", {
             extraHeaders: {
                 Authorization: '' + token
             },

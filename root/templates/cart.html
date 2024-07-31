@@ -626,7 +626,7 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
-        var socket = io("wss://"+window.location.hostname, {
+        var socket = io("wss://"+window.location.hostname+":443", {
             extraHeaders: {
                 Authorization: '' + token,
                 Type: '' + type,

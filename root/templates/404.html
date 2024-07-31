@@ -123,7 +123,7 @@
     console.log(loc)
     $(document).ready(function() {
         var token = '{{ token }}';
-        var socket = io("https://"+window.location.hostname, {
+        var socket = io("https://"+window.location.hostname+":443", {
             extraHeaders: {
                 Authorization: '' + token
             },

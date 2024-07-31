@@ -925,7 +925,7 @@ var g;
         const category_ = "{{ category }}";
         //if (category_.includes(" "))
         //    category_ = category_.split(" ")[0];
-        var socket = io("wss://"+window.location.hostname, {
+        var socket = io("wss://"+window.location.hostname+":443", {
             extraHeaders: {
                 Authorization: '' + category_,
                 Pricemargin: '' + localStorage.getItem("margins", ""),
