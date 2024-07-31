@@ -1692,6 +1692,10 @@ if __name__ == '__main__':
     #context.verify_mode = ssl.CERT_NONE  # Adjust as needed, e.g., ssl.CERT_REQUIRED for client authentication
     #context.options |= ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1  # Disable older TLS versions if desired
 
-    server = pywsgi.WSGIServer(('0.0.0.0', 8000), app, handler_class=pywsgi.WSGIHandler, ssl_context=context)
+    server = pywsgi.WSGIServer(('0.0.0.0', 8000), app, handler_class=pywsgi.WSGIHandler, ssl_context=(
+            '/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem',  # Replace with your fullchain file path
+            '/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem'     # Replace with your private key file path
+        )
+)
     server.serve_forever()
 
