@@ -1229,8 +1229,11 @@ def order_req(data, productdata, total, items):
 
 @app.route("/remAse", methods=['POST'])
 def remAse():
-    session["ordered"] = session["yourCart"]
-    session.pop("yourCart", None)
+    try:
+        session["ordered"] = session["yourCart"]
+        session.pop("yourCart", None)
+    except Exception as e:
+        print(e)
     return {0: 200}
 
 @socketio.on("red")
