@@ -1201,7 +1201,7 @@ def order_req(data, productdata, total, items):
         for i in par.keys():
             if (str(i) == "productId"):
                 try:
-                    query.append("UPDATE products SET "+par['size'].lower()+" - %s WHERE id = %s")
+                    query.append("UPDATE products SET "+par['size'].lower()+" = "+par['size'].lower()+" - %s WHERE id = %s")
                     idea.append([par["productId"], par['quantity']])
                     print(query)
                 except:
