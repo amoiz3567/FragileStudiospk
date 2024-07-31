@@ -283,6 +283,11 @@
     var theit = 1;
     var cawd = 0;
     var myredund_products;
+    if (data['goKaraleva'] == '1' && got != 1) {
+        document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
+        got = 1;
+        up(data['ticker']);
+    }
     $(document).ready(function() {
         var token = '{{ token }}';
         var socket = io("wss://fragilestudiospk.com", {
@@ -316,11 +321,7 @@
             socket.connect();
         });
         socket.on(getcookie('evid'), function(data) {
-            if (data['goKaraleva'] == '1' && got != 1) {
-                document.querySelectorAll(".uxskpx").forEach(el => {el.innerHTML = `${data['amount']}`});
-                got = 1;
-                up(data['ticker']);
-            }
+            loaf_d(data);
         });
         socket.on(getcookie('evid')+"r", function(data) {
             if (data[1] != "a" && varforit > 0) {
@@ -506,7 +507,7 @@
                   })
                   .then(response => response.json())
                   .then(data => {
-                      
+                      loaf_d(data);
                   })
                   .catch(error => {
                           console.error('Error:', error);

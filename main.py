@@ -1272,9 +1272,9 @@ def red(data):
     ret(userId, products, productId)
     return 200
 
-@app.route("/redund/<path:data>")
+@app.route("/redund/<path:data>", methods=['POST'])
 @before_mid
-def red(data):
+def red_post(data):
     print(data)
     location = (data.split(',')[1]) # the location of the product
     userId = (data.split(',')[0])   # the user id which is ofc temp
