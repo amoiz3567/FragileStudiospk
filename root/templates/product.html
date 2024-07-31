@@ -922,7 +922,7 @@ $(".img_producto_container")
   var noice = 0;
   var got2 = 0;
   var sessioned = "";
-  $(document).ready(function () {
+  $(document).ready(function () { 
     try{
       var token = '{{ token }}';
       var socket = io("wss://"+window.location.hostname, {
@@ -1000,10 +1000,10 @@ $(".img_producto_container")
           }
       });
       socket.addEventListener("error", (e) => {
-        if (!socket.connected) {
+        /*if (!socket.connected) {
               console.log('error Reconnecting...');
               socket.connect();
-          }
+          }*/
         document.getElementById("knowme").innerHTML = `Try Adding Again`;
       });
       socket.on(getcookie('evid')+"r", function(data) {

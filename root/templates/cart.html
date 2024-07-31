@@ -695,10 +695,10 @@ var g;
         }
         window.redundancy = redund;
         function retlisting(a) {
-            if (!socket.connected) {
+            /*if (!socket.connected) {
                 console.log('error Reconnecting...');
                 socket.connect();
-            }
+            }*/
 
             console.log(a);
             socket.emit("saved", "ok");
@@ -709,10 +709,10 @@ var g;
             socket.emit("save", p);
         }
         function rmc(id) {
-            if (!socket.connected) {
+            /*if (!socket.connected) {
                 console.log('error Reconnecting...');
                 socket.connect();
-            }
+            }*/
 
             a = socket.emit('rmc', {0:id}, tulip, sessioned, function (data) {
                 if (data[0] == 200) {
