@@ -1065,8 +1065,11 @@ def send400(p):
 def set_mmm(ds):
     if request.method == 'POST':
         response = make_response(jsonify({0: "200"}))
-        response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
-        session['ordered'] = "{"+f"\"0\": \"{ds}\""+"}"
+        try:
+            response.set_cookie('yourCart', "meow, me billi hu!", secure=True)
+            session['ordered'] = "{"+f"\"0\": \"{ds}\""+"}"
+        except:
+            pass
         return response
     abort(404)
 
@@ -1187,12 +1190,20 @@ def order_req(data, productdata, total, items):
     b = 0
     productdata = productdata.replace("dict_values(", "").replace(")", "").replace("&#39;", "\'").replace("&#34;", "\"")
     print(productdata)
+    cursor = mydb.cursor(dictionary=True)
     for r in json.loads(productdata):
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
         print(r)
+        query = ""
         par = json.loads(r.replace("\'", "\""))
         for i in par.keys():
+            if (str(i) == "productId"):
+                try:
+                    query += f"UPDATE products SET {par['size'].lower()} = {par['size'].lower()} - {par['quantity']} WHERE id = '{par["productId"]}';"
+                    print(query)
+                except:
+                    print("weird word to think about but ERROR")
             if (i != "wuus"):
                 body += f"""<b>{i}</b>: {par[i]}<br>"""
     with open("../orders.txt", "a") as fp:
@@ -1202,6 +1213,9 @@ def order_req(data, productdata, total, items):
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
+        cursor.execute(query)
+        mydb.commit()
+        cursor.close()
         return {0:200}
     return {0:400}
 
