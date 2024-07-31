@@ -80,7 +80,6 @@ KEY = base64_str
 def rkey(key, o=random.randint(1, 15)):
     res = key[o]
     return res
-
 ## NO PASS (TEMPORARY).
 mydb_pool = pooling.MySQLConnectionPool(pool_name="mypool",
                                         pool_size=32,
@@ -142,7 +141,8 @@ app.config.from_mapping(SECRET_KEY='dev')
 app.config['CORS_HEADERS'] = 'Content-Type'
 #CORS(app, cors_allowed_origins = '*')
 CORS(app, resources={r"/socket.io/*": {"origins": "https://fragilestudiospk.com"}})
-socketio = SocketIO(app, cors_allowed_origins="*" , async_mode='gevent')
+socketio = SocketIO(app, cors_allowed_origins="*" , async_mode='gevent', max_http_buffer_size=1024 * 1024 * 10)
+
 #socketio = SocketIO(app, async_mode='eventlet')
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 ## THE CACHE:
