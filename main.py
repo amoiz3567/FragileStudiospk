@@ -1684,7 +1684,7 @@ channel.basic_consume(queue='order_queue',
 if __name__ == '__main__':
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     context.load_cert_chain('/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem', '/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem')
-    context = SSLContext(PROTOCOL_TLS)
+    #context = SSLContext(PROTOCOL_TLS)
 
     # Optional: Set additional SSL context options if needed
     #context.verify_mode = ssl.CERT_NONE  # Adjust as needed, e.g., ssl.CERT_REQUIRED for client authentication
