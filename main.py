@@ -1551,7 +1551,7 @@ def request_ca_read(data):
     r = cachemargins(cursor)
     socketio.emit(request.cookies.get("evid")+"r", {0: r, 1: "b", 2: ""})
     cursor.close()
-    del r, exists, res
+    del r, exists
     #abort(400)
 
 @before_mid
