@@ -1682,7 +1682,7 @@ channel.basic_consume(queue='order_queue',
 #context.load_cert_chain(certfile='cert/ALDsigning.crt', keyfile='cert/ALDsigning.key')
 #esbf235824nv1x825 TEMPORARY ofc serverkey pass
 if __name__ == '__main__':
-    context = SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     #context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain('/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem', '/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem')
     context.minimum_version = ssl.TLSVersion.TLSv1_2
