@@ -631,7 +631,13 @@ var g;
                 Authorization: '' + token,
                 Type: '' + type,
                 Pricemargin: '' + localStorage.getItem("margins", "")
-            }
+            },
+            reconnection: true, // Enable automatic reconnection
+            reconnectionAttempts: 125, // Number of reconnection attempts before giving up
+            reconnectionDelay: 1000, // Delay between reconnections (in milliseconds)
+            reconnectionDelayMax: 5000, // Maximum delay between reconnections
+            transports: ['websocket'], // Prefer WebSocket
+            upgrade: false // Disable transport upgrade
         });
         socket.on("crate"+getcookie('evid')+"{{type}}", function(data) {
             console.log(data)

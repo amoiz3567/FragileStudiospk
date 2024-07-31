@@ -464,7 +464,13 @@ document.addEventListener('input', e => {
         var socket = io("https://"+window.location.hostname, {
             extraHeaders: {
                 Authorization: '' + token
-            }
+            },
+            reconnection: true, // Enable automatic reconnection
+            reconnectionAttempts: 125, // Number of reconnection attempts before giving up
+            reconnectionDelay: 1000, // Delay between reconnections (in milliseconds)
+            reconnectionDelayMax: 5000, // Maximum delay between reconnections
+            transports: ['websocket'], // Prefer WebSocket
+            upgrade: false // Disable transport upgrade
         });
         socket.on(getcookie('evid')+"r", function(data) {
             /*if (data[2] != "") {
