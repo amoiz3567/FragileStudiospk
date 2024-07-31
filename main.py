@@ -1136,7 +1136,7 @@ def checkout_cart():
         for i in a:
             i = json.loads(i.replace("\'", "\""))
             amounte += int(i['quantity'])
-            price += int(i['price'])*int(i['quantity'])
+            price += int(i['price'])
         isthat = "200 PKR"
         if (price >= 3999):
             isthat = "0 PKR"
