@@ -442,10 +442,18 @@
             console.log(data);
         });
         function get_cat() {
+            if (!socket.connected) {
+                showMessage('error', 'Reconnecting...', 500);
+                socket.connect();
+            }
             socket.emit("get_category_read", 'alldata_');
             console.log("[1]: Reading...");
         }
         function get_products(ide, nom) {
+            if (!socket.connected) {
+                showMessage('error', 'Reconnecting...', 500);
+                socket.connect();
+            }
             try {
                 socket.emit("get_products_read", ide, nom);
                 console.log("[2]: Reading...");
@@ -454,6 +462,10 @@
             }   
         }
         function redund() {
+            if (!socket.connected) {
+                showMessage('error', 'Reconnecting...', 500);
+                socket.connect();
+            }
             const j = [`${getcookie('evid')}`,''];
             socket.emit("red", `${j}`)
             console.log("redund")
