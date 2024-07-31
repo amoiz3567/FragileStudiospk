@@ -1217,7 +1217,7 @@ def order_req(data, productdata, total, items):
         print("sent!")
         for id in idea:
             for i in query:
-                cursor.execute(i, (id[0],id[1]))
+                cursor.execute(i, (id[1],id[0]))
         mydb.commit()
         cursor.close()
         return {0:200}
