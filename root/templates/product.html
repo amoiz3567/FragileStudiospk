@@ -1000,6 +1000,10 @@ $(".img_producto_container")
           }
       });
       socket.addEventListener("error", (e) => {
+        if (!socket.connected) {
+              console.log('error Reconnecting...');
+              socket.connect();
+          }
         document.getElementById("knowme").innerHTML = `Try Adding Again`;
       });
       socket.on(getcookie('evid')+"r", function(data) {
@@ -1019,10 +1023,18 @@ $(".img_producto_container")
         id = (data) // Now the add to cart is gonna send it to the original signed in  id after results.
       });*/
       function redund_Recommendations() {
+        if (!socket.connected) {
+            console.log('error Reconnecting...');
+            socket.connect();
+        }
         socket.emit("sp_products", exclude);
         console.log("pain...");
       }
       function redund() {
+        if (!socket.connected) {
+            console.log('error Reconnecting...');
+            socket.connect();
+        }
         const j = [`${getcookie('evid')}`, `${loc.substring(loc.lastIndexOf('/') + 1)}`];
         socket.emit("red", `${j}`);
         socket.emit("get_category_read", "alldata_")
@@ -1032,6 +1044,10 @@ $(".img_producto_container")
         document.getElementById("knowme").innerHTML = `loading...`
         formation['ping'] = 0;
         //if (getcookie("id") != null) {
+          if (!socket.connected) {
+              console.log('error Reconnecting...');
+              socket.connect();
+          }
         if (a == "") {
           var tulip = "0";
           var data_To_gib = formation;

@@ -625,7 +625,13 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
-        var socket = io();
+        var socket = io("wss://"+window.location.hostname, {
+            extraHeaders: {
+                Authorization: '' + token,
+                Type: '' + type,
+                Pricemargin: '' + localStorage.getItem("margins", "")
+            }
+        });
         socket.on("crate"+getcookie('evid')+"{{type}}", function(data) {
             console.log(data)
             if (data[0] == 'cart' && la == 0 && data[1] != '{}') {
@@ -692,6 +698,7 @@ var g;
                 console.log('error Reconnecting...');
                 socket.connect();
             }
+
             console.log(a);
             socket.emit("saved", "ok");
             socket.emit("get_category_read", "alldata_")
@@ -701,6 +708,11 @@ var g;
             socket.emit("save", p);
         }
         function rmc(id) {
+            if (!socket.connected) {
+                console.log('error Reconnecting...');
+                socket.connect();
+            }
+
             a = socket.emit('rmc', {0:id}, tulip, sessioned, function (data) {
                 if (data[0] == 200) {
                     var loaf_kar = data[2];
