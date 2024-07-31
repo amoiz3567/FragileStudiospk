@@ -935,8 +935,9 @@ var g;
             reconnectionDelay: 1000, // Delay between reconnections (in milliseconds)
             reconnectionDelayMax: 5000, // Maximum delay between reconnections
         });
-        socket.on('connect', () => {
-            console.log('Connected to the server');
+        socket.on('disconnect', () => {
+            console.log('Disconnected from the server');
+            socket.connect();
         });
 
         socket.on('disconnect', () => {
@@ -953,6 +954,7 @@ var g;
 
         socket.on('reconnect_failed', () => {
             console.log('Failed to reconnect');
+            socket.connect();
         });
 
         socket.on(getcookie('evid'), function(data) {
