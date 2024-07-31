@@ -931,7 +931,7 @@ $(".img_producto_container")
               },
             reconnection: true, // Enable automatic reconnection
             reconnectionAttempts: 125, // Number of reconnection attempts before giving up
-            reconnectionDelay: 1000, // Delay between reconnections (in milliseconds)
+            reconnectionDelay: 7000, // Delay between reconnections (in milliseconds)
             reconnectionDelayMax: 5000, // Maximum delay between reconnections
       });
       socket.on('connect', () => {
