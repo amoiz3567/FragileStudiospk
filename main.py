@@ -1220,7 +1220,7 @@ def order_req(data, productdata, total, items):
         try:
             for id in idea:
                 cursor.execute("SELECT "+id[2]+" FROM products WHERE id=%s", (id[0],))
-                result = cursor.fetchone().values()[0]
+                result = list(cursor.fetchone().values())[0]
                 print(result, "\n\n\n the result")
                 for i in query:
                     print("here")
