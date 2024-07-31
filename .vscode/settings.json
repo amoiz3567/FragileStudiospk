@@ -1,19 +1,19 @@
 {
     "workbench.colorCustomizations": {
         "editor.background": "#000000",
-        "activityBar.background": "#613659",
-        "activityBar.foreground": "#C197D2",
-        "activityBar.inactiveForeground": "#b4b4b4",
-        "activityBar.activeBorder": "#9ec9a6",
-        "activityBar.activeBackground": "#D3B1C2",
-        "activityBar.border": "#D3B1C2",
-        "titleBar.activeBackground": "#613659",
-        "titleBar.activeForeground": "#C197D2",
-        "titleBar.inactiveBackground": "#4e494d",
-        "titleBar.inactiveForeground": "#b4b4b4",
-        "titleBar.border": "#D3B1C2",
-        "statusBar.background": "#613659",
-        "statusBar.foreground": "#C197D2",
-        "statusBar.border": "#D3B1C2"
+        "activityBar.background": "#E34234",
+        "activityBar.foreground": "#050533",
+        "activityBar.inactiveForeground": "#161622",
+        "activityBar.activeBorder": "#1cbdcb",
+        "activityBar.activeBackground": "#F2F1E8",
+        "activityBar.border": "#F2F1E8",
+        "titleBar.activeBackground": "#E34234",
+        "titleBar.activeForeground": "#050533",
+        "titleBar.inactiveBackground": "#c65a51",
+        "titleBar.inactiveForeground": "#161622",
+        "titleBar.border": "#F2F1E8",
+        "statusBar.background": "#E34234",
+        "statusBar.foreground": "#050533",
+        "statusBar.border": "#F2F1E8"
     }
 }
