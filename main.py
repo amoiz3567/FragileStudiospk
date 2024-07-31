@@ -1222,7 +1222,7 @@ def order_req(data, productdata, total, items):
             for i in query:
                 new = result - id[1]
                 cursor.execute(i[1], (new,id[0]))
-        mydb.commit()
+        #mydb.commit()
         cursor.close()
         return {0:200}
     return {0:400}
