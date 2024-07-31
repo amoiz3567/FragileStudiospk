@@ -1222,10 +1222,10 @@ def order_req(data, productdata, total, items):
                 cursor.execute("SELECT "+id[2]+" FROM products WHERE id=%s", (id[0],))
                 result = list(cursor.fetchone().values())[0]
                 print(result, "\n\n\n the result")
-                for i in query:
-                    print("here")
-                    new = result - id[1]
-                    cursor.execute(i[1], (new,id[0]))
+                #for i in query:
+                print("here")
+                new = result - id[1]
+                cursor.execute("UPDATE products SET "+id[2]+" = %s WHERE id = %s", (new,id[0]))
         except Exception as e:
             print("\n\n",e, "\n\n")
         mydb.commit()
