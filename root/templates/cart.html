@@ -625,13 +625,7 @@ var g;
     $(document).ready(function() {
         var token = '{{ token }}';
         var type = '{{ type }}';
-        var socket = io("wss://"+window.location.hostname, {
-            extraHeaders: {
-                Authorization: '' + token,
-                Type: '' + type,
-                Pricemargin: '' + localStorage.getItem("margins", "")
-            }
-        });
+        var socket = io();
         socket.on("crate"+getcookie('evid')+"{{type}}", function(data) {
             console.log(data)
             if (data[0] == 'cart' && la == 0 && data[1] != '{}') {
@@ -694,6 +688,10 @@ var g;
         }
         window.redundancy = redund;
         function retlisting(a) {
+            if (!socket.connected) {
+                console.log('error Reconnecting...');
+                socket.connect();
+            }
             console.log(a);
             socket.emit("saved", "ok");
             socket.emit("get_category_read", "alldata_")
