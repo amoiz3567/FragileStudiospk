@@ -1217,14 +1217,17 @@ def order_req(data, productdata, total, items):
         print("sent!")
         cursor.execute("USE products;")
         print("got here")
-        for id in idea:
-            cursor.execute(i[0], (id[1], id[0],))
-            result = cursor.fetchone()[id[2]]
-            print(result, "\n\n\n the result")
-            for i in query:
-                print("here")
-                new = result - id[1]
-                cursor.execute(i[1], (new,id[0]))
+        try:
+            for id in idea:
+                cursor.execute(i[0], (id[1], id[0],))
+                result = cursor.fetchone()[id[2]]
+                print(result, "\n\n\n the result")
+                for i in query:
+                    print("here")
+                    new = result - id[1]
+                    cursor.execute(i[1], (new,id[0]))
+        except Exception as e:
+            print("\n\n",e, "\n\n")
         mydb.commit()
         cursor.close()
         return {0:200}
