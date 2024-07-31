@@ -1686,7 +1686,7 @@ if __name__ == '__main__':
     context.load_cert_chain('/etc/letsencrypt/live/fragilestudiospk.com/fullchain.pem', '/etc/letsencrypt/live/fragilestudiospk.com/privkey.pem')
     #context = SSLContext(PROTOCOL_TLS)
     context.minimum_version = ssl.TLSVersion.TLSv1_2
-    context.maximum_version = ssl.TLSVersion.TLSv1_3
+    #context.maximum_version = ssl.TLSVersion.TLSv1_3
 
     # Optional: Set additional SSL context options if needed
     #context.verify_mode = ssl.CERT_NONE  # Adjust as needed, e.g., ssl.CERT_REQUIRED for client authentication
