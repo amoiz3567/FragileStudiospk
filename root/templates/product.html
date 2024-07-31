@@ -893,11 +893,11 @@ $(".img_producto_container")
     const scr = document.querySelectorAll('.img_producto_container');
     console.log(scr);
     global_num_length = item['l'];
-    ric(global_num_length);
     if (item['s'] > 9999) {
       global_num_length = item['s'];
       console.log("heyyyyyy what is going on dudes yay")
     }
+    ric(global_num_length);
     document.querySelectorAll('#ident').forEach(function (el) {el.innerText = `${item['id']}`});
     try {
       for (let c= 0; c< scr.length; c++)
@@ -949,7 +949,7 @@ $(".img_producto_container")
                 document.getElementById("jude").innerHTML = `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;FREE SIZE&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;FREE SIZE&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
                 create_dp();
                 document.querySelector(".dropbtn").innerHTML = "FREE SIZE";
-                global_num_length = intent.s;
+                global_num_length = intent.s != 0 ? intent.s:0;
               } else {
                 document.getElementById("jude").innerHTML = `${intent.s != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.s};ric(global_num_length);">&nbsp;S&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;S&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
                 document.getElementById("jude").innerHTML += `${intent.m != 0 ? `<a class="ra selected" nonce="{{ csp_nonce() }}" onclick="global_num_length = ${intent.m};ric(global_num_length);">&nbsp;M&nbsp;</a>`:`<s class="ra" style="text-decoration: line-through;">&nbsp;M&nbsp; <i style="text-decoration: none; font-size: 9px;">SOLD</s>`}`;
