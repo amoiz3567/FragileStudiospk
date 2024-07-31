@@ -129,6 +129,7 @@ talisman = Talisman(app, content_security_policy={
         "'self'",
         'https://www.google.com',
     ],
+    'connect-src': ["'self'", "ws://*", "wss://*"],
 })
 talisman.force_https = True
 talisman.force_file_save = True
@@ -772,7 +773,7 @@ def ret(id, products=None, p=None):
     res = {"ticker": tick, "goKaraleva": "1", "amount": crate_len}
     res.update({"d": json.dumps(data, cls=DecimalEncoder)})
     socketio.emit(id, res)
-    pass
+    return res
 @app.route('/saved')
 def saved():
     bruv = make_response(render_template('cart.html', type='saved'))
@@ -1270,6 +1271,34 @@ def red(data):
         return render_template('404.html')
     ret(userId, products, productId)
     return 200
+
+@app.route("/redund/<path:data>")
+@before_mid
+def red(data):
+    print(data)
+    location = (data.split(',')[1]) # the location of the product
+    userId = (data.split(',')[0])   # the user id which is ofc temp
+    print(location, "this is product id")
+    for i in location: # yes this is way beyond O(n) :(
+        if (i == "?" or i == ";" or i == "\'" or i == "\""):
+            print("I quit")
+            socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
+            return render_template('404.html')
+    productId = location
+    if len(location) == 0:
+        productId = None
+    try:
+        #v = request.headers.get("Pricemargin")
+        category_id = request.headers.get("Authorization")
+    except:
+        v = ""
+        category_id = ""
+    products = retProduct(productId, userId, category_id, v)
+    if products == None or products == []:
+        socketio.emit(userId, {"ticker": '', "goKaraleva": "0"})
+        return render_template('404.html')
+    return ret(userId, products, productId), 200
+
 #! ONCE IN LINUX SERVER PLZ ADD CACHING TO PREVENT (D)DOS ATTACKS!
 '''
 @app.before_request
