@@ -62,7 +62,7 @@
     <span style="color: transparent;">this is a horizontal texthorizontal texthorizontal text</span>
   </div>
 </div>
-<body id="bod">
+<body id="bod">menu("soldout","soldout_");
 	<!--div class="man v pizzaria n"></div-->
   <div id="description__" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #5a5a5a23;">
     <div id="description_" class="center" align="center" style="transition: .3s; position: absolute; height: auto; min-height: 450px; width:auto; max-width: 550px; overflow-y: auto; height: auto; max-height: 50vh; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
@@ -88,6 +88,16 @@
     <div nonce="{{ csp_nonce() }}" onclick="op('sizegraph', 'sizegraph_');" style="width: 100vw; height: 100vh; background-color: #5a5a5a86;"></div>
   </div>
 
+  <div id="soldout" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #0000005d; backdrop-filter: blur(10px);">
+    <div id="soldout" class="center" align="center" style="transition: .3s; position: absolute; height: auto; width:auto; max-width: 645px; border-radius: 5px; background-color: rgb(255, 255, 255); z-index: 50; padding: 25px;">
+        <a nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="padding: 10px; position: absolute; top: 0;  right: 0; color: white;filter: brightness(-100%); cursor: pointer; margin-top: 0px; font-size: 55px;"><img style="width: 35px;" src="{{ url_for('static', filename='img/close.png') }}" alt=""></a>
+        <br><br>
+        <div class="col">
+            <h1 style="font-size: 50px;"><i style="font-weight: 400; font-size: 23px;margin: 5px;">This Item Is Sold Out.</i></h1>
+          </div>
+    </div>
+    <div nonce="{{ csp_nonce() }}" onclick="op('dialogue', 'dialogue_')" style="width: 100vw; height: 100vh; background-color: #0000005d; backdrop-filter: blur(10px);"></div>
+</div>
 
   <div id="previewcart_" class="man contain_menu center" style="position: fixed; top: 0; left: 0; z-index: 1000; display: none; background-color: #5a5a5a23;">
     <div id="previewcart" class="center" align="center" style="transition: .3s; position: absolute; height: auto; min-height: 450px; width:auto; max-width: 550px; overflow-y: auto; height: auto; max-height: 50vh; border-radius: 15px; background-color: rgb(255, 255, 255); border: 1px solid rgb(177, 177, 177); z-index: 50; padding: 55px 25px;">
@@ -1156,6 +1166,7 @@ $(".img_producto_container")
   });
 
 function addtocart(event, a="") {
+  if (global_num_length !== 0) {
   if (event.persisted) {
     window.location.reload();
   }
@@ -1171,6 +1182,9 @@ function addtocart(event, a="") {
     formation["size"] = size;
     approve(a);
   }
+} else {
+  menu("soldout","soldout_");
+}
 }
 </script>
 <script>
