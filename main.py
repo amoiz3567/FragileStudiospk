@@ -1191,12 +1191,12 @@ def order_req(data, productdata, total, items):
     productdata = productdata.replace("dict_values(", "").replace(")", "").replace("&#39;", "\'").replace("&#34;", "\"")
     print(productdata)
     cursor = mydb.cursor(dictionary=True)
+    query = []
+    idea = []
     for r in json.loads(productdata):
         b += 1
         body += f"<br>, <h3>{b}:</h3><br>"
         print(r)
-        query = []
-        idea = []
         par = json.loads(r.replace("\'", "\""))
         for i in par.keys():
             if (str(i) == "productId"):
