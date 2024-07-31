@@ -1201,8 +1201,8 @@ def order_req(data, productdata, total, items):
         for i in par.keys():
             if (str(i) == "productId"):
                 try:
-                    query.append("UPDATE products SET "+par['size'].lower()+" = "+par['size'].lower()+" - %s WHERE id = %s")
-                    idea.append([par["productId"], par['quantity']])
+                    query.append(["SELECT "+par['size'].lower()+" FROM products WHERE id=%s", "UPDATE products SET "+par['size'].lower()+" = %s WHERE id = %s"])
+                    idea.append([par["productId"], par['quantity']], par['size'].lower())
                     print(query)
                 except:
                     print("weird word to think about but ERROR")
@@ -1216,8 +1216,11 @@ def order_req(data, productdata, total, items):
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
         for id in idea:
+            cursor.execute("SELECT xl FROM products WHERE id = %s", (id[0],))
+            result = cursor.fetchone()[id[2]]
             for i in query:
-                cursor.execute(i, (id[1],id[0]))
+                new = result - id[1]
+                cursor.execute(i, (new,id[0]))
         mydb.commit()
         cursor.close()
         return {0:200}
