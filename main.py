@@ -1196,11 +1196,13 @@ def order_req(data, productdata, total, items):
         body += f"<br>, <h3>{b}:</h3><br>"
         print(r)
         query = []
+        idea = []
         par = json.loads(r.replace("\'", "\""))
         for i in par.keys():
             if (str(i) == "productId"):
                 try:
-                    query.append(f"UPDATE products SET {par['size'].lower()} - {par['quantity']} WHERE id = '{par["productId"]}'")
+                    query.append("UPDATE products SET "+par['size'].lower()+" - %s WHERE id = %s")
+                    idea.append([par["productId"], par['quantity']])
                     print(query)
                 except:
                     print("weird word to think about but ERROR")
@@ -1213,8 +1215,9 @@ def order_req(data, productdata, total, items):
     password = "ssnl iemy ycbu flks"
     if (send_Order(subject, body, recipients, sender, password) == True):
         print("sent!")
-        for i in query:
-            cursor.execute(i)
+        for id in idea:
+            for i in query:
+                cursor.execute(i, (id[0],id[1]))
         mydb.commit()
         cursor.close()
         return {0:200}
