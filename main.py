@@ -1502,7 +1502,7 @@ def bulkcache(cursor):
     return r
 import functools
 
-def cache(func):
+def cache_rea(func):
     cache_dict = {}
 
     @functools.wraps(func)
@@ -1519,7 +1519,7 @@ def cache(func):
             return result
     return wrapper
 
-@cache
+@cache_rea
 def cachestuff2(cursor, row_id, pm):
     cursor.execute(f"""SELECT price_margins, name, description, img FROM category WHERE category_id='{row_id}'""")
     return cursor.fetchall()
